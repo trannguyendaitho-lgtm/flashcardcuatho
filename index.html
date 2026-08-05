@@ -671,6 +671,49 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
         }
+        /* === V40 - Transition Overlay (chuyển cảnh khi đổi theme / đăng nhập / đổi Host-Khách) === */
+        .transition-overlay {
+            position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center;
+            background: var(--bg-gradient); opacity: 0; pointer-events: none; transition: opacity 0.28s ease;
+        }
+        .transition-overlay.show { opacity: 1; pointer-events: all; }
+        .transition-spinner {
+            width: 46px; height: 46px; border-radius: 50%; border: 3px solid rgba(var(--accent-rgb),0.18);
+            border-top-color: var(--brand-color); animation: transitionSpin 0.7s linear infinite;
+        }
+        @keyframes transitionSpin { to { transform: rotate(360deg); } }
+
+        /* === V40 - Host badge + Toggle Host/Khách === */
+        .host-badge-chip {
+            display: none; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.3px;
+            padding: 6px 12px; border-radius: 20px; background: linear-gradient(90deg, rgba(234,179,8,0.18), rgba(234,179,8,0.05));
+            border: 1px solid rgba(234,179,8,0.4); color: var(--accent-gold); text-transform: uppercase;
+        }
+        .host-view-toggle { display: none; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; color: var(--text-muted); }
+        .host-switch { position: relative; width: 42px; height: 24px; border-radius: 20px; background: rgba(255,255,255,0.12); border: 1px solid var(--panel-border); cursor: pointer; transition: background 0.25s ease; flex-shrink: 0; }
+        .host-switch.on { background: var(--brand-color); }
+        .host-switch-knob { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.3); transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+        .host-switch.on .host-switch-knob { transform: translateX(18px); }
+
+        /* === V40 - Tab Thuật ngữ Code (Gói từ vựng) === */
+        .code-term-card { background: var(--panel-bg); border: 1px solid var(--card-glow-border); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--card-glow-shadow); }
+        .code-term-card .ctc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+        .code-term-card .ctc-term { font-family: var(--font-mono); font-weight: 700; font-size: 15.5px; color: var(--brand-text); }
+        .code-term-card .ctc-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 3px 9px; border-radius: 20px; background: rgba(var(--accent-rgb),0.14); color: var(--brand-text); white-space: nowrap; }
+        .code-term-card .ctc-meaning { margin-top: 6px; font-size: 14px; color: var(--text-main); }
+        .code-term-card .ctc-example { margin-top: 6px; font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+        .code-term-card .ctc-actions { display: flex; gap: 8px; margin-top: 10px; }
+        .code-cat-pill { padding: 7px 14px; min-height: 36px; border-radius: 20px; font-size: 12px; font-weight: 700; background: var(--panel-bg); border: 1px solid var(--panel-border); color: var(--text-muted); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .code-cat-pill.active { background: var(--brand-color); border-color: var(--brand-color); color: #fff; }
+        .host-admin-panel { background: rgba(var(--accent-rgb),0.06); border: 1px dashed rgba(var(--accent-rgb),0.4); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 20px; }
+
+        /* === V40 - Tab Ủng hộ tác giả === */
+        .donate-qr-box { text-align: center; background: var(--panel-bg); border: 1px solid var(--card-glow-border); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--card-glow-shadow); max-width: 320px; margin: 0 auto; }
+        .donate-qr-box img { width: 100%; max-width: 220px; border-radius: 14px; background: #fff; padding: 8px; }
+        .donate-info-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--panel-border); font-size: 13.5px; }
+        .donate-info-row:last-child { border-bottom: none; }
+        .donate-info-row .div-label { color: var(--text-muted); }
+        .donate-info-row .div-val { font-weight: 700; font-family: var(--font-mono); color: var(--text-main); }
     </style>
 </head>
 <body>
@@ -731,13 +774,60 @@
             size = size || 16;
             return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="' + size + '" height="' + size + '" style="flex-shrink:0;vertical-align:-3px">' + (ICONS[name] || '') + '</svg>';
         }
+
+        /* === V40 - Nhận diện Host & Chuyển cảnh (Transition Overlay) === */
+        const HOST_IDENTIFIERS = ['trannguyendaitho', 'leoluon'];
+        function checkIsHost(userEmail) {
+            if (!userEmail) return false;
+            return HOST_IDENTIFIERS.some(id => userEmail.trim().toLowerCase().includes(id));
+        }
+        let isHostAccount = false;   // Tài khoản đăng nhập có phải Host không (theo email)
+        let guestPreviewMode = false; // Host đang gạt sang xem thử giao diện Khách
+        function isEffectiveHost() { return isHostAccount && !guestPreviewMode; }
+
+        function showTransition(duration) {
+            duration = duration || 650;
+            let ov = document.getElementById('transitionOverlay');
+            if(!ov) return;
+            ov.classList.add('show');
+            setTimeout(() => ov.classList.remove('show'), duration);
+        }
+
+        function applyHostStatus(email) {
+            isHostAccount = checkIsHost(email);
+            if(!isHostAccount) guestPreviewMode = false;
+            updateHostUI();
+        }
+
+        function updateHostUI() {
+            let badge = document.getElementById('hostBadgeChip');
+            let toggleWrap = document.getElementById('hostViewToggleWrap');
+            let sw = document.getElementById('hostViewSwitch');
+            if(badge) badge.style.display = isHostAccount ? 'flex' : 'none';
+            if(toggleWrap) toggleWrap.style.display = isHostAccount ? 'flex' : 'none';
+            if(sw) sw.classList.toggle('on', guestPreviewMode);
+            let brandingRow = document.getElementById('hostBrandingRow');
+            if(brandingRow) brandingRow.style.display = isEffectiveHost() ? 'flex' : 'none';
+            // Đồng bộ lại panel Admin của tab Thuật ngữ Code + hiển thị lại danh sách theo đúng quyền
+            if(typeof renderCodeTermsTab === 'function') renderCodeTermsTab();
+        }
+
+        function toggleHostGuestView() {
+            if(!isHostAccount) return;
+            showTransition(500);
+            setTimeout(() => {
+                guestPreviewMode = !guestPreviewMode;
+                updateHostUI();
+            }, 180);
+        }
     </script>
+    <div id="transitionOverlay" class="transition-overlay"><div class="transition-spinner"></div></div>
     <div class="starfield"></div>
     <div class="starfield-2"></div>
 
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-card">
-            <div class="welcome-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="44" height="44"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></div>
+            <div class="welcome-logo"><span class="app-logo-svg-slot" style="display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="44" height="44"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></div>
             <div class="welcome-title">VocabOrbit</div>
             <div class="welcome-subtitle">Hệ Thống Học Từ Vựng Không Gian v39</div>
             <button class="btn-start-app" onclick="startApp()">Bắt đầu hành trình học tập <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></button>
@@ -769,15 +859,21 @@
         <div class="header-left">
             <button class="hamburger" id="hamBtn" onclick="toggleSidebar()" aria-label="Mở menu điều hướng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             <div class="app-title-box">
-                <span class="app-title">VocabOrbit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span>
+                <span class="app-title">VocabOrbit <span class="app-logo-svg-slot" style="display:inline-block; width:15px; height:15px; vertical-align:-2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></span>
                 <span class="app-subtitle">V39 Dual Theme Edition</span>
             </div>
         </div>
         <div class="header-right">
             <div class="streak-badge-header"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> <span id="streakCountHeader">0</span> Ngày</div>
+            <div class="host-badge-chip" id="hostBadgeChip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Đang là Host</div>
+            <div class="host-view-toggle" id="hostViewToggleWrap">
+                <span>Khách</span>
+                <div class="host-switch" id="hostViewSwitch" onclick="toggleHostGuestView()"><div class="host-switch-knob"></div></div>
+                <span>Host</span>
+            </div>
             <button class="btn-icon" id="voiceToggleBtn" onclick="cycleVoice()" title="Bấm để đổi giọng đọc" aria-label="Đổi giọng đọc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
             <button class="btn-icon" id="audioMasterBtn" onclick="toggleAudioMaster()" aria-label="Bật hoặc tắt âm thanh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-            <button class="btn-icon" onclick="toggleTheme()" aria-label="Đổi giao diện sáng tối"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
+            <button class="btn-icon" onclick="showTransition(500); setTimeout(toggleTheme, 150);" aria-label="Đổi giao diện sáng tối"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
             <div id="authAreaEl">
                 <button class="btn-icon" id="loginPromptBtn" onclick="openLoginModal()" title="Đăng nhập tài khoản">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -789,6 +885,7 @@
     <div class="sticky-day-bar" id="stickyDayBar"></div>
     <div class="streak-warning-banner" id="streakWarningBanner" role="status" aria-live="polite"></div>
     <div class="undo-toast" id="undoToast" role="status" aria-live="polite"></div>
+    <div class="undo-toast" id="genericToast" role="status" aria-live="polite"></div>
     <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
     
     <div class="sidebar" id="sidebar">
@@ -801,7 +898,7 @@
         <div class="nav-item active" id="nav-calendar" onclick="switchTab('calendar')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Lịch trình học tập</div>
         <div class="nav-item" id="nav-flashcard" onclick="switchTab('flashcard')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Thẻ học Flashcard</div>
         <div class="nav-item" id="nav-list" onclick="switchTab('list')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Danh sách tổng hợp</div>
-        <div class="nav-item" id="nav-library" onclick="switchTab('library')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg> Kho từ vựng theo cấp độ</div>
+        <div class="nav-item" id="nav-library" onclick="switchTab('library')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg> Thuật ngữ Code</div>
         
         <div class="nav-group-title">Mảnh ghép bổ sung</div>
         <div class="nav-item" id="nav-smart" onclick="switchTab('smart')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Ôn tập thông minh <span id="navSmartBadge" style="background:var(--brand-color); color:white; font-size:11px; font-weight:800; padding:1px 8px; border-radius:10px; margin-left:6px; display:none;">0</span></div>
@@ -810,6 +907,7 @@
         <div class="nav-item" id="nav-backup" onclick="switchTab('backup')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Sao lưu & Khôi phục</div>
         <div class="nav-item" id="nav-settings" onclick="switchTab('settings')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Cài đặt cấu hình</div>
         <div class="nav-item" id="nav-guide" onclick="switchTab('guide')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Hướng dẫn nạp từ</div>
+        <div class="nav-item" id="nav-donate" onclick="switchTab('donate')" style="color:var(--accent-gold);"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Ủng hộ tác giả</div>
         <div class="nav-item" onclick="openAboutModal()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Giới thiệu & Nhật ký</div>
 
         <button class="nav-item nav-danger" onclick="resetAll()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Reset toàn bộ dữ liệu</button>
@@ -943,17 +1041,71 @@
         </main>
 
         <main id="tab-library">
-            <p style="text-align:center; color:var(--text-muted); font-size:13px; margin-bottom:18px;">Chọn cấp độ để xem các gói từ vựng dựng sẵn — nạp thẳng vào lịch học chỉ với 1 lần bấm. Kho sẽ được bổ sung thêm ở các phiên bản sau.</p>
-            <div class="cefr-filter-container">
-                <div class="cefr-box c-a1 active" id="lib-cefr-a1" onclick="setLibraryLevel('a1')">A1</div>
-                <div class="cefr-box c-a2" id="lib-cefr-a2" onclick="setLibraryLevel('a2')">A2</div>
-                <div class="cefr-box c-b1" id="lib-cefr-b1" onclick="setLibraryLevel('b1')">B1</div>
-                <div class="cefr-box c-b2" id="lib-cefr-b2" onclick="setLibraryLevel('b2')">B2</div>
-                <div class="cefr-box c-c1" id="lib-cefr-c1" onclick="setLibraryLevel('c1')">C1</div>
-                <div class="cefr-box c-c2" id="lib-cefr-c2" onclick="setLibraryLevel('c2')">C2</div>
+            <div class="host-admin-panel" id="codeTermsAdminPanel" style="display:none;">
+                <h4 style="display:flex; align-items:center; gap:7px; color:var(--accent-gold); margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bảng điều khiển Admin (Host)</h4>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+                    <label class="btn-action-panel" style="cursor:pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Tải tệp JSON lên<input type="file" accept=".json" id="codeTermsFileInput" style="display:none;" onchange="handleCodeTermsFileUpload(event)"></label>
+                    <button class="btn-nav" onclick="openCodeTermManualForm()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nhập thủ công</button>
+                    <button class="btn-nav" onclick="exportCodeTerms()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Xuất dữ liệu gói từ</button>
+                </div>
+
+                <div id="codeTermsPreviewBox" style="display:none; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:14px; padding:14px; margin-bottom:14px;">
+                    <p style="font-size:13px; font-weight:700; margin-bottom:8px;">Xem trước <span id="codeTermsPreviewCount">0</span> thuật ngữ sẽ được nạp:</p>
+                    <div id="codeTermsPreviewList" style="max-height:200px; overflow-y:auto;"></div>
+                    <div style="display:flex; gap:10px; margin-top:12px;">
+                        <button class="btn-nav" onclick="cancelCodeTermsImport()">Huỷ</button>
+                        <button class="btn-action-panel" onclick="confirmCodeTermsImport()">Xác nhận nạp</button>
+                    </div>
+                </div>
+
+                <div id="codeTermManualFormBox" style="display:none; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:14px; padding:14px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <div class="form-group"><label class="field-label">Thuật ngữ</label><input type="text" class="form-input" id="ctManualTerm" placeholder="VD: commit"></div>
+                        <div class="form-group"><label class="field-label">Chủ đề</label><input type="text" class="form-input" id="ctManualCategory" placeholder="VD: Git/GitHub"></div>
+                    </div>
+                    <div class="form-group"><label class="field-label">Nghĩa</label><input type="text" class="form-input" id="ctManualMeaning" placeholder="Giải nghĩa tiếng Việt"></div>
+                    <div class="form-group"><label class="field-label">Ghi chú / Ví dụ</label><input type="text" class="form-input" id="ctManualExample" placeholder="Ví dụ minh hoạ (không bắt buộc)"></div>
+                    <div style="display:flex; gap:10px; margin-top:6px;">
+                        <button class="btn-nav" onclick="closeCodeTermManualForm()">Huỷ</button>
+                        <button class="btn-action-panel" onclick="saveCodeTermManual()">Lưu thuật ngữ</button>
+                    </div>
+                </div>
             </div>
-            <div id="libraryPackageList" style="display:flex; flex-direction:column; gap:12px; margin-top:20px; max-width:680px; margin-left:auto; margin-right:auto;"></div>
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
+                <input type="text" class="search-input" style="flex:1; min-width:220px;" placeholder="Tìm thuật ngữ (Anh hoặc Việt)..." oninput="filterCodeTermSearch(this.value)">
+                <button class="btn-action-panel" onclick="startCodeTermsPractice()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Luyện tập Flashcard</button>
+            </div>
+            <div id="codeCatPills" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;"></div>
+            <div id="codeTermsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:14px;"></div>
         </main>
+
+        <div class="modal" id="codeTermsPracticeModal">
+            <div class="modal-content" style="max-width:440px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                    <span class="card-counter" id="practiceCounter">1 / 1</span>
+                    <button class="btn-icon" onclick="closeCodeTermsPractice()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                </div>
+                <div class="card-container" id="practiceCardContainer" onclick="flipPracticeCard()" style="height:260px;">
+                    <div class="card-inner" id="practiceCardInner">
+                        <div class="card-face card-face-front">
+                            <div class="badge" id="practiceFrontCat" style="color:white; align-self:flex-start;">Chủ đề</div>
+                            <div class="card-word" id="practiceFrontTerm" style="font-family:var(--font-mono);">term</div>
+                            <div class="card-example">Bấm để lật...</div>
+                        </div>
+                        <div class="card-face card-face-back">
+                            <div class="card-meaning" id="practiceBackMeaning">Nghĩa</div>
+                            <div class="card-example" id="practiceBackExample">Ví dụ</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls-row" style="margin-top:16px;">
+                    <button class="btn-nav" onclick="practiceNav(-1)">◀ TRƯỚC</button>
+                    <span style="font-size:12px; color:var(--text-muted)">Bấm thẻ để lật</span>
+                    <button class="btn-nav" onclick="practiceNav(1)">SAU ▶</button>
+                </div>
+            </div>
+        </div>
 
         <main id="tab-stats">
             <div class="stats-grid">
@@ -1072,13 +1224,27 @@
                 </div>
 
                 <div class="setting-row" style="flex-direction:column; align-items:stretch; gap:10px;">
-                    <div class="setting-info"><label style="display:flex; align-items:center; gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg> Trợ lý AI Auto-Fill</label><p>Nhập API Key riêng của bạn để dùng nút "AI Auto-Fill" tự động điền phiên âm/nghĩa/ví dụ khi thêm từ thủ công. Key chỉ lưu trên máy bạn, không gửi đi đâu khác ngoài nhà cung cấp AI bạn chọn.</p></div>
-                    <select class="form-input" id="aiProviderSelect" onchange="saveAiSettings()" style="width:100%;">
-                        <option value="gemini">Google Gemini API</option>
-                        <option value="openai">OpenAI API</option>
-                    </select>
-                    <input type="password" class="form-input" id="aiApiKeyInput" placeholder="Dán API Key của bạn vào đây..." onchange="saveAiSettings()">
-                    <p id="aiKeyStatus" style="font-size:11.5px; color:var(--text-muted);"></p>
+                    <div class="setting-info"><label style="display:flex; align-items:center; gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg> Trợ lý AI Auto-Fill</label><p>Tự động điền phiên âm/nghĩa/ví dụ khi thêm từ thủ công, chạy qua Worker bảo mật trung gian — bạn không cần tự nhập hay quản lý API Key nào cả.</p></div>
+                    <p id="aiKeyStatus" style="font-size:11.5px; color:var(--color-mastered-text);"></p>
+                </div>
+
+                <div class="setting-row" id="hostBrandingRow" style="display:none; flex-direction:column; align-items:stretch; gap:10px;">
+                    <div class="setting-info"><label style="display:flex; align-items:center; gap:6px; color:var(--accent-gold)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Cấu hình thương hiệu (Host)</label><p>Đổi Logo App và ảnh QR chuyển khoản — áp dụng ngay cho toàn bộ ứng dụng và tab "Ủng hộ tác giả".</p></div>
+                    <label class="field-label">Link Logo mới (URL ảnh)</label>
+                    <input type="text" class="form-input" id="hostLogoUrlInput" placeholder="https://... (để trống = dùng logo mặc định)">
+                    <label class="field-label">Hoặc tải ảnh Logo lên</label>
+                    <input type="file" accept="image/*" class="form-input" id="hostLogoFileInput" style="padding:8px;">
+                    <label class="field-label" style="margin-top:6px;">Link ảnh QR chuyển khoản (URL ảnh)</label>
+                    <input type="text" class="form-input" id="hostQrUrlInput" placeholder="https://... (để trống = dùng QR mặc định)">
+                    <label class="field-label">Hoặc tải ảnh QR lên</label>
+                    <input type="file" accept="image/*" class="form-input" id="hostQrFileInput" style="padding:8px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px;">
+                        <div><label class="field-label">Tên ngân hàng</label><input type="text" class="form-input" id="hostBankNameInput" placeholder="VD: MB Bank"></div>
+                        <div><label class="field-label">Số tài khoản</label><input type="text" class="form-input" id="hostBankAccInput" placeholder="VD: 0123456789"></div>
+                        <div><label class="field-label">Chủ tài khoản</label><input type="text" class="form-input" id="hostBankOwnerInput" placeholder="VD: TRAN NGUYEN DAI THO"></div>
+                        <div><label class="field-label">Cú pháp chuyển khoản</label><input type="text" class="form-input" id="hostBankNoteInput" placeholder="VD: Ung ho VocabOrbit"></div>
+                    </div>
+                    <button class="btn-action-panel" style="align-self:flex-start; margin-top:6px;" onclick="saveHostBrandingConfig()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Lưu cấu hình thương hiệu</button>
                 </div>
             </div>
         </main>
@@ -1116,6 +1282,28 @@
                         <li>• Trên điện thoại: <strong style="color:var(--text-main)">Nhấn và giữ ngón tay (khoảng 1 giây)</strong> vào ô ngày bạn muốn học.</li>
                     </ul>
                     <p style="font-size:13.5px; line-height: 1.5; margin-top: 8px;">Bảng nạp từ sẽ xuất hiện, bạn chỉ cần chọn hoặc thả file `.js` vừa tải về vào ô trống. Hệ thống sẽ tự động đồng bộ hóa toàn bộ từ vựng vào ngày đó!</p>
+                </div>
+            </div>
+        </main>
+
+        <main id="tab-donate">
+            <div style="max-width:520px; margin:0 auto; text-align:center;">
+                <div style="color:var(--accent-gold); margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="42" height="42"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                <h3 style="color:var(--text-main); margin-bottom:8px;">Cảm ơn bạn đã đồng hành cùng VocabOrbit!</h3>
+                <p style="font-size:13.5px; color:var(--text-muted); line-height:1.6; margin-bottom:24px;">Mọi sự ủng hộ, dù nhỏ, đều giúp mình có thêm động lực để duy trì server, phát triển thêm tính năng mới và giữ cho ứng dụng luôn miễn phí cho tất cả mọi người. Xin chân thành cảm ơn!</p>
+
+                <div class="donate-qr-box">
+                    <img id="donateQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=VocabOrbit-Donate" alt="QR chuyển khoản ủng hộ">
+                    <div style="margin-top:16px; text-align:left;">
+                        <div class="donate-info-row"><span class="div-label">Ngân hàng</span><span class="div-val" id="donateBankName">Đang cập nhật</span></div>
+                        <div class="donate-info-row"><span class="div-label">Số tài khoản</span><span class="div-val" id="donateBankAcc">Đang cập nhật</span></div>
+                        <div class="donate-info-row"><span class="div-label">Chủ tài khoản</span><span class="div-val" id="donateBankOwner">Đang cập nhật</span></div>
+                        <div class="donate-info-row"><span class="div-label">Nội dung CK</span><span class="div-val" id="donateBankNote">Ung ho VocabOrbit</span></div>
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:18px;">
+                        <button class="btn-nav" style="flex:1; justify-content:center;" onclick="copyDonateAccountNumber()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/></svg> Sao chép STK</button>
+                        <button class="btn-action-panel" style="flex:1; justify-content:center;" onclick="downloadDonateQr()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Tải ảnh QR</button>
+                    </div>
                 </div>
             </div>
         </main>
@@ -1201,20 +1389,7 @@
 
     <!-- V26 - Modal Giới thiệu & Nhật ký phiên bản -->
     <!-- V29 - Modal chọn ngày để nạp gói từ Kho từ vựng -->
-    <div class="modal" id="libraryImportModal">
-        <div class="modal-content" style="max-width:400px;">
-            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> Nạp gói vào lịch học</div>
-            <p id="libImportPkgName" style="text-align:center; font-size:13px; color:var(--text-muted); margin-bottom:16px;"></p>
-            <div class="form-group">
-                <label style="font-size:12px; font-weight:700;">Chọn ngày để nạp gói này</label>
-                <input type="date" class="form-input" id="libImportDateInput">
-            </div>
-            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:18px;">
-                <button class="btn-nav" onclick="document.getElementById('libraryImportModal').classList.remove('show')">Huỷ</button>
-                <button class="btn-action-panel" onclick="confirmLibraryImport()">Xác nhận nạp</button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- V34 - Modal alert/confirm tuỳ chỉnh, thay cho hộp thoại mặc định của trình duyệt -->
     <!-- V35 - Modal đăng nhập tài khoản -->
@@ -1361,41 +1536,24 @@
         let packagesLog = {}; // Lưu lịch sử nạp gói: { packageId: { day: '2026-06-18', timestamp: '18:30:25 22/06/2026', count: 5 } }
 
         // V29 - Kho từ vựng dựng sẵn theo cấp độ CEFR, mỗi cấp có thể chứa nhiều gói. Sẽ được bổ sung thêm ở các phiên bản sau.
-        const builtInPackageLibrary = {
-            a1: [
-                { title: "A1 - Khởi đầu: Gia đình & cuộc sống", words: [
-                    {word:"Hello", pronUK:"/həˈləʊ/", pronUS:"/heˈloʊ/", pos:"Interjection", wordFamily:"", level:"A1", meaning:"Xin chào", example:"Hello, how are you today?"},
-                    {word:"Family", pronUK:"/ˈfæm.əl.i/", pronUS:"/ˈfæm.əl.i/", pos:"Noun", wordFamily:"Familial (adj)", level:"A1", meaning:"Gia đình", example:"I love spending time with my family."},
-                    {word:"School", pronUK:"/skuːl/", pronUS:"/skuːl/", pos:"Noun", wordFamily:"Schooling (n)", level:"A1", meaning:"Trường học", example:"My son goes to school every morning."},
-                    {word:"Water", pronUK:"/ˈwɔː.tər/", pronUS:"/ˈwɑː.t̬ɚ/", pos:"Noun", wordFamily:"Watery (adj)", level:"A1", meaning:"Nước", example:"Please drink more water every day."},
-                    {word:"Friend", pronUK:"/frend/", pronUS:"/frend/", pos:"Noun", wordFamily:"Friendly (adj), Friendship (n)", level:"A1", meaning:"Bạn bè", example:"She is my best friend."},
-                    {word:"Happy", pronUK:"/ˈhæp.i/", pronUS:"/ˈhæp.i/", pos:"Adj", wordFamily:"Happiness (n), Happily (adv)", level:"A1", meaning:"Vui vẻ, hạnh phúc", example:"I feel very happy today."}
-                ]}
-            ],
-            a2: [
-                { title: "A2 - Đi lại & Mua sắm", words: [
-                    {word:"Journey", pronUK:"/ˈdʒɜː.ni/", pronUS:"/ˈdʒɝː.ni/", pos:"Noun", wordFamily:"", level:"A2", meaning:"Hành trình, chuyến đi", example:"We had a long journey to the countryside."},
-                    {word:"Receipt", pronUK:"/rɪˈsiːt/", pronUS:"/rɪˈsiːt/", pos:"Noun", wordFamily:"Receive (v)", level:"A2", meaning:"Hoá đơn, biên lai", example:"Please keep your receipt in case you need a refund."},
-                    {word:"Expensive", pronUK:"/ɪkˈspen.sɪv/", pronUS:"/ɪkˈspen.sɪv/", pos:"Adj", wordFamily:"Expense (n), Inexpensive (adj)", level:"A2", meaning:"Đắt đỏ", example:"This restaurant is too expensive for us."},
-                    {word:"Discount", pronUK:"/ˈdɪs.kaʊnt/", pronUS:"/ˈdɪs.kaʊnt/", pos:"Noun", wordFamily:"", level:"A2", meaning:"Giảm giá", example:"I got a 20% discount on these shoes."},
-                    {word:"Luggage", pronUK:"/ˈlʌɡ.ɪdʒ/", pronUS:"/ˈlʌɡ.ɪdʒ/", pos:"Noun", wordFamily:"", level:"A2", meaning:"Hành lý", example:"Please don't leave your luggage unattended."},
-                    {word:"Reserve", pronUK:"/rɪˈzɜːv/", pronUS:"/rɪˈzɝːv/", pos:"Verb", wordFamily:"Reservation (n)", level:"A2", meaning:"Đặt trước, đặt chỗ", example:"I'd like to reserve a table for two."}
-                ]}
-            ],
-            b1: [
-                { title: "B1 - Công việc & Sự nghiệp", words: [
-                    {word:"Achieve", pronUK:"/əˈtʃiːv/", pronUS:"/əˈtʃiːv/", pos:"Verb", wordFamily:"Achievement (n)", level:"B1", meaning:"Đạt được, hoàn thành", example:"She achieved all her goals this year."},
-                    {word:"Colleague", pronUK:"/ˈkɒl.iːɡ/", pronUS:"/ˈkɑː.liːɡ/", pos:"Noun", wordFamily:"", level:"B1", meaning:"Đồng nghiệp", example:"I had lunch with a colleague from work."},
-                    {word:"Deadline", pronUK:"/ˈded.laɪn/", pronUS:"/ˈded.laɪn/", pos:"Noun", wordFamily:"", level:"B1", meaning:"Hạn chót", example:"We need to finish the report before the deadline."},
-                    {word:"Negotiate", pronUK:"/nɪˈɡəʊ.ʃi.eɪt/", pronUS:"/nɪˈɡoʊ.ʃi.eɪt/", pos:"Verb", wordFamily:"Negotiation (n)", level:"B1", meaning:"Đàm phán, thương lượng", example:"They negotiated a better salary for the new job."},
-                    {word:"Responsible", pronUK:"/rɪˈspɒn.sə.bəl/", pronUS:"/rɪˈspɑːn.sə.bəl/", pos:"Adj", wordFamily:"Responsibility (n)", level:"B1", meaning:"Có trách nhiệm", example:"He is responsible for the entire marketing team."},
-                    {word:"Promote", pronUK:"/prəˈməʊt/", pronUS:"/prəˈmoʊt/", pos:"Verb", wordFamily:"Promotion (n)", level:"B1", meaning:"Thăng chức, quảng bá", example:"She was promoted to sales manager last month."}
-                ]}
-            ],
-            b2: [], c1: [], c2: []
-        };
-        let currentLibraryLevel = 'a1';
-        let pendingLibraryImport = null;
+        /* === V40 - Kho Thuật ngữ Code (thay thế Kho theo cấp độ CEFR cũ) === */
+        const DEFAULT_CODE_TERMS = [
+            {id:'seed-1', term:'commit', category:'Git/GitHub', meaning:'Lưu lại một điểm thay đổi trong lịch sử code', example:'git commit -m "fix bug"'},
+            {id:'seed-2', term:'pull request', category:'Git/GitHub', meaning:'Yêu cầu gộp nhánh code của bạn vào nhánh chính', example:'Open a pull request to merge your feature branch.'},
+            {id:'seed-3', term:'merge conflict', category:'Git/GitHub', meaning:'Xung đột xảy ra khi Git không tự gộp được 2 thay đổi', example:'Please resolve the merge conflict before pushing.'},
+            {id:'seed-4', term:'useState', category:'React', meaning:'Hook quản lý state cục bộ trong component', example:'const [count, setCount] = useState(0);'},
+            {id:'seed-5', term:'props', category:'React', meaning:'Dữ liệu được truyền từ component cha xuống con', example:'This component receives a title prop.'},
+            {id:'seed-6', term:'useEffect', category:'React', meaning:'Hook chạy side-effect sau khi component render', example:'useEffect(() => { fetchData(); }, []);'},
+            {id:'seed-7', term:'prompt engineering', category:'AI Terms', meaning:'Kỹ thuật thiết kế câu lệnh để AI trả lời chính xác hơn', example:'Prompt engineering improves the quality of AI responses.'},
+            {id:'seed-8', term:'token', category:'AI Terms', meaning:'Đơn vị nhỏ nhất mà mô hình AI xử lý văn bản', example:'This model can process up to 128k tokens.'},
+            {id:'seed-9', term:'fine-tuning', category:'AI Terms', meaning:'Huấn luyện bổ sung một mô hình AI trên dữ liệu chuyên biệt', example:'We fine-tuned the model on customer support data.'}
+        ];
+        let codeTerms = [];
+        let currentCodeCategory = 'all';
+        let codeTermSearchQuery = '';
+        let pendingCodeTermEditId = null;
+        let pendingCodeTermsImport = [];
+        let practiceDeck = []; let practiceIdx = 0; let practiceFlipped = false;
         let calInitDate = new Date();
         let currentYear = calInitDate.getFullYear(); let currentMonth = calInitDate.getMonth(); let currentSelectedDayISO = ""; let targetModalDayISO = "";
         let filteredList = []; let cIdx = 0; let activeSortMode = "abc"; let activeFilter = "all"; let activeCefrFilter = "all";
@@ -1512,7 +1670,9 @@
             updateReadyIndicator(); updateSmartBadge();
 
             setupSwipeGestures('cardContainerEl', () => nextW(), () => prevW());
-            loadAiSettings();
+            updateAiKeyStatus();
+            loadHostBranding();
+            loadCodeTerms();
         }
 
         function initAudioContext() {
@@ -1624,70 +1784,179 @@
             switchTab(target);
         }
 
-        /* === V29 - Kho từ vựng theo cấp độ CEFR === */
-        function initLibraryTab() { setLibraryLevel(currentLibraryLevel); }
-
-        function setLibraryLevel(lvl) {
-            currentLibraryLevel = lvl;
-            document.querySelectorAll('#tab-library .cefr-box').forEach(b => b.classList.remove('active'));
-            document.getElementById('lib-cefr-' + lvl).classList.add('active');
-            renderLibraryPackages();
+        /* === V40 - Kho Thuật ngữ Code (thay thế Kho theo cấp độ CEFR cũ) === */
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
 
-        function renderLibraryPackages() {
-            let container = document.getElementById('libraryPackageList');
-            let packages = builtInPackageLibrary[currentLibraryLevel] || [];
-            if(packages.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:var(--radius-lg);">${ic('inbox', 20)} Chưa có gói nào ở cấp độ ${currentLibraryLevel.toUpperCase()} — sẽ được bổ sung ở các phiên bản sau ${ic('rocket', 16)}</div>`;
+        function loadCodeTerms() {
+            let raw = localStorage.getItem('tho_v40_codeTerms');
+            codeTerms = raw ? JSON.parse(raw) : DEFAULT_CODE_TERMS.slice();
+            if(!raw) saveCodeTerms();
+        }
+        function saveCodeTerms() { localStorage.setItem('tho_v40_codeTerms', JSON.stringify(codeTerms)); }
+
+        function initLibraryTab() {
+            loadCodeTerms();
+            currentCodeCategory = 'all';
+            codeTermSearchQuery = '';
+            renderCodeTermsTab();
+        }
+
+        function getCodeCategories() { return Array.from(new Set(codeTerms.map(t => t.category || 'Khác'))); }
+
+        function setCodeCategory(cat) { currentCodeCategory = cat; renderCodeTermsTab(); }
+        function filterCodeTermSearch(q) { codeTermSearchQuery = q.toLowerCase(); renderCodeTermsTab(); }
+
+        function getFilteredCodeTerms() {
+            return codeTerms.filter(t =>
+                (currentCodeCategory === 'all' || t.category === currentCodeCategory) &&
+                (!codeTermSearchQuery || t.term.toLowerCase().includes(codeTermSearchQuery) || (t.meaning || '').toLowerCase().includes(codeTermSearchQuery))
+            );
+        }
+
+        function renderCodeTermsTab() {
+            let host = typeof isEffectiveHost === 'function' && isEffectiveHost();
+            let adminPanel = document.getElementById('codeTermsAdminPanel');
+            if(adminPanel) adminPanel.style.display = host ? 'block' : 'none';
+
+            let cats = ['all', ...getCodeCategories()];
+            let pillsEl = document.getElementById('codeCatPills');
+            if(pillsEl) pillsEl.innerHTML = cats.map(c => `<button class="code-cat-pill ${c === currentCodeCategory ? 'active' : ''}" onclick="setCodeCategory('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tổng hợp' : escapeHtml(c)}</button>`).join('');
+
+            let list = getFilteredCodeTerms();
+            let listEl = document.getElementById('codeTermsList');
+            if(!listEl) return;
+            if(list.length === 0) {
+                listEl.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); grid-column:1/-1;">${ic('inbox', 20)} Không tìm thấy thuật ngữ nào.</div>`;
                 return;
             }
-            container.innerHTML = "";
-            packages.forEach((pkg, idx) => {
-                let row = document.createElement('div');
-                row.className = "guide-step";
-                row.style.cssText = "display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;";
-                row.innerHTML = `
-                    <div>
-                        <h4 style="margin-bottom:2px;">${pkg.title}</h4>
-                        <p style="font-size:12px; color:var(--text-muted);">${pkg.words.length} từ vựng</p>
-                    </div>
-                    <button class="btn-action-panel">Nạp vào lịch ${ic('download', 14)}</button>
-                `;
-                row.querySelector('button').onclick = () => openLibraryImportModal(currentLibraryLevel, idx);
-                container.appendChild(row);
-            });
+            listEl.innerHTML = list.map(t => `
+                <div class="code-term-card">
+                    <div class="ctc-top"><span class="ctc-term">${escapeHtml(t.term)}</span><span class="ctc-cat">${escapeHtml(t.category || 'Khác')}</span></div>
+                    <div class="ctc-meaning">${escapeHtml(t.meaning || '')}</div>
+                    ${t.example ? `<div class="ctc-example">"${escapeHtml(t.example)}"</div>` : ''}
+                    ${host ? `<div class="ctc-actions">
+                        <button class="btn-nav" style="padding:6px 12px; min-height:32px; font-size:11.5px;" onclick="openCodeTermManualForm('${t.id}')">${ic('type', 12)} Sửa</button>
+                        <button class="btn-nav" style="padding:6px 12px; min-height:32px; font-size:11.5px; color:var(--color-unlearned-text);" onclick="deleteCodeTerm('${t.id}')">${ic('xCircle', 12)} Xoá</button>
+                    </div>` : ''}
+                </div>
+            `).join('');
         }
 
-        function openLibraryImportModal(levelKey, pkgIndex) {
-            let pkg = builtInPackageLibrary[levelKey][pkgIndex];
-            pendingLibraryImport = { levelKey, pkgIndex };
-            document.getElementById('libImportPkgName').innerText = `"${pkg.title}" — ${pkg.words.length} từ`;
-            document.getElementById('libImportDateInput').value = new Date().toISOString().split('T')[0];
-            document.getElementById('libraryImportModal').classList.add('show');
+        function openCodeTermManualForm(editId) {
+            pendingCodeTermEditId = editId || null;
+            let t = editId ? codeTerms.find(x => x.id === editId) : null;
+            document.getElementById('ctManualTerm').value = t ? t.term : '';
+            document.getElementById('ctManualMeaning').value = t ? t.meaning : '';
+            document.getElementById('ctManualCategory').value = t ? t.category : '';
+            document.getElementById('ctManualExample').value = t ? t.example : '';
+            document.getElementById('codeTermManualFormBox').style.display = 'block';
+        }
+        function closeCodeTermManualForm() {
+            document.getElementById('codeTermManualFormBox').style.display = 'none';
+            pendingCodeTermEditId = null;
+        }
+        function saveCodeTermManual() {
+            let term = document.getElementById('ctManualTerm').value.trim();
+            let meaning = document.getElementById('ctManualMeaning').value.trim();
+            let category = document.getElementById('ctManualCategory').value.trim() || 'Khác';
+            let example = document.getElementById('ctManualExample').value.trim();
+            if(!term || !meaning) { showAlert("Vui lòng nhập đủ Thuật ngữ và Nghĩa.", {icon: 'alertTriangle'}); return; }
+            if(pendingCodeTermEditId) {
+                let t = codeTerms.find(x => x.id === pendingCodeTermEditId);
+                if(t) { t.term = term; t.meaning = meaning; t.category = category; t.example = example; }
+            } else {
+                codeTerms.push({ id: 'ct-' + Date.now(), term, meaning, category, example });
+            }
+            saveCodeTerms();
+            closeCodeTermManualForm();
+            renderCodeTermsTab();
+            showAlert("Đã lưu thuật ngữ!", {icon: 'checkCircle'});
+        }
+        async function deleteCodeTerm(id) {
+            let ok = await showConfirm("Xoá thuật ngữ này khỏi kho?", {danger: true, confirmText: "Xoá"});
+            if(!ok) return;
+            codeTerms = codeTerms.filter(t => t.id !== id);
+            saveCodeTerms();
+            renderCodeTermsTab();
+        }
+        function exportCodeTerms() {
+            let blob = new Blob([JSON.stringify(codeTerms, null, 2)], { type: 'application/json' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url; a.download = 'vocaborbit-code-terms.json'; a.click();
+            URL.revokeObjectURL(url);
+        }
+        function handleCodeTermsFileUpload(event) {
+            let file = event.target.files[0];
+            if(!file) return;
+            let reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    let parsed = JSON.parse(evt.target.result);
+                    if(!Array.isArray(parsed)) throw new Error("Dữ liệu phải là một mảng (array) các thuật ngữ.");
+                    pendingCodeTermsImport = parsed.map((item, idx) => ({
+                        id: 'ct-import-' + Date.now() + '-' + idx,
+                        term: item.term || item.word || '',
+                        meaning: item.meaning || '',
+                        category: item.category || 'Khác',
+                        example: item.example || ''
+                    })).filter(t => t.term && t.meaning);
+                    if(pendingCodeTermsImport.length === 0) throw new Error("Không tìm thấy thuật ngữ hợp lệ nào (cần có ít nhất 'term' và 'meaning').");
+                    renderCodeTermsPreview();
+                } catch(err) {
+                    showAlert("File JSON không hợp lệ: " + err.message, {icon: 'xCircle'});
+                }
+            };
+            reader.readAsText(file);
+        }
+        function renderCodeTermsPreview() {
+            let box = document.getElementById('codeTermsPreviewBox');
+            if(pendingCodeTermsImport.length === 0) { box.style.display = 'none'; return; }
+            box.style.display = 'block';
+            document.getElementById('codeTermsPreviewList').innerHTML = pendingCodeTermsImport.map(t => `<div style="padding:6px 0; border-bottom:1px solid var(--panel-border); font-size:12.5px;"><b>${escapeHtml(t.term)}</b> (${escapeHtml(t.category)}) — ${escapeHtml(t.meaning)}</div>`).join('');
+            document.getElementById('codeTermsPreviewCount').innerText = pendingCodeTermsImport.length;
+        }
+        function confirmCodeTermsImport() {
+            codeTerms = codeTerms.concat(pendingCodeTermsImport);
+            saveCodeTerms();
+            pendingCodeTermsImport = [];
+            document.getElementById('codeTermsPreviewBox').style.display = 'none';
+            document.getElementById('codeTermsFileInput').value = '';
+            renderCodeTermsTab();
+            showAlert("Đã nạp thành công các thuật ngữ mới!", {icon: 'checkCircle'});
+        }
+        function cancelCodeTermsImport() {
+            pendingCodeTermsImport = [];
+            document.getElementById('codeTermsPreviewBox').style.display = 'none';
+            document.getElementById('codeTermsFileInput').value = '';
         }
 
-        function confirmLibraryImport() {
-            if(!pendingLibraryImport) return;
-            let { levelKey, pkgIndex } = pendingLibraryImport;
-            let pkg = builtInPackageLibrary[levelKey][pkgIndex];
-            let targetDay = document.getElementById('libImportDateInput').value;
-            if(!targetDay) { showAlert("Vui lòng chọn ngày để nạp gói."); return; }
-
-            let uniquePkgId = "pkg-lib-" + Date.now();
-            let now = new Date();
-            let timeString = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
-
-            // Nhân bản (clone) từng từ để không làm hỏng gói mẫu gốc nếu nạp lại nhiều lần
-            pkg.words.forEach(w => rawList.push({ ...w, day: targetDay, packageId: uniquePkgId }));
-            packagesLog[uniquePkgId] = { day: targetDay, timestamp: timeString, count: pkg.words.length };
-
-            save();
-            renderCalendar();
-            updateReadyIndicator(); updateSmartBadge();
-            document.getElementById('libraryImportModal').classList.remove('show');
-            showAlert(`Đã nạp "${pkg.title}" (${pkg.words.length} từ) vào ngày ${targetDay}!`, {icon: 'checkCircle'});
-            pendingLibraryImport = null;
+        /* === V40 - Luyện tập Flashcard nhanh từ danh sách Thuật ngữ Code === */
+        function startCodeTermsPractice() {
+            practiceDeck = getFilteredCodeTerms();
+            if(practiceDeck.length === 0) { showAlert("Không có thuật ngữ nào để luyện tập.", {icon: 'alertTriangle'}); return; }
+            practiceIdx = 0; practiceFlipped = false;
+            document.getElementById('codeTermsPracticeModal').classList.add('show');
+            renderPracticeCard();
         }
+        function renderPracticeCard() {
+            let t = practiceDeck[practiceIdx];
+            document.getElementById('practiceCounter').innerText = `${practiceIdx + 1} / ${practiceDeck.length}`;
+            document.getElementById('practiceCardContainer').classList.toggle('flipped', practiceFlipped);
+            document.getElementById('practiceFrontTerm').innerText = t.term;
+            document.getElementById('practiceFrontCat').innerText = t.category || 'Khác';
+            document.getElementById('practiceBackMeaning').innerText = t.meaning;
+            document.getElementById('practiceBackExample').innerText = t.example || '';
+        }
+        function flipPracticeCard() { practiceFlipped = !practiceFlipped; renderPracticeCard(); }
+        function practiceNav(dir) {
+            practiceFlipped = false;
+            practiceIdx = (practiceIdx + dir + practiceDeck.length) % practiceDeck.length;
+            renderPracticeCard();
+        }
+        function closeCodeTermsPractice() { document.getElementById('codeTermsPracticeModal').classList.remove('show'); }
 
         function toggleTheme() {
             let current = document.body.getAttribute('data-theme');
@@ -2826,53 +3095,27 @@
 
         function saveSettings() { localStorage.setItem('tho_v18_speechrate', document.getElementById('speechRateSlider').value); }
 
-        /* === V38 - AI Auto-Fill (Gemini / OpenAI) === */
-        function saveAiSettings() {
-            localStorage.setItem('tho_v38_ai_provider', document.getElementById('aiProviderSelect').value);
-            localStorage.setItem('tho_v38_ai_key', document.getElementById('aiApiKeyInput').value);
-            updateAiKeyStatus();
-        }
-
-        function loadAiSettings() {
-            let provider = localStorage.getItem('tho_v38_ai_provider') || 'gemini';
-            let key = localStorage.getItem('tho_v38_ai_key') || '';
-            document.getElementById('aiProviderSelect').value = provider;
-            document.getElementById('aiApiKeyInput').value = key;
-            updateAiKeyStatus();
-        }
+        /* === V40 - AI Auto-Fill qua Cloudflare Worker Proxy bảo mật (không cần API Key thủ công) === */
+        const AI_WORKER_URL = 'https://vocabapi.trannguyendaitho.workers.dev';
 
         function updateAiKeyStatus() {
-            let key = document.getElementById('aiApiKeyInput').value;
-            document.getElementById('aiKeyStatus').innerHTML = key ? (ic('checkCircle', 12) + " Đã lưu API Key trên máy này.") : (ic('alertTriangle', 12) + " Chưa nhập API Key — nút AI Auto-Fill sẽ không hoạt động.");
+            let statusEl = document.getElementById('aiKeyStatus');
+            if(statusEl) statusEl.innerHTML = ic('checkCircle', 12) + " Sẵn sàng dùng — chạy qua Worker bảo mật, không cần API Key.";
         }
 
-        async function callGeminiApi(apiKey, prompt) {
-            let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+        async function callWorkerAi(prompt) {
+            let res = await fetch(AI_WORKER_URL, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                body: JSON.stringify({ prompt })
             });
-            if(!res.ok) { let err = await res.json().catch(() => ({})); throw new Error(err?.error?.message || `Lỗi HTTP ${res.status}`); }
+            if(!res.ok) { let err = await res.json().catch(() => ({})); throw new Error(err?.error || err?.message || `Lỗi HTTP ${res.status}`); }
             let data = await res.json();
-            return data.candidates[0].content.parts[0].text;
-        }
-
-        async function callOpenAiApi(apiKey, prompt) {
-            let res = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
-                body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }] })
-            });
-            if(!res.ok) { let err = await res.json().catch(() => ({})); throw new Error(err?.error?.message || `Lỗi HTTP ${res.status}`); }
-            let data = await res.json();
-            return data.choices[0].message.content;
+            return data.text || data.result || data.candidates?.[0]?.content?.parts?.[0]?.text || (typeof data === 'string' ? data : JSON.stringify(data));
         }
 
         async function handleAiAutoFill() {
             let word = document.getElementById('m-word').value.trim();
             if(!word) { showAlert("Vui lòng nhập từ vựng trước khi dùng AI Auto-Fill."); return; }
-
-            let provider = localStorage.getItem('tho_v38_ai_provider') || 'gemini';
-            let apiKey = localStorage.getItem('tho_v38_ai_key') || '';
-            if(!apiKey) { showAlert("Bạn chưa nhập API Key.\n\nVào Cài đặt cấu hình → mục \"Trợ lý AI Auto-Fill\" để nhập Key trước.", {icon: 'alertTriangle'}); return; }
 
             let btn = document.getElementById('aiAutoFillBtn');
             let originalHTML = btn.innerHTML;
@@ -2882,7 +3125,7 @@
             let prompt = `Cho từ tiếng Anh "${word}", hãy trả về DUY NHẤT 1 đối tượng JSON hợp lệ (không giải thích gì thêm, không dùng markdown code block), với đúng các trường: pronUK (phiên âm Anh-Anh dạng IPA có dấu / /), pronUS (phiên âm Anh-Mỹ dạng IPA có dấu / /), pos (loại từ ngắn gọn: Noun/Verb/Adj/Adv...), wordFamily (họ từ liên quan cùng gốc dạng "Từ1 (loại), Từ2 (loại)", để trống "" nếu không có), meaning (nghĩa tiếng Việt ngắn gọn, sát nghĩa nhất), example (một câu ví dụ tiếng Anh tự nhiên có dùng từ "${word}").`;
 
             try {
-                let resultText = provider === 'gemini' ? await callGeminiApi(apiKey, prompt) : await callOpenAiApi(apiKey, prompt);
+                let resultText = await callWorkerAi(prompt);
                 let cleaned = resultText.replace(/```json|```/g, '').trim();
                 let data = JSON.parse(cleaned);
 
@@ -2894,7 +3137,7 @@
                 if(data.example) document.getElementById('m-example').value = data.example;
             } catch(err) {
                 console.error('Lỗi AI Auto-Fill:', err);
-                showAlert("AI Auto-Fill thất bại: " + err.message + "\n\nKiểm tra lại API Key hoặc thử lại sau.", {icon: 'xCircle'});
+                showAlert("AI Auto-Fill thất bại: " + err.message + "\n\nThử lại sau ít phút, hoặc điền thủ công.", {icon: 'xCircle'});
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHTML;
@@ -2974,6 +3217,100 @@
             pendingUndoAction = null;
             clearTimeout(undoToastTimeout);
             document.getElementById('undoToast').classList.remove('show');
+        }
+
+        /* === V40 - Toast thông báo nhanh (không có nút hành động, tự ẩn) === */
+        let genericToastTimeout = null;
+        function showToast(message) {
+            let toast = document.getElementById('genericToast');
+            toast.innerHTML = `<span>${message}</span>`;
+            toast.classList.add('show');
+            clearTimeout(genericToastTimeout);
+            genericToastTimeout = setTimeout(() => toast.classList.remove('show'), 2600);
+        }
+
+        /* === V40 - Tab Ủng hộ tác giả: Sao chép STK & Tải ảnh QR === */
+        function copyDonateAccountNumber() {
+            let acc = document.getElementById('donateBankAcc').innerText.trim();
+            if(!acc || acc === 'Đang cập nhật') { showAlert("Chủ ứng dụng chưa cấu hình số tài khoản.", {icon: 'alertTriangle'}); return; }
+            navigator.clipboard.writeText(acc).then(() => showToast(ic('checkCircle', 13) + " Đã sao chép số tài khoản!"));
+        }
+        function downloadDonateQr() {
+            let img = document.getElementById('donateQrImg');
+            let a = document.createElement('a');
+            a.href = img.src; a.download = 'vocaborbit-donate-qr.png';
+            document.body.appendChild(a); a.click(); a.remove();
+        }
+
+        /* === V40 - Cấu hình thương hiệu Host (Logo App + Ảnh QR ủng hộ) === */
+        const HOST_BRANDING_KEY = 'tho_v40_hostBranding';
+        function loadHostBranding() {
+            let raw = localStorage.getItem(HOST_BRANDING_KEY);
+            let cfg = raw ? JSON.parse(raw) : {};
+            applyHostBrandingToUI(cfg);
+            if(document.getElementById('hostLogoUrlInput')) {
+                document.getElementById('hostLogoUrlInput').value = cfg.logoUrl || '';
+                document.getElementById('hostQrUrlInput').value = cfg.qrUrl || '';
+                document.getElementById('hostBankNameInput').value = cfg.bankName || '';
+                document.getElementById('hostBankAccInput').value = cfg.accountNumber || '';
+                document.getElementById('hostBankOwnerInput').value = cfg.accountOwner || '';
+                document.getElementById('hostBankNoteInput').value = cfg.transferNote || '';
+            }
+        }
+
+        function applyHostBrandingToUI(cfg) {
+            cfg = cfg || {};
+            // Logo App: thay ở header + favicon
+            if(cfg.logoUrl) {
+                document.querySelectorAll('.app-logo-svg-slot').forEach(el => { el.innerHTML = `<img src="${cfg.logoUrl}" style="width:100%; height:100%; object-fit:contain; border-radius:6px;">`; });
+                let favicon = document.querySelector("link[rel~='icon']");
+                if(!favicon) { favicon = document.createElement('link'); favicon.rel = 'icon'; document.head.appendChild(favicon); }
+                favicon.href = cfg.logoUrl;
+            }
+            // Ảnh QR chuyển khoản trong tab Ủng hộ tác giả
+            let qrImg = document.getElementById('donateQrImg');
+            if(qrImg && cfg.qrUrl) qrImg.src = cfg.qrUrl;
+            // Thông tin ngân hàng
+            if(document.getElementById('donateBankName')) {
+                document.getElementById('donateBankName').innerText = cfg.bankName || 'Đang cập nhật';
+                document.getElementById('donateBankAcc').innerText = cfg.accountNumber || 'Đang cập nhật';
+                document.getElementById('donateBankOwner').innerText = cfg.accountOwner || 'Đang cập nhật';
+                document.getElementById('donateBankNote').innerText = cfg.transferNote || 'Ung ho VocabOrbit';
+            }
+        }
+
+        function saveHostBrandingConfig() {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền thay đổi cấu hình thương hiệu.", {icon: 'xCircle'}); return; }
+
+            let cfg = {
+                logoUrl: document.getElementById('hostLogoUrlInput').value.trim(),
+                qrUrl: document.getElementById('hostQrUrlInput').value.trim(),
+                bankName: document.getElementById('hostBankNameInput').value.trim(),
+                accountNumber: document.getElementById('hostBankAccInput').value.trim(),
+                accountOwner: document.getElementById('hostBankOwnerInput').value.trim(),
+                transferNote: document.getElementById('hostBankNoteInput').value.trim()
+            };
+
+            let logoFile = document.getElementById('hostLogoFileInput').files[0];
+            let qrFile = document.getElementById('hostQrFileInput').files[0];
+            let pendingReads = [];
+            if(logoFile) pendingReads.push(fileToDataUrl(logoFile).then(url => cfg.logoUrl = url));
+            if(qrFile) pendingReads.push(fileToDataUrl(qrFile).then(url => cfg.qrUrl = url));
+
+            Promise.all(pendingReads).then(() => {
+                localStorage.setItem(HOST_BRANDING_KEY, JSON.stringify(cfg));
+                applyHostBrandingToUI(cfg);
+                showAlert("Đã lưu cấu hình thương hiệu — Logo và QR đã được đồng bộ trên toàn ứng dụng!", {icon: 'checkCircle'});
+            });
+        }
+
+        function fileToDataUrl(file) {
+            return new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
         }
 
         function showAlert(message, opts = {}) {
@@ -3112,6 +3449,7 @@
   }
 
   function handleGoogleLogin() {
+    window.showTransition && window.showTransition(700);
     signInWithPopup(auth, provider)
       .then((result) => {
         justLoggedInViaButton = true;
@@ -3126,6 +3464,7 @@
   }
 
   function handleSignOut() {
+    window.showTransition && window.showTransition(700);
     signOut(auth).then(() => {
       document.getElementById('userMenuModal').classList.remove('show');
     }).catch((error) => {
@@ -3143,11 +3482,13 @@
       document.getElementById('userNameBig').innerText = user.displayName || 'Người dùng';
       document.getElementById('userEmailBig').innerText = user.email || '';
 
+      window.applyHostStatus && window.applyHostStatus(user.email);
       if(justLoggedInViaButton) { justLoggedInViaButton = false; loadFromCloud(user); }
       window.skipAuthGate && window.skipAuthGate(); // V37 - Đã đăng nhập thì tự đóng luôn màn hình gate nếu đang hiện
     } else {
       currentUser = null;
       authArea.innerHTML = `<button class="btn-icon" id="loginPromptBtn" onclick="openLoginModal()" title="Đăng nhập tài khoản"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>`;
+      window.applyHostStatus && window.applyHostStatus(null);
     }
   });
 

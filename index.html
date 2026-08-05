@@ -3279,8 +3279,11 @@
             }
         }
 
-        function saveHostBrandingConfig() {
-            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền thay đổi cấu hình thương hiệu.", {icon: 'xCircle'}); return; }
+        async function saveHostBrandingConfig() {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { 
+                showAlert("Chỉ Host mới có quyền thay đổi cấu hình thương hiệu.", {icon: 'xCircle'}); 
+                return; 
+            }
 
             let cfg = {
                 logoUrl: document.getElementById('hostLogoUrlInput').value.trim(),
@@ -3297,10 +3300,21 @@
             if(logoFile) pendingReads.push(fileToDataUrl(logoFile).then(url => cfg.logoUrl = url));
             if(qrFile) pendingReads.push(fileToDataUrl(qrFile).then(url => cfg.qrUrl = url));
 
-            Promise.all(pendingReads).then(() => {
-                localStorage.setItem(HOST_BRANDING_KEY, JSON.stringify(cfg));
-                applyHostBrandingToUI(cfg);
-                showAlert("Đã lưu cấu hình thương hiệu — Logo và QR đã được đồng bộ trên toàn ứng dụng!", {icon: 'checkCircle'});
+            Promise.all(pendingReads).then(async () => {
+                localStorage.setItem('tho_v40_hostBranding', JSON.stringify(cfg));
+                if(typeof applyHostBrandingToUI === 'function') applyHostBrandingToUI(cfg);
+                
+                // Đẩy thẳng lên Firestore Cloud để đồng bộ cho toàn bộ user
+                if(window.saveBrandingToCloud) {
+                    try {
+                        await window.saveBrandingToCloud(cfg);
+                        showAlert("Đã lưu và đồng bộ cấu hình thương hiệu lên Cloud thành công!", {icon: 'checkCircle'});
+                    } catch(err) {
+                        showAlert("Đã lưu máy nhưng lỗi đồng bộ Cloud: " + err.message, {icon: 'alertTriangle'});
+                    }
+                } else {
+                    showAlert("Đã lưu cấu hình thương hiệu thành công!", {icon: 'checkCircle'});
+                }
             });
         }
 
@@ -3376,7 +3390,31 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
+// --- TỰ ĐỘNG TẢI LOGO/QR TỪ CLOUD KHI MỞ WEB ---
+  async function loadBrandingOnStartup() {
+    try {
+      let snap = await getDoc(doc(db, 'config', 'branding'));
+      if (snap.exists()) {
+        let cfg = snap.data();
+        localStorage.setItem('tho_v40_hostBranding', JSON.stringify(cfg));
+        if (typeof window.applyHostBrandingToUI === 'function') {
+          window.applyHostBrandingToUI(cfg);
+        }
+      }
+    } catch(e) { console.log("Chưa có cấu hình branding trên cloud:", e); }
+  }
+  loadBrandingOnStartup();
 
+  // --- HÀM ĐẨY CẤU HÌNH LÊN CLOUD ---
+  window.saveBrandingToCloud = async function(cfg) {
+    try {
+      await setDoc(doc(db, 'config', 'branding'), cfg);
+      return true;
+    } catch(err) {
+      console.error("Lỗi lưu branding lên cloud:", err);
+      throw err;
+    }
+  };
   let currentUser = null;
   let cloudSyncTimeout = null;
   let justLoggedInViaButton = false;

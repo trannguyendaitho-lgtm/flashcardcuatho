@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="VocabOrbit - Ứng dụng học từ vựng tiếng Anh bằng Flashcard, Quiz và Ôn tập thông minh, hoạt động offline, cài đặt được như app thật.">
     <meta name="theme-color" content="#0b0f19" id="metaThemeColor">
-    <title>VocabOrbit - V42.2 Quick-Add & Login Gate Edition</title>
+    <title>VocabOrbit - V42.3 Discover Cloud Edition</title>
 
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -904,12 +904,15 @@
         <div class="welcome-card">
             <div class="welcome-logo"><span class="app-logo-svg-slot" style="display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="44" height="44"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></div>
             <div class="welcome-title">VocabOrbit</div>
-            <div class="welcome-subtitle">Hệ Thống Học Từ Vựng Không Gian v42.2</div>
+            <div class="welcome-subtitle">Hệ Thống Học Từ Vựng Không Gian v42.3</div>
             <button class="btn-start-app" onclick="startApp()">Bắt đầu hành trình học tập <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></button>
         </div>
     </div>
 
     <!-- V37 - Màn hình đăng nhập riêng, chỉ hiện với người dùng CHƯA TỪNG quyết định đăng nhập/dùng thử -->
+    <div class="welcome-screen hidden" id="authCheckingOverlay" style="background:#f3f6fc !important;">
+        <div class="transition-spinner" style="border-top-color:#1d4ed8;"></div>
+    </div>
     <div class="welcome-screen hidden" id="authGateScreen">
         <div class="welcome-card">
             <div style="margin-bottom:14px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="44" height="44"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
@@ -933,7 +936,7 @@
             <button class="hamburger" id="hamBtn" onclick="toggleSidebar()" aria-label="Mở menu điều hướng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             <div class="app-title-box">
                 <span class="app-title">VocabOrbit <span class="app-logo-svg-slot" style="display:inline-block; width:15px; height:15px; vertical-align:-2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></span>
-                <span class="app-subtitle">V42.2 Quick-Add & Login Gate Edition</span>
+                <span class="app-subtitle">V42.3 Discover Cloud Edition</span>
             </div>
         </div>
         <div class="header-right">
@@ -971,7 +974,7 @@
         <div class="nav-item active" id="nav-calendar" onclick="switchTab('calendar')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Lịch trình học tập</div>
         <div class="nav-item" id="nav-flashcard" onclick="switchTab('flashcard')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Thẻ học Flashcard</div>
         <div class="nav-item" id="nav-list" onclick="switchTab('list')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Danh sách tổng hợp</div>
-        <div class="nav-item" id="nav-library" onclick="switchTab('library')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg> Thuật ngữ Code</div>
+        <div class="nav-item" id="nav-library" onclick="switchTab('library')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg> Gói từ vựng khám phá</div>
         
         <div class="nav-group-title">Mảnh ghép bổ sung</div>
         <div class="nav-item" id="nav-smart" onclick="switchTab('smart')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Ôn tập thông minh <span id="navSmartBadge" style="background:var(--brand-color); color:white; font-size:11px; font-weight:800; padding:1px 8px; border-radius:10px; margin-left:6px; display:none;">0</span></div>
@@ -1158,7 +1161,7 @@
 
         <main id="tab-library">
             <div class="host-admin-panel" id="codeTermsAdminPanel" style="display:none;">
-                <h4 style="display:flex; align-items:center; gap:7px; color:var(--accent-gold); margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bảng điều khiển Admin (Host)</h4>
+                <h4 style="display:flex; align-items:center; gap:7px; color:var(--accent-gold); margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bảng điều khiển Admin (Host) — Công bố lên Cloud</h4>
                 <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
                     <label class="btn-action-panel" style="cursor:pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Tải tệp JSON lên<input type="file" accept=".json" id="codeTermsFileInput" style="display:none;" onchange="handleCodeTermsFileUpload(event)"></label>
                     <button class="btn-nav" onclick="openCodeTermManualForm()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nhập thủ công</button>
@@ -1189,8 +1192,12 @@
             </div>
 
             <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
-                <input type="text" class="search-input" style="flex:1; min-width:220px;" placeholder="Tìm thuật ngữ (Anh hoặc Việt)..." oninput="filterCodeTermSearch(this.value)">
+                <input type="text" class="search-input" style="flex:1; min-width:220px;" placeholder="Tìm từ vựng (Anh hoặc Việt)..." oninput="filterCodeTermSearch(this.value)">
                 <button class="btn-action-panel" onclick="startCodeTermsPractice()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Luyện tập Flashcard</button>
+            </div>
+            <div id="discoverImportBar" style="display:none; align-items:center; justify-content:space-between; gap:12px; background:rgba(var(--accent-rgb),0.08); border:1px solid rgba(var(--accent-rgb),0.3); border-radius:14px; padding:12px 16px; margin-bottom:16px; flex-wrap:wrap;">
+                <span style="font-size:12.5px; color:var(--text-main);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> <span id="discoverImportLabel">Gói</span> — nhập cả gói này vào tiến trình học của bạn?</span>
+                <button class="btn-action-panel" onclick="importDiscoverPackageToMyDecks()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Nhập vào tiến trình học</button>
             </div>
             <div id="codeCatPills" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;"></div>
             <div id="codeTermsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:14px;"></div>
@@ -1573,7 +1580,7 @@
 
     <div class="modal" id="aboutModal">
         <div class="modal-content" style="max-width:520px;">
-            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg> VocabOrbit — V42.2</div>
+            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg> VocabOrbit — V42.3</div>
             <div id="installRow" style="display:none; background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.3); padding:14px; border-radius:14px; margin-bottom:16px; text-align:center;">
                 <p style="font-size:12.5px; color:var(--text-main); margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Cài app này vào màn hình chính để dùng như 1 ứng dụng thật, kể cả khi offline!</p>
                 <button class="btn-action-panel" style="width:100%; justify-content:center;" onclick="triggerInstallPrompt()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Cài đặt ứng dụng</button>
@@ -1721,12 +1728,33 @@
             localStorage.setItem('tho_v41_started', '1'); // V41 - Đánh dấu đã vào app, lần tải trang sau sẽ bỏ qua màn hình chào
             initAudioContext();
 
-            // V42.2 - Luôn bắt qua cổng đăng nhập, trừ khi đã xác thực xong là đang đăng nhập rồi
-            if(!(window.authReady && window.currentUser)) document.getElementById('authGateScreen').classList.remove('hidden');
+            // V42.3 - Không hiện thẳng cổng đăng nhập nữa, tránh nháy — dùng requireAuthCheck() quyết định dựa trên trạng thái xác thực thật
+            requireAuthCheck();
         }
+
+        /* === V42.3 - Kiểm tra đăng nhập không gây nháy màn hình: nếu Firebase CHƯA xác thực xong thì hiện màn chờ trung tính, 
+           chỉ hiện đúng 1 lần duy nhất (hoặc cổng đăng nhập, hoặc vào thẳng app) khi đã biết chắc kết quả === */
+        function requireAuthCheck() {
+            if(window.authReady) {
+                if(!window.currentUser) document.getElementById('authGateScreen').classList.remove('hidden');
+                else document.getElementById('authGateScreen').classList.add('hidden');
+            } else {
+                document.getElementById('authCheckingOverlay').classList.remove('hidden');
+            }
+        }
+        window.requireAuthCheck = requireAuthCheck;
+
+        // V42.3 - Được gọi từ onAuthStateChanged khi Firebase đã xác thực xong, thay màn chờ bằng kết quả thật
+        function resolveAuthCheck(isLoggedIn) {
+            document.getElementById('authCheckingOverlay').classList.add('hidden');
+            if(!isLoggedIn) document.getElementById('authGateScreen').classList.remove('hidden');
+            else document.getElementById('authGateScreen').classList.add('hidden');
+        }
+        window.resolveAuthCheck = resolveAuthCheck;
 
         function hideAuthGate() {
             document.getElementById('authGateScreen').classList.add('hidden');
+            document.getElementById('authCheckingOverlay').classList.add('hidden');
         }
         window.hideAuthGate = hideAuthGate;
         function skipAuthGate() { hideAuthGate(); } // Giữ lại tên cũ để tương thích ngược, không còn set cờ bỏ qua vĩnh viễn
@@ -1807,10 +1835,10 @@
 
         function init() {
             // V41 - Đã từng vào app trước đó thì bỏ qua màn hình chào, vào thẳng tab đang xem dở
-            // V42.2 - Nhưng vẫn phải qua cổng đăng nhập bắt buộc (ẩn đi ngay nếu Firebase xác nhận đã đăng nhập)
+            // V42.3 - Không hiện thẳng cổng đăng nhập nữa (gây nháy 0.5s nếu thực ra đã đăng nhập) — hiện màn hình chờ trung tính, để requireAuthCheck() tự quyết định
             if(localStorage.getItem('tho_v41_started')) {
                 document.getElementById('welcomeScreen').classList.add('hidden');
-                if(!(window.authReady && window.currentUser)) document.getElementById('authGateScreen').classList.remove('hidden');
+                requireAuthCheck();
             }
 
             rawList = JSON.parse(localStorage.getItem('tho_v22_raw')) || [...defaultList];
@@ -2015,7 +2043,7 @@
             switchTab(target);
         }
 
-        /* === V40 - Kho Thuật ngữ Code (thay thế Kho theo cấp độ CEFR cũ) === */
+        /* === V42.3 - Kho Gói từ vựng khám phá (đồng bộ Cloud, chỉ Host được công bố) === */
         function escapeHtml(str) {
             return String(str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
@@ -2026,6 +2054,24 @@
             if(!raw) saveCodeTerms();
         }
         function saveCodeTerms() { localStorage.setItem('tho_v40_codeTerms', JSON.stringify(codeTerms)); }
+
+        // V42.3 - Được gọi từ module Firebase khi Cloud có dữ liệu mới hơn máy, áp dụng lại giao diện ngay nếu đang xem tab này
+        function applyCloudCodeTerms(cloudTerms) {
+            codeTerms = cloudTerms;
+            if(document.getElementById('tab-library') && document.getElementById('tab-library').classList.contains('active')) renderCodeTermsTab();
+        }
+        window.applyCloudCodeTerms = applyCloudCodeTerms;
+
+        // V42.3 - Chỉ gọi khi là Host: đẩy toàn bộ Gói từ vựng khám phá lên Cloud để mọi thiết bị khác nhận được
+        async function syncDiscoverToCloud() {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) return;
+            try {
+                if(window.saveDiscoverPackagesToCloud) await window.saveDiscoverPackagesToCloud(codeTerms);
+            } catch(err) {
+                console.error('Lỗi đồng bộ Gói khám phá lên Cloud:', err);
+                showAlert("Đã lưu trên máy, nhưng đồng bộ Cloud thất bại: " + err.message, {icon: 'alertTriangle'});
+            }
+        }
 
         function initLibraryTab() {
             loadCodeTerms();
@@ -2053,13 +2099,22 @@
 
             let cats = ['all', ...getCodeCategories()];
             let pillsEl = document.getElementById('codeCatPills');
-            if(pillsEl) pillsEl.innerHTML = cats.map(c => `<button class="code-cat-pill ${c === currentCodeCategory ? 'active' : ''}" onclick="setCodeCategory('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tổng hợp' : escapeHtml(c)}</button>`).join('');
+            if(pillsEl) pillsEl.innerHTML = cats.map(c => `<button class="code-cat-pill ${c === currentCodeCategory ? 'active' : ''}" onclick="setCodeCategory('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tất cả Gói' : escapeHtml(c)}</button>`).join('');
+
+            // V42.3 - Nút "Nhập cả Gói vào tiến trình học" chỉ hiện khi đang xem đúng 1 Gói/Chủ đề cụ thể (không phải "Tất cả")
+            let importBar = document.getElementById('discoverImportBar');
+            if(importBar) {
+                if(currentCodeCategory !== 'all') {
+                    importBar.style.display = 'flex';
+                    document.getElementById('discoverImportLabel').innerText = `Gói "${currentCodeCategory}"`;
+                } else importBar.style.display = 'none';
+            }
 
             let list = getFilteredCodeTerms();
             let listEl = document.getElementById('codeTermsList');
             if(!listEl) return;
             if(list.length === 0) {
-                listEl.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); grid-column:1/-1;">${ic('inbox', 20)} Không tìm thấy thuật ngữ nào.</div>`;
+                listEl.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); grid-column:1/-1;">${ic('inbox', 20)} Không tìm thấy từ vựng nào trong Gói khám phá.</div>`;
                 return;
             }
             listEl.innerHTML = list.map(t => `
@@ -2089,6 +2144,7 @@
             pendingCodeTermEditId = null;
         }
         function saveCodeTermManual() {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền chỉnh sửa Gói từ vựng khám phá.", {icon: 'xCircle'}); return; }
             let term = document.getElementById('ctManualTerm').value.trim();
             let meaning = document.getElementById('ctManualMeaning').value.trim();
             let category = document.getElementById('ctManualCategory').value.trim() || 'Khác';
@@ -2101,25 +2157,29 @@
                 codeTerms.push({ id: 'ct-' + Date.now(), term, meaning, category, example });
             }
             saveCodeTerms();
+            syncDiscoverToCloud();
             closeCodeTermManualForm();
             renderCodeTermsTab();
-            showAlert("Đã lưu thuật ngữ!", {icon: 'checkCircle'});
+            showAlert("Đã lưu và công bố lên Cloud!", {icon: 'checkCircle'});
         }
         async function deleteCodeTerm(id) {
-            let ok = await showConfirm("Xoá thuật ngữ này khỏi kho?", {danger: true, confirmText: "Xoá"});
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền xoá.", {icon: 'xCircle'}); return; }
+            let ok = await showConfirm("Xoá từ vựng này khỏi Gói khám phá?", {danger: true, confirmText: "Xoá"});
             if(!ok) return;
             codeTerms = codeTerms.filter(t => t.id !== id);
             saveCodeTerms();
+            syncDiscoverToCloud();
             renderCodeTermsTab();
         }
         function exportCodeTerms() {
             let blob = new Blob([JSON.stringify(codeTerms, null, 2)], { type: 'application/json' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
-            a.href = url; a.download = 'vocaborbit-code-terms.json'; a.click();
+            a.href = url; a.download = 'vocaborbit-discover-packages.json'; a.click();
             URL.revokeObjectURL(url);
         }
         function handleCodeTermsFileUpload(event) {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền nạp Gói từ vựng khám phá.", {icon: 'xCircle'}); return; }
             let file = event.target.files[0];
             if(!file) return;
             let reader = new FileReader();
@@ -2150,18 +2210,46 @@
             document.getElementById('codeTermsPreviewCount').innerText = pendingCodeTermsImport.length;
         }
         function confirmCodeTermsImport() {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền nạp Gói từ vựng khám phá.", {icon: 'xCircle'}); return; }
             codeTerms = codeTerms.concat(pendingCodeTermsImport);
             saveCodeTerms();
+            syncDiscoverToCloud();
             pendingCodeTermsImport = [];
             document.getElementById('codeTermsPreviewBox').style.display = 'none';
             document.getElementById('codeTermsFileInput').value = '';
             renderCodeTermsTab();
-            showAlert("Đã nạp thành công các thuật ngữ mới!", {icon: 'checkCircle'});
+            showAlert("Đã nạp và công bố lên Cloud thành công!", {icon: 'checkCircle'});
         }
         function cancelCodeTermsImport() {
             pendingCodeTermsImport = [];
             document.getElementById('codeTermsPreviewBox').style.display = 'none';
             document.getElementById('codeTermsFileInput').value = '';
+        }
+
+        /* === V42.3 - Nhập cả Gói khám phá vào tiến trình học cá nhân (tạo 1 Deck mới, mọi thiết bị/tài khoản đều dùng được) === */
+        function importDiscoverPackageToMyDecks() {
+            if(currentCodeCategory === 'all') { showAlert("Vui lòng chọn đúng 1 Gói cụ thể trước khi nhập.", {icon: 'alertTriangle'}); return; }
+            let terms = getFilteredCodeTerms();
+            if(terms.length === 0) { showAlert("Gói này chưa có từ vựng nào."); return; }
+
+            let deckId = 'deck-discover-' + Date.now();
+            let deckName = `[Khám phá] ${currentCodeCategory}`;
+            wordPackages[deckId] = { id: deckId, name: deckName, createdAt: new Date().toISOString().split('T')[0] };
+
+            let todayISO = new Date().toISOString().split('T')[0];
+            terms.forEach(t => {
+                rawList.push({
+                    stt: rawList.length + 1, word: t.term, meaning: t.meaning,
+                    pronUK: "/.../", pronUS: "/.../", pos: "Word", wordFamily: "",
+                    level: "A1", example: t.example || "No custom example.",
+                    day: todayISO, deckId: deckId, packageId: "discover-import"
+                });
+            });
+
+            save();
+            renderActivityHeatmap();
+            updateReadyIndicator(); updateSmartBadge();
+            showAlert(`Đã thêm Gói "${deckName}" (${terms.length} từ) vào tiến trình học của bạn! Vào tab Flashcard/Ôn tập/Quiz để chọn Gói này.`, {icon: 'checkCircle'});
         }
 
         /* === V40 - Luyện tập Flashcard nhanh từ danh sách Thuật ngữ Code === */
@@ -2705,9 +2793,13 @@
         function loadVoices() {
             let all = window.speechSynthesis.getVoices();
             englishVoices = all.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
-            if(englishVoices.length === 0) englishVoices = all;
+            // V42.3 - Chỉ giữ giọng Google (Microsoft/khác bị loại hoàn toàn theo yêu cầu)
+            let googleOnly = englishVoices.filter(v => /google/i.test(v.name));
+            if(googleOnly.length > 0) englishVoices = googleOnly;
+            else if(englishVoices.length === 0) englishVoices = all;
             englishVoices.sort((a, b) => scoreVoiceQuality(b) - scoreVoiceQuality(a)); // V38 - giọng tốt nhất lên đầu danh sách
             if(!selectedVoiceURI && englishVoices.length > 0) selectedVoiceURI = englishVoices[0].voiceURI; // V38 - tự chọn giọng tốt nhất nếu chưa từng chọn
+            else if(selectedVoiceURI && !englishVoices.some(v => v.voiceURI === selectedVoiceURI) && englishVoices.length > 0) selectedVoiceURI = englishVoices[0].voiceURI; // V42.3 - Giọng cũ đã chọn (VD Microsoft) không còn trong danh sách thì tự chuyển sang giọng Google đầu tiên
             populateVoiceSelect();
         }
 
@@ -3868,6 +3960,38 @@
       }
   };
 
+  // V42.3 - Tải Gói từ vựng khám phá do Host công bố từ Firestore Cloud khi khởi động trang (mọi thiết bị đều đọc được, kể cả chưa đăng nhập)
+  async function loadDiscoverPackagesOnStartup() {
+      try {
+          if (window.db && typeof doc === 'function' && typeof getDoc === 'function') {
+              const docRef = doc(db, 'config', 'discoverPackages');
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                  const cloudData = docSnap.data();
+                  if (Array.isArray(cloudData.terms)) {
+                      localStorage.setItem('tho_v40_codeTerms', JSON.stringify(cloudData.terms));
+                      if (typeof window.applyCloudCodeTerms === 'function') window.applyCloudCodeTerms(cloudData.terms);
+                  }
+              }
+          }
+      } catch (e) {
+          console.log("Lỗi tải Gói từ vựng khám phá từ cloud:", e);
+      }
+  }
+  loadDiscoverPackagesOnStartup();
+
+  // V42.3 - CHỈ Host mới được phép gọi hàm này để đẩy Gói từ vựng khám phá lên Cloud
+  window.saveDiscoverPackagesToCloud = async function(terms) {
+      if (!(typeof isEffectiveHost === 'function' && isEffectiveHost())) {
+          throw new Error("Chỉ Host mới có quyền công bố Gói từ vựng khám phá lên Cloud.");
+      }
+      if (window.db && typeof doc === 'function' && typeof setDoc === 'function') {
+          await setDoc(doc(db, 'config', 'discoverPackages'), { terms, updatedAt: new Date().toISOString() });
+      } else {
+          throw new Error("Chưa kết nối được Firestore Database.");
+      }
+  };
+
   let currentUser = null;
   let cloudSyncTimeout = null;
   let justLoggedInViaButton = false;
@@ -3973,6 +4097,7 @@
     if(user) {
       currentUser = user;
       window.currentUser = user; window.authReady = true; // V42.2 - Lộ ra window + đánh dấu đã xác thực xong, tránh race condition với cổng đăng nhập
+      window.resolveAuthCheck && window.resolveAuthCheck(true); // V42.3 - Báo cho màn chờ biết kết quả thật, tránh nháy cổng đăng nhập
       let avatar = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=6D6CF6&color=fff';
       authArea.innerHTML = `<div class="user-profile-chip" onclick="openUserMenu()"><img src="${avatar}" referrerpolicy="no-referrer"><span>${(user.displayName || 'Tài khoản').split(' ')[0]}</span></div>`;
       document.getElementById('userAvatarBig').src = avatar;
@@ -3989,6 +4114,7 @@
       authArea.innerHTML = `<button class="btn-icon" id="loginPromptBtn" onclick="openLoginModal()" title="Đăng nhập tài khoản"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>`;
       window.applyHostStatus && window.applyHostStatus(null);
       window.showAuthGateIfStarted && window.showAuthGateIfStarted(); // V42.2 - Đăng xuất thì bắt đăng nhập lại ngay, không cho dùng tiếp
+      window.resolveAuthCheck && document.getElementById('authCheckingOverlay') && document.getElementById('authCheckingOverlay').classList.add('hidden'); // V42.3 - Nếu đang ở màn chờ trung tính thì tắt đi, nhường chỗ cho showAuthGateIfStarted() phía trên quyết định
     }
   });
 

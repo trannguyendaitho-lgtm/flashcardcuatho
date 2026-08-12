@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="VocabOrbit - Ứng dụng học từ vựng tiếng Anh bằng Flashcard, Quiz và Ôn tập thông minh, hoạt động offline, cài đặt được như app thật.">
     <meta name="theme-color" content="#0b0f19" id="metaThemeColor">
-    <title>VocabOrbit - V42.5 Always-Welcome Edition</title>
+    <title>VocabOrbit - V42.6 Dashboard Home Edition</title>
 
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -757,6 +757,31 @@
         .donate-info-row .div-val { font-weight: 700; font-family: var(--font-mono); color: var(--text-main); }
         /* === V42.1 - Biểu đồ nhiệt hoạt động học tập (kiểu GitHub contributions) === */
         .heatmap-card { background: var(--panel-bg); border: 1px solid var(--card-glow-border); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--card-glow-shadow); }
+
+        /* === V42.6 - Tab Lịch trình đổi thành Dashboard: Gói học chính giữa, biểu đồ nhiệt thu nhỏ ở góc bên === */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
+        @media (max-width: 900px) { .dashboard-grid { grid-template-columns: 1fr; } .dashboard-side-col { order: -1; } }
+        .dashboard-side-col { position: sticky; top: 0; }
+        .heatmap-card-compact { padding: 16px; }
+        .heatmap-card-compact .heatmap-cell { width: 10px; height: 10px; border-radius: 3px; }
+        .heatmap-card-compact .heatmap-grid { grid-template-rows: repeat(7, 10px); grid-auto-columns: 10px; gap: 2px; }
+        .heatmap-card-compact .heatmap-daylabels { grid-template-rows: repeat(7, 10px); gap: 2px; width: 22px; font-size: 8.5px; }
+        .heatmap-card-compact .heatmap-daylabels span { height: 10px; }
+        .heatmap-card-compact .heatmap-months { grid-auto-columns: 10px; gap: 2px; margin-left: 24px; font-size: 9px; height: 12px; }
+        .heatmap-card-compact .heatmap-legend { font-size: 10px; margin-top: 10px; }
+        .heatmap-stats-row-compact { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+        .heatmap-stats-row-compact .heatmap-stat-box { padding: 12px 8px; }
+        .heatmap-stats-row-compact .hs-val { font-size: 16px; }
+        .heatmap-stats-row-compact .hs-label { font-size: 10px; }
+
+        /* Nút "+ Thêm gói học" với menu 3 lựa chọn (kiểu dropdown neo cạnh nút) */
+        .add-package-wrap { position: relative; }
+        .add-package-dropdown {
+            position: absolute; top: calc(100% + 6px); right: 0; min-width: 240px; background: var(--sidebar-bg); border: 1px solid var(--panel-border);
+            border-radius: 14px; box-shadow: 0 14px 34px -10px rgba(0,0,0,0.45); padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-6px);
+            transition: all 0.18s ease; z-index: 50;
+        }
+        .add-package-wrap.open .add-package-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
         .heatmap-scroll { overflow-x: auto; padding-bottom: 4px; }
         .heatmap-inner { display: inline-flex; flex-direction: column; gap: 4px; min-width: 100%; }
         .heatmap-months { display: grid; grid-auto-flow: column; grid-auto-columns: 15px; gap: 3px; margin-left: 30px; font-size: 11px; color: var(--text-muted); height: 16px; }
@@ -785,6 +810,7 @@
         .deck-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; text-align: left; }
         .deck-picker-card { background: var(--panel-bg); border: 1px solid var(--card-glow-border); border-radius: var(--radius-lg); padding: 16px; cursor: pointer; transition: all 0.2s; min-height: 44px; }
         .deck-picker-card:hover { transform: translateY(-2px); box-shadow: var(--card-glow-shadow); border-color: var(--brand-color); }
+        .deck-picker-card-active { border-color: var(--brand-color); background: rgba(var(--accent-rgb), 0.06); }
         .deck-picker-card .dp-name { font-weight: 700; font-size: 14px; color: var(--text-main); margin-bottom: 6px; }
         .deck-picker-card .dp-count { font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px; }
         .deck-picker-card .dp-edit-btn { background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.3); color: var(--brand-color); padding: 6px 12px; min-height: 32px; border-radius: 20px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
@@ -901,14 +927,7 @@
     <div class="starfield"></div>
     <div class="starfield-2"></div>
 
-    <div class="welcome-screen" id="welcomeScreen">
-        <div class="welcome-card">
-            <div class="welcome-logo"><span class="app-logo-svg-slot" style="display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="44" height="44"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></div>
-            <div class="welcome-title">VocabOrbit</div>
-            <div class="welcome-subtitle">Hệ Thống Học Từ Vựng Không Gian v42.5</div>
-            <button class="btn-start-app" onclick="startApp()">Bắt đầu hành trình học tập <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></button>
-        </div>
-    </div>
+    <!-- V42.6 - Đã bỏ hẳn màn hình chào "Bắt đầu học tập" khỏi luồng: vào app là kiểm tra đăng nhập ngay, không cần bấm gì thêm -->
 
     <!-- V37 - Màn hình đăng nhập riêng, chỉ hiện với người dùng CHƯA TỪNG quyết định đăng nhập/dùng thử -->
     <div class="welcome-screen hidden" id="authCheckingOverlay" style="background:#f3f6fc !important;">
@@ -932,12 +951,18 @@
         </div>
     </div>
 
+    <script>
+        // V42.6 - Chạy NGAY lập tức (không đợi window.onload) mỗi lần tải trang: hiện màn chờ trung tính trong lúc Firebase đang xác thực,
+        // tránh lộ ra sidebar/nội dung app chính (vốn không có class "hidden" mặc định) trong khoảng thời gian chờ trang tải xong hoàn toàn.
+        document.getElementById('authCheckingOverlay').classList.remove('hidden');
+    </script>
+
     <header>
         <div class="header-left">
             <button class="hamburger" id="hamBtn" onclick="toggleSidebar()" aria-label="Mở menu điều hướng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             <div class="app-title-box">
                 <span class="app-title">VocabOrbit <span class="app-logo-svg-slot" style="display:inline-block; width:15px; height:15px; vertical-align:-2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></span>
-                <span class="app-subtitle">V42.5 Always-Welcome Edition</span>
+                <span class="app-subtitle">V42.6 Dashboard Home Edition</span>
             </div>
         </div>
         <div class="header-right">
@@ -1012,34 +1037,53 @@
 
     <div class="app-container">
         <main id="tab-calendar" class="active">
-            <div class="heatmap-card">
-                <h3 style="margin-bottom:16px;">Luyện tập</h3>
-                <div class="heatmap-scroll">
-                    <div class="heatmap-inner">
-                        <div class="heatmap-months" id="heatmapMonthsEl"></div>
-                        <div class="heatmap-body">
-                            <div class="heatmap-daylabels">
-                                <span></span><span>Tue</span><span></span><span>Thu</span><span></span><span>Sat</span><span></span>
+            <div class="dashboard-grid">
+                <div class="dashboard-main-col">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                        <h3 style="margin:0;">Gói từ vựng đang học</h3>
+                        <div class="add-package-wrap" id="addPackageWrap">
+                            <button class="btn-action-panel" onclick="toggleAddPackageMenu()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Thêm gói học</button>
+                            <div class="add-package-dropdown" id="addPackageDropdown">
+                                <button class="sad-item" onclick="chooseAddPackageManual()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg> Tự nhập từ thủ công</button>
+                                <button class="sad-item" onclick="chooseAddPackageDiscover()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> Thêm gói từ Khám phá</button>
+                                <button class="sad-item" onclick="chooseAddPackageJson()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Tải gói lên bằng file JSON</button>
                             </div>
-                            <div class="heatmap-grid" id="heatmapGridEl"></div>
                         </div>
                     </div>
+                    <div id="homeDeckGrid"></div>
                 </div>
-                <div class="heatmap-legend">
-                    <span>Ít</span>
-                    <span class="heatmap-cell lvl-0"></span>
-                    <span class="heatmap-cell lvl-1"></span>
-                    <span class="heatmap-cell lvl-2"></span>
-                    <span class="heatmap-cell lvl-3"></span>
-                    <span class="heatmap-cell lvl-4"></span>
-                    <span>Nhiều</span>
+
+                <div class="dashboard-side-col">
+                    <div class="heatmap-card heatmap-card-compact">
+                        <h3 style="margin-bottom:14px; font-size:14px;">Luyện tập</h3>
+                        <div class="heatmap-scroll">
+                            <div class="heatmap-inner">
+                                <div class="heatmap-months" id="heatmapMonthsEl"></div>
+                                <div class="heatmap-body">
+                                    <div class="heatmap-daylabels">
+                                        <span></span><span>Tue</span><span></span><span>Thu</span><span></span><span>Sat</span><span></span>
+                                    </div>
+                                    <div class="heatmap-grid" id="heatmapGridEl"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="heatmap-legend">
+                            <span>Ít</span>
+                            <span class="heatmap-cell lvl-0"></span>
+                            <span class="heatmap-cell lvl-1"></span>
+                            <span class="heatmap-cell lvl-2"></span>
+                            <span class="heatmap-cell lvl-3"></span>
+                            <span class="heatmap-cell lvl-4"></span>
+                            <span>Nhiều</span>
+                        </div>
+                    </div>
+                    <div class="heatmap-stats-row heatmap-stats-row-compact">
+                        <div class="heatmap-stat-box"><div class="hs-val" id="heatmapStreakVal">0</div><div class="hs-label">Ngày liên tiếp</div></div>
+                        <div class="heatmap-stat-box"><div class="hs-val" id="heatmapTodayVal">0</div><div class="hs-label">Lượt ôn hôm nay</div></div>
+                        <div class="heatmap-stat-box"><div class="hs-val" id="heatmapTotalVal">0</div><div class="hs-label">Tổng lượt ôn</div></div>
+                        <div class="heatmap-stat-box"><div class="hs-val" id="heatmapPkgVal">0</div><div class="hs-label">Gói từ vựng</div></div>
+                    </div>
                 </div>
-            </div>
-            <div class="heatmap-stats-row">
-                <div class="heatmap-stat-box"><div class="hs-val" id="heatmapStreakVal">0</div><div class="hs-label">Ngày liên tiếp</div></div>
-                <div class="heatmap-stat-box"><div class="hs-val" id="heatmapTodayVal">0</div><div class="hs-label">Lượt ôn hôm nay</div></div>
-                <div class="heatmap-stat-box"><div class="hs-val" id="heatmapTotalVal">0</div><div class="hs-label">Tổng lượt ôn (1 năm)</div></div>
-                <div class="heatmap-stat-box"><div class="hs-val" id="heatmapPkgVal">0</div><div class="hs-label">Gói từ vựng</div></div>
             </div>
         </main>
 
@@ -1581,7 +1625,7 @@
 
     <div class="modal" id="aboutModal">
         <div class="modal-content" style="max-width:520px;">
-            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg> VocabOrbit — V42.5</div>
+            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg> VocabOrbit — V42.6</div>
             <div id="installRow" style="display:none; background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.3); padding:14px; border-radius:14px; margin-bottom:16px; text-align:center;">
                 <p style="font-size:12.5px; color:var(--text-main); margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Cài app này vào màn hình chính để dùng như 1 ứng dụng thật, kể cả khi offline!</p>
                 <button class="btn-action-panel" style="width:100%; justify-content:center;" onclick="triggerInstallPrompt()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Cài đặt ứng dụng</button>
@@ -1724,14 +1768,7 @@
 
         const cefrGradients = { 'a1': 'var(--gradient-a1)', 'a2': 'var(--gradient-a2)', 'b1': 'var(--gradient-b1)', 'b2': 'var(--gradient-b2)', 'c1': 'var(--gradient-c1)', 'c2': 'var(--gradient-c2)' };
 
-        function startApp() {
-            document.getElementById('welcomeScreen').classList.add('hidden');
-            initAudioContext();
-
-            // V42.5 - Sau khi bấm "Bắt đầu", luôn kiểm tra đăng nhập (dùng requireAuthCheck() để tránh nháy nếu Firebase chưa xác thực xong)
-            requireAuthCheck();
-        }
-
+        /* === V42.6 - Không còn màn hình chào riêng: vào app là kiểm tra đăng nhập ngay lập tức === */
         /* === V42.3 - Kiểm tra đăng nhập không gây nháy màn hình: nếu Firebase CHƯA xác thực xong thì hiện màn chờ trung tính, 
            chỉ hiện đúng 1 lần duy nhất (hoặc cổng đăng nhập, hoặc vào thẳng app) khi đã biết chắc kết quả === */
         function requireAuthCheck() {
@@ -1757,16 +1794,24 @@
             document.getElementById('authCheckingOverlay').classList.add('hidden');
         }
         window.hideAuthGate = hideAuthGate;
-        function skipAuthGate() { hideAuthGate(); } // Giữ lại tên cũ để tương thích ngược, không còn set cờ bỏ qua vĩnh viễn
+        function skipAuthGate() { hideAuthGate(); } // Giữ lại tên cũ để tương thích ngược
         window.skipAuthGate = skipAuthGate;
 
-        // V42.2 - Đăng xuất khi đang dùng app (đã qua màn hình chào) thì bắt đăng nhập lại ngay
+        // V42.6 - Đăng xuất giữa chừng lúc đang dùng app thì bắt đăng nhập lại ngay lập tức, không còn cần xét màn chào nữa
         function showAuthGateIfStarted() {
-            if(document.getElementById('welcomeScreen').classList.contains('hidden')) {
-                document.getElementById('authGateScreen').classList.remove('hidden');
-            }
+            document.getElementById('authGateScreen').classList.remove('hidden');
         }
         window.showAuthGateIfStarted = showAuthGateIfStarted;
+
+        // V42.6 - Kích hoạt AudioContext ở lần chạm/bấm đầu tiên của người dùng (trình duyệt yêu cầu phải có cử chỉ người dùng),
+        // vì không còn nút "Bắt đầu" để làm việc này nữa.
+        function initAudioContextOnFirstGesture() {
+            initAudioContext();
+            document.removeEventListener('click', initAudioContextOnFirstGesture);
+            document.removeEventListener('touchstart', initAudioContextOnFirstGesture);
+        }
+        document.addEventListener('click', initAudioContextOnFirstGesture, { once: true });
+        document.addEventListener('touchstart', initAudioContextOnFirstGesture, { once: true });
 
         function save() {
             localStorage.setItem('tho_v22_raw', JSON.stringify(rawList));
@@ -1834,8 +1879,8 @@
         }
 
         function init() {
-            // V42.5 - Luôn hiện màn hình chào (logo + nút Bắt đầu) mỗi lần vào, không tự động bỏ qua nữa —
-            // vì giờ đăng nhập là bắt buộc nên màn chào là bước dẫn vào đúng luồng, tránh nhảy thẳng gây khó hiểu.
+            // V42.6 - Không còn màn hình chào: vào app là kiểm tra đăng nhập ngay lập tức
+            requireAuthCheck();
 
             rawList = JSON.parse(localStorage.getItem('tho_v22_raw')) || [...defaultList];
             statuses = JSON.parse(localStorage.getItem('tho_v22_status')) || {};
@@ -2009,6 +2054,7 @@
             if(tabId === 'stats') renderStatsTab();
             if(tabId === 'quiz') initQuizTab();
             if(tabId === 'smart') initSmartTab();
+            if(tabId === 'calendar') renderActivityHeatmap(); // V42.6 - Tab Lịch trình là dashboard, luôn làm mới lưới Gói học + biểu đồ mỗi khi quay lại tab này
 
             currentActiveTabId = tabId;
 
@@ -2342,7 +2388,7 @@
             gridEl.innerHTML = ""; monthsEl.innerHTML = "";
 
             let today = new Date(); today.setHours(0,0,0,0);
-            let totalWeeks = 26;
+            let totalWeeks = 14; // V42.6 - Thu nhỏ lại (trước là 26 tuần) để vừa khung góc bên nhỏ hơn
             let startDate = new Date(today);
             startDate.setDate(startDate.getDate() - (totalWeeks * 7 - 1));
             startDate.setDate(startDate.getDate() - startDate.getDay());
@@ -2389,6 +2435,71 @@
             document.getElementById('heatmapTodayVal').innerText = reviewActivityLog[todayISO] || 0;
             document.getElementById('heatmapTotalVal').innerText = Object.values(reviewActivityLog).reduce((a,b) => a+b, 0);
             document.getElementById('heatmapPkgVal').innerText = Object.keys(wordPackages).length;
+
+            renderHomeDeckGrid(); // V42.6 - Tab Lịch trình giờ là dashboard, luôn đồng bộ lại lưới Gói học mỗi khi heatmap cập nhật
+        }
+
+        /* === V42.6 - Lưới Gói từ vựng đang học, hiển thị ở tab Lịch trình (dashboard chính) === */
+        function renderHomeDeckGrid() {
+            let container = document.getElementById('homeDeckGrid');
+            if(!container) return;
+            let deckIds = Object.keys(wordPackages);
+            if(deckIds.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); background:var(--panel-bg); border:1px dashed var(--panel-border); border-radius:var(--radius-lg);">${ic('inbox', 22)} Bạn chưa có Gói từ vựng nào — bấm "Thêm gói học" để bắt đầu!</div>`;
+                return;
+            }
+            container.innerHTML = `<div class="deck-picker-grid">` + deckIds.map(id => {
+                let pkg = wordPackages[id];
+                let words = rawList.filter(w => w.deckId === id);
+                let mastered = words.filter(w => statuses[w.word] === 'mastered').length;
+                let isActive = id === currentSelectedDeckId;
+                return `
+                    <div class="deck-picker-card ${isActive ? 'deck-picker-card-active' : ''}" onclick="selectDeck('${id}'); switchTab('flashcard');">
+                        <div class="dp-name">${escapeHtml(pkg.name)} ${isActive ? ic('checkCircle', 13) : ''}</div>
+                        <div class="dp-count">${words.length} từ · ${mastered}/${words.length} đã thuộc</div>
+                        <button class="dp-edit-btn" type="button" onclick="event.stopPropagation(); openDeckAddModal('${id}')">${ic('type', 13)} Thêm từ</button>
+                    </div>
+                `;
+            }).join('') + `</div>`;
+        }
+
+        /* === V42.6 - Menu "+ Thêm gói học" với 3 lựa chọn (Nhập thủ công / Khám phá / File JSON) === */
+        function toggleAddPackageMenu() {
+            document.getElementById('addPackageWrap').classList.toggle('open');
+        }
+        function closeAddPackageMenu() {
+            document.getElementById('addPackageWrap').classList.remove('open');
+        }
+        document.addEventListener('click', (e) => {
+            let wrap = document.getElementById('addPackageWrap');
+            if(wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) closeAddPackageMenu();
+        });
+
+        function createNamedDeckAndOpen() {
+            let name = prompt("Đặt tên cho Gói từ vựng mới:", "");
+            if(name === null) return null;
+            name = name.trim();
+            if(!name) { showAlert("Tên Gói không được để trống."); return null; }
+            let deckId = 'deck-' + Date.now();
+            wordPackages[deckId] = { id: deckId, name, createdAt: new Date().toISOString().split('T')[0] };
+            save();
+            selectDeck(deckId);
+            return deckId;
+        }
+
+        function chooseAddPackageManual() {
+            closeAddPackageMenu();
+            let deckId = createNamedDeckAndOpen();
+            if(deckId) { openDeckAddModal(deckId); switchInputMode('quick'); }
+        }
+        function chooseAddPackageDiscover() {
+            closeAddPackageMenu();
+            switchTab('library');
+        }
+        function chooseAddPackageJson() {
+            closeAddPackageMenu();
+            let deckId = createNamedDeckAndOpen();
+            if(deckId) { openDeckAddModal(deckId); }
         }
 
         /* === V42.1 - Chọn / Tạo Gói từ vựng (thay thế calendar day-picker cũ) === */

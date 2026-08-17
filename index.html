@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="VocabOrbit - Ứng dụng học từ vựng tiếng Anh bằng Flashcard, Quiz và Ôn tập thông minh, hoạt động offline, cài đặt được như app thật.">
     <meta name="theme-color" content="#0b0f19" id="metaThemeColor">
-    <title>VocabOrbit - V42.6 Dashboard Home Edition</title>
+    <title>VocabOrbit - V46 [Responsive Fit Edition]</title>
 
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -17,7 +17,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             /* === VocabOrbit V39 — Dark Theme: "Cosmic Orbit" (Deep Space Obsidian) === */
@@ -122,6 +122,117 @@
             --color-cal-progress-text: #B4460C;
         }
 
+        [data-theme="mecola-cream"] {
+            /* === V45.4 — Theme "Mêcola Kem": nền kem ấm, chữ đỏ mận, đúng phong cách nhãn chai bản kem === */
+            --bg-gradient: radial-gradient(ellipse 90% 60% at 15% 0%, rgba(178,58,42,0.08), transparent 55%), linear-gradient(160deg, #FBF3DC 0%, #F5EAC5 100%);
+            --panel-bg: #FFFCF3;
+            --panel-border: rgba(122,36,24,0.16);
+            --card-main-bg: #FFFEF7;
+            --text-main: #7A2418;
+            --text-muted: #9C6B4E;
+            --sidebar-bg: #FFF8E7;
+            --glass-blur: blur(14px);
+            --glass-shadow: 0 14px 34px -16px rgba(122,36,24,0.16);
+            --card-glow-border: rgba(178,58,42,0.26);
+            --card-glow-shadow: 0 0 0 1px rgba(178,58,42,0.08) inset, 0 16px 38px -18px rgba(178,58,42,0.2);
+            --guide-step-bg: rgba(122,36,24,0.05);
+            --code-zone-bg: rgba(122,36,24,0.06);
+            --circle-inner-bg: #FFFCF3;
+
+            --color-unlearned: #7A2418;
+            --color-vague: #C2610C;
+            --color-mastered: #2F9E6E;
+            --color-primary: #B23A2A;
+            --brand-color: #B23A2A;
+            --accent-gold: #C2610C;
+            --accent-rgb: 178,58,42;
+
+            --color-cal-progress: #B23A2A;
+            --color-cal-progress-text: #A03325;
+            --progress-gradient: linear-gradient(90deg, #B23A2A, #E0A030);
+
+            --color-unlearned-text: #A0342A;
+            --color-vague-text: #B45309;
+            --color-mastered-text: #227256;
+            --color-primary-text: #A0342A;
+            --brand-text: #A0342A;
+
+            --gradient-a1: linear-gradient(135deg, #6FCB9F, #2F9E6E);
+            --gradient-a2: linear-gradient(135deg, #E0C25A, #C79A28);
+            --gradient-b1: linear-gradient(135deg, #E8A85E, #D9822E);
+            --gradient-b2: linear-gradient(135deg, #E88A5E, #D4622E);
+            --gradient-c1: linear-gradient(135deg, #DB6B52, #C2452F);
+            --gradient-c2: linear-gradient(135deg, #C2452F, #8C2A1E);
+
+            --font-display: 'Baloo 2', 'Outfit', sans-serif;
+            --font-body: 'Nunito', 'Inter', system-ui, sans-serif;
+            --radius-md: 18px; --radius-lg: 26px; --radius-xl: 30px;
+        }
+        [data-theme="mecola-cream"] .nav-item.active { background: rgba(178,58,42,0.1) !important; color: var(--brand-text) !important; }
+        [data-theme="mecola-cream"] .nav-item:hover:not(.active) { background: rgba(178,58,42,0.05); border-radius: 999px; }
+        [data-theme="mecola-cream"] .heatmap-cell.lvl-0 { background: rgba(122,36,24,0.07); }
+        /* V45.4 - Hoạ tiết bong bóng lấy cảm hứng từ nhãn chai, thay cho hiệu ứng lấp lánh sao mặc định */
+        [data-theme="mecola-cream"] .starfield {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Ccircle cx='40' cy='50' r='16' fill='none' stroke='%23B23A2A' stroke-width='2' opacity='0.28'/%3E%3Ccircle cx='210' cy='110' r='10' fill='none' stroke='%23B23A2A' stroke-width='2' opacity='0.22'/%3E%3Ccircle cx='120' cy='200' r='22' fill='none' stroke='%23B23A2A' stroke-width='2' opacity='0.18'/%3E%3Ccircle cx='230' cy='30' r='7' fill='%23B23A2A' opacity='0.18'/%3E%3Ccircle cx='55' cy='230' r='6' fill='%23B23A2A' opacity='0.22'/%3E%3C/svg%3E");
+            background-size: 260px 260px; animation: none; opacity: 0.55;
+        }
+        [data-theme="mecola-cream"] .starfield-2 { background-image: none; }
+
+        [data-theme="mecola-teal"] {
+            /* === V45.4 — Theme "Mêcola Ngọc": nền xanh ngọc đậm, chữ trắng, đúng phong cách nhãn chai bản xanh === */
+            --bg-gradient: radial-gradient(ellipse 100% 70% at 20% 0%, rgba(255,255,255,0.07), transparent 55%), linear-gradient(160deg, #1FA28E 0%, #14776A 100%);
+            --panel-bg: rgba(12, 58, 51, 0.55);
+            --panel-border: rgba(255,255,255,0.16);
+            --card-main-bg: rgba(10, 50, 44, 0.6);
+            --text-main: #FFFFFF;
+            --text-muted: rgba(255,255,255,0.68);
+            --sidebar-bg: rgba(10, 50, 44, 0.5);
+            --glass-blur: blur(16px);
+            --glass-shadow: 0 14px 34px -16px rgba(0,0,0,0.35);
+            --card-glow-border: rgba(255,255,255,0.22);
+            --card-glow-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 16px 38px -18px rgba(0,0,0,0.4);
+            --guide-step-bg: rgba(255,255,255,0.06);
+            --code-zone-bg: rgba(255,255,255,0.08);
+            --circle-inner-bg: #0C3A33;
+
+            --color-unlearned: #FF8C7A;
+            --color-vague: #FFD37A;
+            --color-mastered: #7CF0C8;
+            --color-primary: #FFFFFF;
+            --brand-color: #FFE7A8;
+            --accent-gold: #FFE7A8;
+            --accent-rgb: 255,231,168;
+
+            --color-cal-progress: #FFE7A8;
+            --color-cal-progress-text: #FFE7A8;
+            --progress-gradient: linear-gradient(90deg, #FFE7A8, #FFFFFF);
+
+            --color-unlearned-text: #FFB3A6;
+            --color-vague-text: #FFE29E;
+            --color-mastered-text: #A8F5DC;
+            --color-primary-text: #FFFFFF;
+            --brand-text: #FFE7A8;
+
+            --gradient-a1: linear-gradient(135deg, #7CF0C8, #2FBE95);
+            --gradient-a2: linear-gradient(135deg, #6FDFE0, #2FA8AE);
+            --gradient-b1: linear-gradient(135deg, #9FC7F5, #5A94D9);
+            --gradient-b2: linear-gradient(135deg, #FFE29E, #F4C24E);
+            --gradient-c1: linear-gradient(135deg, #FFB380, #F08A3E);
+            --gradient-c2: linear-gradient(135deg, #FF8C7A, #E0574A);
+
+            --font-display: 'Baloo 2', 'Outfit', sans-serif;
+            --font-body: 'Nunito', 'Inter', system-ui, sans-serif;
+            --radius-md: 18px; --radius-lg: 26px; --radius-xl: 30px;
+        }
+        [data-theme="mecola-teal"] .nav-item.active { background: rgba(255,255,255,0.14) !important; color: #fff !important; }
+        [data-theme="mecola-teal"] .nav-item:hover:not(.active) { background: rgba(255,255,255,0.07); border-radius: 999px; }
+        [data-theme="mecola-teal"] .heatmap-cell.lvl-0 { background: rgba(255,255,255,0.08); }
+        [data-theme="mecola-teal"] .starfield {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Ccircle cx='40' cy='50' r='16' fill='none' stroke='%23FFFFFF' stroke-width='2' opacity='0.22'/%3E%3Ccircle cx='210' cy='110' r='10' fill='none' stroke='%23FFFFFF' stroke-width='2' opacity='0.18'/%3E%3Ccircle cx='120' cy='200' r='22' fill='none' stroke='%23FFFFFF' stroke-width='2' opacity='0.14'/%3E%3Ccircle cx='230' cy='30' r='7' fill='%23FFFFFF' opacity='0.16'/%3E%3Ccircle cx='55' cy='230' r='6' fill='%23FFFFFF' opacity='0.18'/%3E%3C/svg%3E");
+            background-size: 260px 260px; animation: none; opacity: 0.6;
+        }
+        [data-theme="mecola-teal"] .starfield-2 { background-image: none; }
+
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -204,13 +315,16 @@
         }
         .btn-start-app:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 14px 34px -8px rgba(242, 184, 75, 0.6); }
 
-        .app-container { display: flex; height: 100vh; overflow-y: auto; overflow-x: hidden; position: relative; scrollbar-gutter: stable; }
+        /* V46 - Dùng dvh (dynamic viewport height) khi trình duyệt/WebView hỗ trợ, để không bị hụt/thừa chiều cao
+           do thanh địa chỉ ẩn/hiện trên điện thoại; 100vh vẫn giữ làm phương án dự phòng cho trình duyệt cũ */
+        .app-container { display: flex; height: 100vh; height: 100dvh; overflow-y: auto; overflow-x: hidden; position: relative; scrollbar-gutter: stable; }
 
         header {
-            position: fixed; top: 0; left: 0; right: 0; height: 68px;
+            position: fixed; top: 0; left: 0; right: 0; height: 68px; height: calc(68px + env(safe-area-inset-top, 0px));
             background: var(--panel-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--panel-border); z-index: 90;
-            display: flex; align-items: center; justify-content: space-between; padding: 0 26px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: env(safe-area-inset-top, 0px) 26px 0 26px;
             box-shadow: var(--glass-shadow);
         }
         .header-left { display: flex; align-items: center; gap: 16px; }
@@ -244,8 +358,8 @@
         .user-profile-chip span { font-size: 12.5px; font-weight: 600; color: var(--text-main); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .btn-icon:hover { transform: translateY(-2px); background: var(--color-primary); color: #0A0D18; box-shadow: 0 8px 18px -6px rgba(76, 199, 222, 0.5); border-color: transparent; }
 
-        .sticky-day-bar { position: fixed; bottom: 22px; right: 22px; background: linear-gradient(135deg, var(--brand-color), var(--accent-gold)); color: white; padding: 12px 20px; border-radius: var(--radius-md); font-size: 13.5px; font-weight: 700; z-index: 100; box-shadow: 0 14px 30px -10px rgba(var(--accent-rgb), 0.55); display: none; animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); font-family: var(--font-mono); }
-        .streak-warning-banner { display: none; position: fixed; bottom: 22px; left: 22px; max-width: 300px; background: linear-gradient(135deg, var(--color-unlearned), #D1435F); color: white; padding: 14px 18px; border-radius: var(--radius-md); font-size: 12.5px; font-weight: 700; z-index: 100; box-shadow: 0 14px 30px -10px rgba(241, 99, 126, 0.5); align-items: center; gap: 10px; animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); line-height: 1.4; }
+        .sticky-day-bar { position: fixed; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); right: 22px; background: linear-gradient(135deg, var(--brand-color), var(--accent-gold)); color: white; padding: 12px 20px; border-radius: var(--radius-md); font-size: 13.5px; font-weight: 700; z-index: 100; box-shadow: 0 14px 30px -10px rgba(var(--accent-rgb), 0.55); display: none; animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); font-family: var(--font-mono); max-width: calc(100vw - 32px); }
+        .streak-warning-banner { display: none; position: fixed; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); left: 22px; max-width: 300px; background: linear-gradient(135deg, var(--color-unlearned), #D1435F); color: white; padding: 14px 18px; border-radius: var(--radius-md); font-size: 12.5px; font-weight: 700; z-index: 100; box-shadow: 0 14px 30px -10px rgba(241, 99, 126, 0.5); align-items: center; gap: 10px; animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); line-height: 1.4; }
         .streak-warning-banner.show { display: flex; }
         .streak-warning-close { background: rgba(0,0,0,0.25); border: none; color: white; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; flex-shrink: 0; font-size: 12px; }
 
@@ -330,7 +444,7 @@
         }
         [data-theme="light"] .nav-item:hover:not(.active) { background: rgba(29,78,216,0.05); border-radius: 999px; }
 
-        main { flex: 1; padding: 100px 26px 48px 26px; max-width: 1200px; margin: 0 auto; width: 100%; display: none; }
+        main { flex: 1; padding: 100px 26px 84px 26px; max-width: 1200px; margin: 0 auto; width: 100%; display: none; }
         main.active { display: block; animation: tabFadeIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
         @keyframes tabFadeIn { from { opacity: 0; transform: translateY(16px) scale(0.975); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
@@ -402,22 +516,38 @@
         .mini-progress-track { width: 100%; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-top: 6px; }
         .mini-progress-bar { height: 100%; background: var(--progress-gradient); width: 0%; transition: width 0.3s ease; }
 
-        .flashcard-wrapper { max-width: 440px; margin: 22px auto 0 auto; display: flex; flex-direction: column; gap: 22px; }
-        .card-container { perspective: 1200px; width: 100%; height: 300px; cursor: pointer; transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        /* V46 - Khung Flashcard: rộng hơn (hình chữ nhật ngang thay vì cao lêu nghêu), tự co giãn theo NỘI DUNG THẬT
+           (JS đo chiều cao thật của 2 mặt thẻ rồi gán cho khung, xem hàm syncCardHeight()) thay vì set cứng 500/620px
+           như bản cũ -> không còn cảnh ảnh/chữ bị tràn ra ngoài khung hoặc bị thanh "Đổi gói" nổi che mất nữa. */
+        .flashcard-wrapper { max-width: 460px; margin: 22px auto 0 auto; display: flex; flex-direction: column; gap: 22px; padding-bottom: 76px; }
+        .card-container { perspective: 1200px; width: 100%; height: 420px; min-height: 320px; cursor: pointer; transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.25s ease; }
         .card-container.changing { opacity: 0; transform: scale(0.93) translateY(8px); }
         .card-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.25); }
         .card-container.flipped .card-inner { transform: rotateY(180deg); }
 
         .card-face {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--radius-xl); padding: 26px;
-            display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--card-glow-border);
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--radius-xl); padding: 22px;
+            display: flex; flex-direction: column; justify-content: center; gap: 10px; border: 1px solid var(--card-glow-border);
             background: var(--card-main-bg); backdrop-filter: var(--glass-blur); box-shadow: var(--glass-shadow), var(--card-glow-shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+            overflow: hidden;
         }
+        .card-face-front { justify-content: space-between; }
         .card-face-back {
             transform: rotateY(180deg);
             justify-content: center;
             align-items: center;
-            gap: 16px;
+            gap: 10px;
+        }
+        /* V46 - Bọc khối chữ ở mặt sau để dễ chuyển bố cục dọc/ngang theo kích thước màn hình */
+        .card-back-info { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; min-width: 0; }
+        /* V46 - Từ máy tính bảng/PC trở lên: mặt sau chuyển sang bố cục NGANG (ảnh trái - chữ phải), đúng kiểu
+           "hình chữ nhật ngang" thay vì xếp chồng dọc, giúp thẻ rộng & thấp hơn, không bị tràn nội dung */
+        @media (min-width: 720px) {
+            .flashcard-wrapper { max-width: 660px; }
+            .card-face-back { flex-direction: row; align-items: center; text-align: left; gap: 22px; padding: 30px; }
+            .card-face-back .card-illustration { flex: 0 0 42%; max-width: 240px; height: 190px; margin: 0; }
+            .card-back-info { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
+            .card-back-info .card-meaning, .card-back-info .card-example, .card-back-info .card-example-vi, .card-back-info .word-family { text-align: left; max-width: 100%; }
         }
 
         .card-container.aura-unlearned .card-face { box-shadow: 0 0 0 1.5px rgba(241,99,126,0.55) inset, 0 0 34px -4px rgba(241,99,126,0.45), 0 22px 42px -16px rgba(241,99,126,0.3), inset 0 1px 0 rgba(255,255,255,0.05); border-color: rgba(241,99,126,0.6); }
@@ -444,6 +574,12 @@
         .word-family { font-size: 12px; color: var(--color-primary-text); text-align: center; background: rgba(76,199,222,0.1); border: 1px solid rgba(76,199,222,0.22); padding: 8px 14px; border-radius: 12px; max-width: 360px; line-height: 1.5; }
         .card-meaning { font-family: var(--font-display); font-size: 25px; font-weight: 700; text-align: center; color: var(--color-mastered-text); letter-spacing: -0.01em; }
         .card-example { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; text-align: center; background: rgba(0,0,0,0.18); padding: 12px 16px; border-radius: 14px; width: 100%; max-width: 380px; }
+        /* V44 - Ví dụ tiếng Việt hiện ngay dưới ví dụ tiếng Anh, cùng khung nhưng phân biệt bằng màu nhạt hơn + in nghiêng */
+        .card-example-vi { font-size: 12.5px; color: var(--text-muted); opacity: 0.8; font-style: italic; line-height: 1.5; text-align: center; width: 100%; max-width: 380px; margin-top: -8px; }
+        /* V44 - Ảnh minh họa phóng to, chiếm không gian bao quát hơn ở mặt sau Flashcard */
+        .card-illustration { width: 100%; max-width: 220px; height: 130px; border-radius: 16px; object-fit: cover; border: 1px solid var(--panel-border); box-shadow: 0 10px 22px -8px rgba(0,0,0,0.4); background: rgba(255,255,255,0.04); flex-shrink: 0; }
+        .vc-thumb { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.18); }
+        .vc-w-row { display: flex; align-items: center; gap: 8px; }
 
         .controls-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
         .btn-nav { background: var(--panel-bg); border: 1px solid var(--panel-border); color: var(--text-main); padding: 11px 18px; min-height: 44px; border-radius: 12px; cursor: pointer; font-size: 12.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
@@ -672,7 +808,7 @@
         }
 
         @media (max-width: 900px) {
-            main { padding: 88px 16px 40px 16px; }
+            main { padding: 88px 16px 76px 16px; }
             header { padding: 0 14px; }
             .app-subtitle { display: none; }
             .streak-badge-header { padding: 7px 10px; gap: 3px; }
@@ -689,8 +825,7 @@
             .day-number { width: 22px; height: 22px; font-size: 11px; }
             .day-status-label { font-size: 9px; padding: 2px 5px; }
 
-            .card-container { height: 360px; }
-            .card-word { font-size: 28px; }
+            .card-word { font-size: 26px; }
             .welcome-card { padding: 34px 22px; }
             .form-row-2col { grid-template-columns: 1fr; }
             .quiz-container { padding: 18px; }
@@ -705,8 +840,12 @@
             .btn-rate { padding: 10px 4px; font-size: 11px; }
             .controls-row > span { display: none; }
             .app-title { font-size: 15px; }
-            .card-face { padding: 18px; }
+            .card-face { padding: 16px; gap: 8px; }
             .pron-tag { font-size: 10.5px; padding: 4px 6px; }
+            .card-illustration { max-width: 170px; height: 100px; }
+            .card-example, .card-example-vi { font-size: 12px; padding: 9px 12px; }
+            .flashcard-wrapper { padding-bottom: 90px; }
+            .sticky-day-bar { left: 12px; right: 12px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); text-align: center; justify-content: center; font-size: 12px; padding: 10px 14px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -738,6 +877,8 @@
 
         /* === V40 - Tab Thuật ngữ Code (Gói từ vựng) === */
         .code-term-card { background: var(--panel-bg); border: 1px solid var(--card-glow-border); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--card-glow-shadow); }
+        .code-term-card.ctc-add-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--text-muted); border-style: dashed; cursor: pointer; min-height: 100px; transition: all 0.2s; }
+        .code-term-card.ctc-add-card:hover { color: var(--brand-color); border-color: var(--brand-color); }
         .code-term-card .ctc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
         .code-term-card .ctc-term { font-family: var(--font-mono); font-weight: 700; font-size: 15.5px; color: var(--brand-text); }
         .code-term-card .ctc-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 3px 9px; border-radius: 20px; background: rgba(var(--accent-rgb),0.14); color: var(--brand-text); white-space: nowrap; }
@@ -811,21 +952,38 @@
         .deck-picker-card { background: var(--panel-bg); border: 1px solid var(--card-glow-border); border-radius: var(--radius-lg); padding: 16px; cursor: pointer; transition: all 0.2s; min-height: 44px; }
         .deck-picker-card:hover { transform: translateY(-2px); box-shadow: var(--card-glow-shadow); border-color: var(--brand-color); }
         .deck-picker-card-active { border-color: var(--brand-color); background: rgba(var(--accent-rgb), 0.06); }
+        /* V45.2 - Gói đã học thuộc 100% từ, hiện màu xanh lá nổi bật để dễ nhận ra */
+        .deck-picker-card-completed { border-color: var(--color-mastered); background: rgba(53,211,153,0.08); box-shadow: 0 0 0 1px rgba(53,211,153,0.25), 0 8px 24px -10px rgba(53,211,153,0.35); }
+        .deck-picker-card-completed .dp-name { color: var(--color-mastered-text); }
+        .deck-picker-card-completed .dp-count { color: var(--color-mastered-text); font-weight: 600; }
+        .dp-completed-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; color: var(--color-mastered-text); background: rgba(53,211,153,0.14); border: 1px solid rgba(53,211,153,0.35); padding: 2px 9px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
         .deck-picker-card .dp-name { font-weight: 700; font-size: 14px; color: var(--text-main); margin-bottom: 6px; }
         .deck-picker-card .dp-count { font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px; }
         .deck-picker-card .dp-edit-btn { background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.3); color: var(--brand-color); padding: 6px 12px; min-height: 32px; border-radius: 20px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
         .deck-picker-card.deck-picker-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); border-style: dashed; font-weight: 700; font-size: 13px; text-align: center; }
         .deck-picker-card.deck-picker-add:hover { color: var(--brand-color); }
+        .dp-delete-btn { position: absolute; top: 10px; right: 10px; background: rgba(241,99,126,0.14); border: 1px solid rgba(241,99,126,0.3); color: var(--color-unlearned-text); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .dp-delete-btn:hover { background: rgba(241,99,126,0.28); }
+        .deck-picker-card { position: relative; }
+        .deck-picker-card .dp-name { padding-right: 32px; }
+        .trash-item { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: var(--radius-lg); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+        .trash-item-days { font-family: var(--font-mono); font-size: 11px; color: var(--brand-color); background: rgba(var(--accent-rgb),0.1); border: 1px solid rgba(var(--accent-rgb),0.3); padding: 3px 10px; border-radius: 20px; }
     </style>
 </head>
 <body>
     <script>
+        // ⚠️ V43-TEST - Cờ bật/tắt chế độ Test cục bộ, đọc SỚM NHẤT (trước cả theme) để không có bất kỳ khung hình nào lộ ra cổng đăng nhập.
+        // Giá trị này PHẢI khớp với DEV_TEST_MODE khai báo bên dưới trong script chính — đổi cả 2 chỗ cùng lúc khi bật/tắt.
+        window.__DEV_TEST_MODE_EARLY__ = false;
+    </script>
+    <script>
         // V27 - Khôi phục theme đã lưu ngay lập tức để tránh nháy sai màu lúc tải trang
         (function() {
             let savedTheme = localStorage.getItem('tho_v38_theme');
-            if(savedTheme === 'light' || savedTheme === 'dark') document.body.setAttribute('data-theme', savedTheme);
+            if(['light', 'dark', 'mecola-cream', 'mecola-teal'].includes(savedTheme)) document.body.setAttribute('data-theme', savedTheme);
             let metaTc = document.getElementById('metaThemeColor');
-            if(metaTc) metaTc.setAttribute('content', savedTheme === 'light' ? '#f3f6fc' : '#0b0f19');
+            let metaColors = { light: '#f3f6fc', dark: '#0b0f19', 'mecola-cream': '#FBF3DC', 'mecola-teal': '#1FA28E' };
+            if(metaTc) metaTc.setAttribute('content', metaColors[savedTheme] || '#0b0f19');
         })();
     </script>
     <script>
@@ -877,6 +1035,15 @@
             return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="' + size + '" height="' + size + '" style="flex-shrink:0;vertical-align:-3px">' + (ICONS[name] || '') + '</svg>';
         }
 
+        /* ==========================================================================
+           ⚠️ V43-TEST — CHẾ ĐỘ TEST CỤC BỘ (KHÔNG UP LÊN WEB THẬT KHI CÒN BẬT!) ⚠️
+           Bật DEV_TEST_MODE = true để: bỏ qua hoàn toàn cổng đăng nhập, tự động vào
+           thẳng app với quyền Host — chỉ dùng để bạn tự test file trên máy.
+           TRƯỚC KHI DEPLOY LÊN NETLIFY/WEB THẬT: đổi lại thành false.
+           ========================================================================== */
+        const DEV_TEST_MODE = false;
+        const DEV_TEST_FAKE_USER = { displayName: 'Test Host', email: 'trannguyendaitho.test@local', photoURL: '' };
+
         /* === V40 - Nhận diện Host & Chuyển cảnh (Transition Overlay) === */
         const HOST_IDENTIFIERS = ['trannguyendaitho', 'leoluon'];
         function checkIsHost(userEmail) {
@@ -907,7 +1074,8 @@
             let sw = document.getElementById('hostViewSwitch');
             if(badge) badge.style.display = isHostAccount ? 'flex' : 'none';
             if(toggleWrap) toggleWrap.style.display = isHostAccount ? 'flex' : 'none';
-            if(sw) sw.classList.toggle('on', guestPreviewMode);
+            // V43 - Sửa lỗi công tắc bị đảo ngược: knob "on" (đẩy về phía nhãn "Host") phải nghĩa là ĐANG LÀ Host thật (không preview), không phải ngược lại
+            if(sw) sw.classList.toggle('on', !guestPreviewMode);
             let brandingRow = document.getElementById('hostBrandingRow');
             if(brandingRow) brandingRow.style.display = isEffectiveHost() ? 'flex' : 'none';
             // Đồng bộ lại panel Admin của tab Thuật ngữ Code + hiển thị lại danh sách theo đúng quyền
@@ -954,7 +1122,8 @@
     <script>
         // V42.6 - Chạy NGAY lập tức (không đợi window.onload) mỗi lần tải trang: hiện màn chờ trung tính trong lúc Firebase đang xác thực,
         // tránh lộ ra sidebar/nội dung app chính (vốn không có class "hidden" mặc định) trong khoảng thời gian chờ trang tải xong hoàn toàn.
-        document.getElementById('authCheckingOverlay').classList.remove('hidden');
+        // V43-TEST - Nếu đang bật chế độ Test cục bộ thì bỏ qua bước này luôn, không hiện màn chờ dù chỉ 1 khung hình.
+        if(!window.__DEV_TEST_MODE_EARLY__) document.getElementById('authCheckingOverlay').classList.remove('hidden');
     </script>
 
     <header>
@@ -962,7 +1131,7 @@
             <button class="hamburger" id="hamBtn" onclick="toggleSidebar()" aria-label="Mở menu điều hướng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             <div class="app-title-box">
                 <span class="app-title">VocabOrbit <span class="app-logo-svg-slot" style="display:inline-block; width:15px; height:15px; vertical-align:-2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg></span></span>
-                <span class="app-subtitle">V42.6 Dashboard Home Edition</span>
+                <span class="app-subtitle">V46 Responsive Fit Edition</span>
             </div>
         </div>
         <div class="header-right">
@@ -975,7 +1144,7 @@
             </div>
             <button class="btn-icon" id="voiceToggleBtn" onclick="cycleVoice()" title="Bấm để đổi giọng đọc" aria-label="Đổi giọng đọc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
             <button class="btn-icon" id="audioMasterBtn" onclick="toggleAudioMaster()" aria-label="Bật hoặc tắt âm thanh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-            <button class="btn-icon" onclick="showTransition(500); setTimeout(toggleTheme, 150);" aria-label="Đổi giao diện sáng tối"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
+            <button class="btn-icon" id="themeToggleBtn" onclick="showTransition(500); setTimeout(toggleTheme, 150);" aria-label="Đổi giao diện"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
             <div id="authAreaEl">
                 <button class="btn-icon" id="loginPromptBtn" onclick="openLoginModal()" title="Đăng nhập tài khoản">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -998,15 +1167,15 @@
 
         <div class="nav-group-title">Chức năng chính</div>
         <div class="nav-item active" id="nav-calendar" onclick="switchTab('calendar')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Lịch trình học tập</div>
-        <div class="nav-item" id="nav-flashcard" onclick="switchTab('flashcard')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Thẻ học Flashcard</div>
-        <div class="nav-item" id="nav-list" onclick="switchTab('list')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Danh sách tổng hợp</div>
+        <div class="nav-item" id="nav-list" onclick="switchTab('list')" style="display:none;"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Danh sách tổng hợp</div>
         <div class="nav-item" id="nav-library" onclick="switchTab('library')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg> Gói từ vựng khám phá</div>
         
         <div class="nav-group-title">Mảnh ghép bổ sung</div>
-        <div class="nav-item" id="nav-smart" onclick="switchTab('smart')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Ôn tập thông minh <span id="navSmartBadge" style="background:var(--brand-color); color:white; font-size:11px; font-weight:800; padding:1px 8px; border-radius:10px; margin-left:6px; display:none;">0</span></div>
+        <div class="nav-item" id="nav-smart" onclick="switchTab('smart')" style="display:none;"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Ôn tập thông minh <span id="navSmartBadge" style="background:var(--brand-color); color:white; font-size:11px; font-weight:800; padding:1px 8px; border-radius:10px; margin-left:6px; display:none;">0</span></div>
         <div class="nav-item" id="nav-stats" onclick="switchTab('stats')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Thống kê & Biểu đồ</div>
         <div class="nav-item" id="nav-quiz" onclick="switchTab('quiz')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="3"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15.5" y1="13" x2="15.51" y2="13"/><line x1="17.5" y1="10.5" x2="17.51" y2="10.5"/></svg> Trò chơi Mini Game</div>
         <div class="nav-item" id="nav-backup" onclick="switchTab('backup')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Sao lưu & Khôi phục</div>
+        <div class="nav-item" id="nav-trash" onclick="switchTab('trash')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> Thùng rác <span id="navTrashBadge" style="background:var(--color-unlearned-text); color:white; font-size:11px; font-weight:800; padding:1px 8px; border-radius:10px; margin-left:6px; display:none;">0</span></div>
         <div class="nav-item" id="nav-settings" onclick="switchTab('settings')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Cài đặt cấu hình</div>
         <div class="nav-item" id="nav-guide" onclick="switchTab('guide')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Hướng dẫn nạp từ</div>
         <div class="nav-item" id="nav-donate" onclick="switchTab('donate')" style="color:var(--accent-gold);"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Ủng hộ tác giả</div>
@@ -1087,8 +1256,16 @@
             </div>
         </main>
 
+        <main id="tab-trash">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                <h3 style="margin:0;">Thùng rác — Gói từ đã xoá</h3>
+            </div>
+            <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:16px;">Gói từ vựng bị xoá sẽ nằm ở đây 30 ngày trước khi tự động xoá vĩnh viễn. Bạn có thể khôi phục bất cứ lúc nào trong khoảng thời gian này.</p>
+            <div id="trashListEl"></div>
+        </main>
+
         <main id="tab-flashcard">
-            <button id="backToTabBtn" onclick="goBackTab()" style="display:none; align-items:center; gap:6px; background:var(--panel-bg); border:1px solid var(--panel-border); color:var(--text-main); padding:9px 16px; border-radius:12px; cursor:pointer; font-size:12.5px; font-weight:600; margin-bottom:14px;">← Quay lại danh sách</button>
+            <button class="back-to-tab-btn" onclick="goBackTab()" style="display:none; align-items:center; gap:6px; background:var(--panel-bg); border:1px solid var(--panel-border); color:var(--text-main); padding:9px 16px; border-radius:12px; cursor:pointer; font-size:12.5px; font-weight:600; margin-bottom:14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Về trang chủ</button>
             <div id="flashcardLockAlert" class="lock-alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Vui lòng chọn một Gói từ vựng để mở khóa Flashcard!</div>
             <div class="flashcard-wrapper" id="flashcardCoreContent" style="display:none;">
                 <div class="controls-row">
@@ -1110,10 +1287,14 @@
                                 <div class="card-example" id="f-ex">Bấm để lật...</div>
                             </div>
                             <div class="card-face card-face-back">
-                                <div class="card-meaning" id="b-meaning">Nghĩa</div>
-                                <div class="card-example" id="b-ex">Ví dụ</div>
-                                <div class="word-family" id="b-family"></div>
-                                <div class="badge" id="b-level" style="color:white; margin-top: 5px;">A1</div>
+                                <img class="card-illustration" id="b-image" style="display:none;" alt="Ảnh minh họa">
+                                <div class="card-back-info">
+                                    <div class="card-meaning" id="b-meaning">Nghĩa</div>
+                                    <div class="card-example" id="b-ex">Ví dụ</div>
+                                    <div class="card-example-vi" id="b-ex-vi"></div>
+                                    <div class="word-family" id="b-family"></div>
+                                    <div class="badge" id="b-level" style="color:white; margin-top: 5px;">A1</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1132,6 +1313,7 @@
         </main>
 
         <main id="tab-smart">
+            <button class="back-to-tab-btn" onclick="goBackTab()" style="display:none; align-items:center; gap:6px; background:var(--panel-bg); border:1px solid var(--panel-border); color:var(--text-main); padding:9px 16px; border-radius:12px; cursor:pointer; font-size:12.5px; font-weight:600; margin-bottom:14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Về trang chủ</button>
             <div id="smartLockAlert" class="lock-alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg> Không có từ nào cần ôn tập lúc này! Hãy học thêm từ mới hoặc quay lại sau.</div>
             <div id="smartCoreContent" style="display:none;">
                 <div class="controls-row" style="margin-bottom: 16px;">
@@ -1153,10 +1335,14 @@
                                     <div class="card-example" id="sr-ex">Bấm để lật...</div>
                                 </div>
                                 <div class="card-face card-face-back">
-                                    <div class="card-meaning" id="sr-meaning">Nghĩa</div>
-                                    <div class="card-example" id="sr-exback">Ví dụ</div>
-                                    <div class="word-family" id="sr-family"></div>
-                                    <div class="badge" id="sr-levelback" style="color:white; margin-top: 5px;">A1</div>
+                                    <img class="card-illustration" id="sr-image" style="display:none;" alt="Ảnh minh họa">
+                                    <div class="card-back-info">
+                                        <div class="card-meaning" id="sr-meaning">Nghĩa</div>
+                                        <div class="card-example" id="sr-exback">Ví dụ</div>
+                                        <div class="card-example-vi" id="sr-exback-vi"></div>
+                                        <div class="word-family" id="sr-family"></div>
+                                        <div class="badge" id="sr-levelback" style="color:white; margin-top: 5px;">A1</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1178,9 +1364,15 @@
         </main>
 
         <main id="tab-list">
+            <button class="back-to-tab-btn" onclick="goBackTab()" style="display:none; align-items:center; gap:6px; background:var(--panel-bg); border:1px solid var(--panel-border); color:var(--text-main); padding:9px 16px; border-radius:12px; cursor:pointer; font-size:12.5px; font-weight:600; margin-bottom:14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Về trang chủ</button>
             <div id="listLockAlert" class="lock-alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" style="vertical-align:-2px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Vui lòng chọn một Gói từ vựng để xem bảng tổng hợp!</div>
             <div id="listCoreContent" style="display:none;">
-                
+                <!-- V44 - "Ôn tập thông minh" không còn là mục riêng trong menu, gộp vào ngay đây (danh sách từ của 1 Gói) -->
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+                    <button class="btn-action-panel" onclick="backToTabId='list'; switchTab('flashcard');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Luyện tập Flashcard</button>
+                    <button class="btn-action-panel" style="background:linear-gradient(135deg, #34d399, #10b981);" onclick="backToTabId='list'; switchTab('smart');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Ôn tập thông minh</button>
+                </div>
+
                 <div class="cefr-filter-container">
                     <div class="cefr-box c-a1" id="cefr-a1" onclick="setCefrFilter('a1')">A1</div>
                     <div class="cefr-box c-a2" id="cefr-a2" onclick="setCefrFilter('a2')">A2</div>
@@ -1205,16 +1397,39 @@
         </main>
 
         <main id="tab-library">
+            <!-- V44 - Banner hiện khi đang ở chế độ "Thêm gói từ Khám phá" (đi từ Lịch trình sang để chọn 1 Gói nhập vào tiến trình học) -->
+            <div id="discoverPickBanner" style="display:none; align-items:center; justify-content:space-between; gap:12px; background:rgba(var(--accent-rgb),0.08); border:1px solid rgba(var(--accent-rgb),0.3); border-radius:14px; padding:12px 16px; margin-bottom:16px; flex-wrap:wrap;">
+                <span style="font-size:12.5px; color:var(--text-main);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Chọn 1 Gói bên dưới để nhập vào tiến trình học của bạn.</span>
+                <button class="btn-nav" onclick="cancelPickDiscoverForImport()">Huỷ</button>
+            </div>
+            <div id="codeCatPills" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;"></div>
+
+            <!-- V43.4 - Chỉ hiện khi Host/Khách đã mở vào bên trong 1 Gói con cụ thể -->
+            <div id="discoverBreadcrumbWrap" style="display:none; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+                <button class="btn-nav" onclick="backToPackageList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="vertical-align:-2px"><polyline points="15 18 9 12 15 6"/></svg> Quay lại danh sách Gói</button>
+                <h3 id="discoverPkgTitle" style="margin:0; font-size:15.5px;"></h3>
+                <button class="btn-action-panel" id="discoverPickImportBtn" style="display:none;" onclick="importDiscoverPackageIntoPersonalDeck(currentDiscoverPackageId)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Nhập gói này vào tiến trình học</button>
+            </div>
+
             <div class="host-admin-panel" id="codeTermsAdminPanel" style="display:none;">
                 <h4 style="display:flex; align-items:center; gap:7px; color:var(--accent-gold); margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bảng điều khiển Admin (Host) — Công bố lên Cloud</h4>
                 <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
-                    <label class="btn-action-panel" style="cursor:pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Tải tệp JSON lên<input type="file" accept=".json" id="codeTermsFileInput" style="display:none;" onchange="handleCodeTermsFileUpload(event)"></label>
+                    <label class="btn-action-panel" style="cursor:pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Tải tệp lên<input type="file" accept=".json,.js,.txt" id="codeTermsFileInput" style="display:none;" onchange="handleCodeTermsFileUpload(event)"></label>
                     <button class="btn-nav" onclick="openCodeTermManualForm()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nhập thủ công</button>
                     <button class="btn-nav" onclick="exportCodeTerms()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Xuất dữ liệu gói từ</button>
                 </div>
 
+                <!-- V43.4 - Vùng kéo & thả file JSON, tiện hơn bấm chọn file, cùng tác dụng với nút "Tải tệp JSON lên" -->
+                <div id="codeTermsDropZone" style="border:2px dashed var(--panel-border); border-radius:14px; padding:18px; text-align:center; color:var(--text-muted); font-size:12.5px; margin-bottom:14px; transition: all 0.2s;" ondragover="event.preventDefault(); this.style.borderColor='var(--brand-color)'; this.style.color='var(--brand-color)';" ondragleave="this.style.borderColor='var(--panel-border)'; this.style.color='var(--text-muted)';" ondrop="handleCodeTermsFileDrop(event)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" style="margin-bottom:4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <div>Hoặc kéo & thả file (.json/.js/.txt) vào đây để nạp nhanh</div>
+                </div>
+
                 <div id="codeTermsPreviewBox" style="display:none; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:14px; padding:14px; margin-bottom:14px;">
-                    <p style="font-size:13px; font-weight:700; margin-bottom:8px;">Xem trước <span id="codeTermsPreviewCount">0</span> thuật ngữ sẽ được nạp:</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;">
+                        <p style="font-size:13px; font-weight:700; margin:0;">Xem trước <span id="codeTermsPreviewCount">0</span> thuật ngữ sẽ được nạp:</p>
+                        <button class="btn-nav" style="padding:6px 12px; min-height:30px; font-size:11.5px;" onclick="openAddTermToPendingBatch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Thêm từ vào lô này</button>
+                    </div>
                     <div id="codeTermsPreviewList" style="max-height:200px; overflow-y:auto;"></div>
                     <div style="display:flex; gap:10px; margin-top:12px;">
                         <button class="btn-nav" onclick="cancelCodeTermsImport()">Huỷ</button>
@@ -1223,10 +1438,7 @@
                 </div>
 
                 <div id="codeTermManualFormBox" style="display:none; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:14px; padding:14px;">
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                        <div class="form-group"><label class="field-label">Thuật ngữ</label><input type="text" class="form-input" id="ctManualTerm" placeholder="VD: commit"></div>
-                        <div class="form-group"><label class="field-label">Chủ đề</label><input type="text" class="form-input" id="ctManualCategory" placeholder="VD: Git/GitHub"></div>
-                    </div>
+                    <div class="form-group"><label class="field-label">Thuật ngữ</label><input type="text" class="form-input" id="ctManualTerm" placeholder="VD: commit"></div>
                     <div class="form-group"><label class="field-label">Nghĩa</label><input type="text" class="form-input" id="ctManualMeaning" placeholder="Giải nghĩa tiếng Việt"></div>
                     <div class="form-group"><label class="field-label">Ghi chú / Ví dụ</label><input type="text" class="form-input" id="ctManualExample" placeholder="Ví dụ minh hoạ (không bắt buộc)"></div>
                     <div style="display:flex; gap:10px; margin-top:6px;">
@@ -1236,15 +1448,10 @@
                 </div>
             </div>
 
-            <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
+            <div id="discoverSearchRow" style="display:none; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
                 <input type="text" class="search-input" style="flex:1; min-width:220px;" placeholder="Tìm từ vựng (Anh hoặc Việt)..." oninput="filterCodeTermSearch(this.value)">
                 <button class="btn-action-panel" onclick="startCodeTermsPractice()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><rect x="7" y="2" width="13" height="17" rx="2"/><rect x="3" y="6" width="13" height="17" rx="2"/></svg> Luyện tập Flashcard</button>
             </div>
-            <div id="discoverImportBar" style="display:none; align-items:center; justify-content:space-between; gap:12px; background:rgba(var(--accent-rgb),0.08); border:1px solid rgba(var(--accent-rgb),0.3); border-radius:14px; padding:12px 16px; margin-bottom:16px; flex-wrap:wrap;">
-                <span style="font-size:12.5px; color:var(--text-main);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> <span id="discoverImportLabel">Gói</span> — nhập cả gói này vào tiến trình học của bạn?</span>
-                <button class="btn-action-panel" onclick="importDiscoverPackageToMyDecks()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Nhập vào tiến trình học</button>
-            </div>
-            <div id="codeCatPills" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;"></div>
             <div id="codeTermsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:14px;"></div>
         </main>
 
@@ -1430,11 +1637,11 @@
                         <svg class="chevron-icon" id="promptChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <div class="prompt-collapse" id="promptCollapseWrap">
-                        <div class="prompt-code-zone" id="promptText">"Hãy phân tích các từ tiếng Anh sau và chuyển đổi thành một mảng dữ liệu JSON nạp Flashcard, mỗi phần tử gồm đúng các thuộc tính sau: stt (số thứ tự), word (từ vựng), pronUK (phiên âm Anh-Anh, có dấu / /), pronUS (phiên âm Anh-Mỹ, có dấu / /), pos (loại từ: Noun/Verb/Adj/Adv...), wordFamily (họ từ liên quan cùng gốc, ghi dạng 'Từ1 (loại), Từ2 (loại)', để trống '' nếu không có), level (cấp độ CEFR: A1/A2/B1/B2/C1/C2), meaning (nghĩa tiếng Việt), example (một câu ví dụ tiếng Anh có dùng từ đó). Sau khi tạo xong mảng, hãy viết một đoạn mã HTML/JavaScript ngắn tạo ra một URL đối tượng Blob chứa mảng JSON này và hiển thị một nút bấm mang tên 'Tải file .js học tập'. Khi tôi bấm vào nút đó, trình duyệt sẽ tự động tải xuống file dữ liệu dạng .js cho tôi. Không giải thích dài dòng. Các từ vựng cần xử lý là: [DÁN TỪ CỦA BẠN VÀO ĐÂY]"</div>
+                        <div class="prompt-code-zone" id="promptText">"Hãy phân tích các từ tiếng Anh sau và chuyển đổi thành một mảng dữ liệu JSON nạp Flashcard, mỗi phần tử gồm ĐÚNG các thuộc tính sau, không thêm không thiếu: stt (số thứ tự), word (từ vựng), pronUK (phiên âm Anh-Anh, có dấu / /), pronUS (phiên âm Anh-Mỹ, có dấu / /), pos (loại từ: Noun/Verb/Adj/Adv...), wordFamily (BẮT BUỘC liệt kê ít nhất 3 từ cùng họ/cùng gốc nếu từ đó có, ghi dạng 'Từ1 (loại), Từ2 (loại), Từ3 (loại)'; nếu từ gốc thực sự không có đủ 3 từ họ hàng thì ghi hết những từ có, để trống '' chỉ khi hoàn toàn không có từ nào cùng họ), level (cấp độ CEFR: A1/A2/B1/B2/C1/C2), meaning (nghĩa tiếng Việt — nếu từ có nhiều nghĩa/đồng nghĩa, chỉ liệt kê TỐI ĐA 2 nghĩa phổ biến/hay dùng nhất, cách nhau bằng dấu phẩy, không liệt kê hết mọi nghĩa), example (một câu ví dụ tiếng Anh có dùng từ đó), exampleVi (bản dịch tiếng Việt CHÍNH XÁC của đúng câu example ở trên, không phải câu ví dụ khác), image (một đường link URL ảnh minh hoạ trực quan cho từ đó — BẮT BUỘC phải là link ảnh THẬT, đang tồn tại, lấy từ nguồn ảnh miễn phí bản quyền như Pixabay, Pexels, Unsplash hoặc Wikimedia Commons, link phải trỏ thẳng tới file ảnh đuôi .jpg/.jpeg/.png/.webp, TUYỆT ĐỐI không được tự bịa ra link không có thật, nếu không tìm được ảnh phù hợp thì để trống ''). Sau khi tạo xong mảng, hãy viết một đoạn mã HTML/JavaScript ngắn tạo ra một URL đối tượng Blob chứa mảng JSON này và hiển thị một nút bấm mang tên 'Tải file .js học tập'. Khi tôi bấm vào nút đó, trình duyệt sẽ tự động tải xuống file dữ liệu dạng .js cho tôi. Không giải thích dài dòng. Các từ vựng cần xử lý là: [DÁN TỪ CỦA BẠN VÀO ĐÂY]"</div>
                     </div>
                     <button class="btn-action-panel" style="padding: 8px 14px; font-size:12.5px;" onclick="navigator.clipboard.writeText(document.getElementById('promptText').innerText); showAlert('Đã sao chép prompt thông minh thành công!');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="vertical-align:-2px"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/></svg> Sao chép nhanh câu lệnh</button>
                     <p style="font-size:12px; color:var(--text-muted); margin-top:10px;">Định dạng mỗi từ sau khi Gemini xử lý sẽ có dạng như sau:</p>
-                    <div class="prompt-code-zone" style="color:var(--text-muted); font-size:11.5px;">{ "stt": 1, "word": "Surgery", "pronUK": "/ˈsɜː.dʒər.i/", "pronUS": "/ˈsɝː.dʒɚ.i/", "pos": "Noun", "wordFamily": "Surgeon (n), Surgical (adj)", "level": "B2", "meaning": "Phẫu thuật", "example": "The doctor specialized in heart surgery." }</div>
+                    <div class="prompt-code-zone" style="color:var(--text-muted); font-size:11.5px;">{ "stt": 1, "word": "Surgery", "pronUK": "/ˈsɜː.dʒər.i/", "pronUS": "/ˈsɝː.dʒɚ.i/", "pos": "Noun", "wordFamily": "Surgeon (n), Surgical (adj), Surgically (adv)", "level": "B2", "meaning": "Phẫu thuật", "example": "The doctor specialized in heart surgery.", "exampleVi": "Vị bác sĩ chuyên về phẫu thuật tim.", "image": "https://...duong-dan-anh-that.jpg" }</div>
                 </div>
 
                 <div class="guide-step">
@@ -1482,8 +1689,8 @@
         <div class="modal-content" style="max-width:560px;">
             <div class="modal-title" id="modalTargetTitle">Thông tin & Nạp dữ liệu</div>
             <div class="file-drop-area">
-                <span style="font-size:13px; color:var(--text-muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="vertical-align:-2px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Kéo thả hoặc click chọn file (.js/.txt)</span>
-                <input type="file" accept=".js,.txt" onchange="handleDayFile(event)">
+                <span style="font-size:13px; color:var(--text-muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="vertical-align:-2px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Kéo thả hoặc click chọn file (.js/.json/.txt)</span>
+                <input type="file" accept=".js,.txt,.json" onchange="handleDayFile(event)">
             </div>
             
             <!-- Khu vực danh sách các gói từ đã nạp của ngày (V22 New Feature) -->
@@ -1534,6 +1741,8 @@
                 </div>
                 <div class="form-group"><label class="field-label">Họ từ (word family)</label><input type="text" class="form-input" id="m-family" placeholder="VD: Decide (v), Decision (n)"></div>
                 <div class="form-group"><label class="field-label">Ví dụ</label><input type="text" class="form-input" id="m-example" placeholder="Một câu ví dụ tiếng Anh..."></div>
+                <div class="form-group"><label class="field-label">Ví dụ (dịch tiếng Việt)</label><input type="text" class="form-input" id="m-example-vi" placeholder="Bản dịch tiếng Việt của câu ví dụ trên..."></div>
+                <div class="form-group"><label class="field-label">Ảnh minh họa (dán URL ảnh)</label><input type="text" class="form-input" id="m-image" placeholder="https://..."></div>
                 <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
                     <button type="button" class="btn-nav" onclick="document.getElementById('inputModal').classList.remove('show')">Đóng</button>
                     <button type="button" class="btn-action-panel" onclick="saveManualWord()">Lưu từ</button>
@@ -1563,6 +1772,8 @@
             </div>
             <div class="form-group"><label class="field-label">Họ từ (word family)</label><input type="text" class="form-input" id="e-family"></div>
             <div class="form-group"><label class="field-label">Ví dụ</label><input type="text" class="form-input" id="e-example"></div>
+            <div class="form-group"><label class="field-label">Ví dụ (dịch tiếng Việt)</label><input type="text" class="form-input" id="e-example-vi"></div>
+            <div class="form-group"><label class="field-label">Ảnh minh họa (dán URL ảnh)</label><input type="text" class="form-input" id="e-image" placeholder="https://..."></div>
             <div style="display:flex; justify-content:space-between; gap:10px; margin-top:16px;">
                 <button class="btn-delete-package" style="padding:11px 16px; font-size:13px; display:inline-flex; align-items:center; gap:6px;" onclick="deleteWordItem()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> Xoá từ này</button>
                 <div style="display:flex; gap:10px;">
@@ -1623,15 +1834,63 @@
         </div>
     </div>
 
+    <!-- V43 - Modal nhập tên (thay thế prompt() gốc của trình duyệt, xấu và không đồng bộ giao diện) -->
+    <div class="modal" id="customPromptModal">
+        <div class="modal-content" style="max-width:400px;">
+            <div id="customPromptLabel" style="font-size:14px; font-weight:700; color:var(--text-main); margin-bottom:12px;">Nhập tên:</div>
+            <input type="text" class="form-input" id="customPromptInput" style="width:100%;" onkeydown="if(event.key==='Enter') confirmCustomPrompt();">
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:18px;">
+                <button class="btn-nav" onclick="cancelCustomPrompt()">Huỷ</button>
+                <button class="btn-action-panel" onclick="confirmCustomPrompt()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="aboutModal">
         <div class="modal-content" style="max-width:520px;">
-            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg> VocabOrbit — V42.6</div>
+            <div class="modal-title" style="display:flex; align-items:center; justify-content:center; gap:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.3" transform="rotate(-18 12 12)"/></svg> VocabOrbit — V44</div>
             <div id="installRow" style="display:none; background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.3); padding:14px; border-radius:14px; margin-bottom:16px; text-align:center;">
                 <p style="font-size:12.5px; color:var(--text-main); margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Cài app này vào màn hình chính để dùng như 1 ứng dụng thật, kể cả khi offline!</p>
                 <button class="btn-action-panel" style="width:100%; justify-content:center;" onclick="triggerInstallPrompt()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Cài đặt ứng dụng</button>
             </div>
             <div id="offlineStatusRow" style="font-size:11.5px; color:var(--text-muted); text-align:center; margin-bottom:16px;"></div>
             <div style="max-height:340px; overflow-y:auto; display:flex; flex-direction:column; gap:14px;">
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> V45.5 — Sửa lỗi mất nút Về trang chủ</h4>
+                    <p class="changelog-desc">Sửa lỗi nút "Về trang chủ" không hiện khi mở 1 Gói học ra thẳng tab Danh sách/Ôn tập thông minh (do nút chỉ tồn tại vật lý trong tab Flashcard, bị ẩn theo khi tab đó không active). Giờ mỗi tab (Flashcard/Danh sách/Ôn tập thông minh) đều có nút riêng, luôn hiện đúng lúc.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M8.5 2h7l-0.8 5.2H9.3L8.5 2z"/><path d="M9.3 7.2l-2 3.3v9a2 2 0 0 0 2 2h5.4a2 2 0 0 0 2-2v-9l-2-3.3"/><circle cx="12" cy="15" r="1.3"/></svg> V45.4 — Thêm 2 giao diện Mêcola (tách riêng bản Kem & Ngọc)</h4>
+                    <p class="changelog-desc">Tách giao diện "Mêcola" thành 2 bản riêng đúng 2 màu trên nhãn chai thật: "Mêcola Kem" (nền kem ấm, chữ đỏ mận) và "Mêcola Ngọc" (nền xanh ngọc đậm, chữ trắng). Cả 2 đều dùng font bo tròn thủ công Baloo 2 + Nunito, và có hoạ tiết bong bóng tròn rải rác lấy cảm hứng từ hình bong bóng trên nhãn chai (thay cho hiệu ứng lấp lánh sao mặc định). Bấm icon đổi giao diện giờ xoay đủ 4 chế độ: Tối → Sáng → Mêcola Kem → Mêcola Ngọc, mỗi giao diện có icon riêng.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> V45.3 — Nút Về trang chủ khi xem 1 Gói</h4>
+                    <p class="changelog-desc">Đổi nút "Quay lại danh sách" thành "Về trang chủ" kèm icon ngôi nhà, hiện rõ ràng hơn khi đang xem bên trong 1 Gói học hoặc đang luyện tập/ôn tập.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg> V45.2 — Sửa âm thanh, gói hoàn thành, màu cấp độ</h4>
+                    <p class="changelog-desc">Sửa lỗi bấm dồn nút phát âm bị xếp hàng phát nối tiếp kéo dài — giờ bấm phát âm từ mới sẽ ngắt ngay âm đang phát trước đó. Gói từ vựng học thuộc 100% ở tab Lịch trình giờ hiện viền/khung màu xanh lá nổi bật kèm nhãn "Hoàn thành". Thẻ từ vựng trong tab Khám phá: nhãn cấp độ giờ tô đúng màu CEFR dùng chung toàn app (A1/A2 xanh lá, B1/B2 xanh dương, C1/C2 tím...) thay vì một màu cố định như trước.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> V44 — Gộp tab, sửa lỗi Khám phá</h4>
+                    <p class="changelog-desc">Bỏ 2 mục "Danh sách tổng hợp" và "Ôn tập thông minh" khỏi menu chính — bấm vào 1 Gói ở Lịch trình giờ mở thẳng vào bảng danh sách từ (lọc CEFR/trạng thái/sắp xếp) của đúng Gói đó, có sẵn 2 nút "Luyện tập Flashcard" và "Ôn tập thông minh" ngay trong màn này. Sửa lỗi tab Khám phá: mục "Tất cả Gói" giờ hiện đúng danh sách các Gói con (kèm nhãn Mục) thay vì gộp phẳng từng từ lẻ ra ngoài. Khôi phục tính năng "Thêm gói từ Khám phá" (trong menu "+ Thêm gói học" ở Lịch trình) — giờ hoạt động đúng với cấu trúc Gói con mới: chọn 1 Gói bên Khám phá, bấm "Nhập gói này vào tiến trình học" là gói đó xuất hiện ngay trong "Gói từ vựng đang học". Định dạng lại Flashcard: mặt sau ảnh minh hoạ phóng to hơn hẳn, thêm câu ví dụ dịch tiếng Việt ngay dưới ví dụ tiếng Anh; thêm ô "Ví dụ (dịch tiếng Việt)" vào form Thêm từ/Sửa từ; cập nhật lại Prompt mẫu gửi Gemini để khớp đúng định dạng mới (họ từ tối thiểu 3 từ, nghĩa tối đa 2 nghĩa phổ biến nhất, thêm trường exampleVi). Sửa lỗi nạp file .js/.txt bị báo "không đúng định dạng JSON" oan khi file có thêm chữ/code thừa sau mảng dữ liệu (đổi cách bóc tách từ regex sang đếm độ sâu ngoặc vuông, chính xác tuyệt đối).</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> V43.4 — Nhiều Gói con trong 1 Mục, kéo-thả JSON</h4>
+                    <p class="changelog-desc">Mỗi Mục khám phá (IELTS/A1-A2/B1-B2/C1-C2) giờ chứa được nhiều Gói con do Host tự tạo tuỳ thích (vd IELTS → "Gói Học thuật", "Gói Đời sống"...) — bấm vào 1 Mục sẽ thấy danh sách các Gói con trong đó, bấm vào 1 Gói mới vào soạn/xem từ vựng bên trong. Bỏ hẳn mục "Nhập cả gói vào tiến trình học" — tab Khám phá giờ chỉ để Host công bố và mọi người browse/luyện tập trực tiếp, không tạo Deck cá nhân từ đây nữa. Bảng điều khiển Admin có thêm ô kéo-thả file JSON ngay cạnh nút "Tải tệp JSON lên", tiện hơn khi cần nạp nhanh.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> V43.3 — Duyệt & đặt tên gói khám phá</h4>
+                    <p class="changelog-desc">Khung "Xem trước thuật ngữ sẽ nạp" (khi Host tải file JSON lên) giờ cho sửa lại trước khi xác nhận: bỏ bớt từ không muốn nạp, hoặc bấm "Thêm từ vào lô này" để bổ sung thủ công ngay trong lô đó. Host có thể đặt tên hiển thị riêng cho mỗi Gói khám phá (nút "Đặt tên gói cho khách") để khách thấy tên thân thiện hơn thay vì mã danh mục cứng (IELTS/A1-A2/B1-B2/C1-C2). Đổi icon nút xoá Gói ở Lịch trình từ dấu ✕ sang icon thùng rác cho rõ nghĩa "chuyển vào Thùng rác" thay vì xoá hẳn.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> V43.2 — Thùng rác, gộp Flashcard vào Lịch trình</h4>
+                    <p class="changelog-desc">Thêm tab "Thùng rác": xoá một Gói từ vựng giờ không mất luôn, mà giữ lại 30 ngày để khôi phục (nút xoá nằm ngay trên mỗi thẻ Gói ở tab Lịch trình). Bỏ mục "Thẻ học Flashcard" khỏi menu chính — bấm vào 1 Gói ở Lịch trình sẽ mở Flashcard ngay, không cần chọn tab riêng nữa. Bảng Admin (Host) của Gói khám phá: thêm nút "+" thêm nhanh 1 thuật ngữ (bắt buộc chọn đúng 1 Gói cụ thể trước, không cho thêm khi đang xem "Tất cả Gói" để tránh lẫn danh mục), nút Xoá giờ có 5 giây đếm ngược Hoàn tác trước khi xoá hẳn, tự dọn sạch các thuật ngữ mẫu/cũ có danh mục không còn hợp lệ. Bản Test cục bộ giờ chỉ lưu offline khi thêm/sửa/xoá thuật ngữ khám phá, không còn cố gọi lên Cloud gây lỗi do chưa cấu hình Firebase thật.</p>
+                </div>
+                <div class="guide-step">
+                    <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg> V43.1 — Ảnh minh họa cho từ vựng (bản Test)</h4>
+                    <p class="changelog-desc">Mỗi từ giờ có thể có thêm 1 ảnh minh họa (dán URL ảnh), hiện ở mặt sau Flashcard chính, Ôn tập thông minh và làm thumbnail trong danh sách từ. Cập nhật lại Prompt mẫu gửi Gemini để AI tự gợi ý kèm link ảnh thật (Pixabay/Pexels/Unsplash/Wikimedia) cho từng từ khi tạo gói JSON. Thêm ô "Ảnh minh họa" vào form Thêm từ chi tiết và Sửa từ. Ảnh lỗi/không tải được sẽ tự ẩn, không vỡ giao diện.</p>
+                </div>
                 <div class="guide-step">
                     <h4 style="display:flex; align-items:center; gap:6px; color:var(--brand-color);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> V41 — Đồng bộ Cloud & Deep Link</h4>
                     <p class="changelog-desc">Cấu hình thương hiệu Host (Logo, QR, thông tin ngân hàng) giờ được đồng bộ hai chiều qua Firestore Cloud — Host đổi trên máy này sẽ tự động cập nhật cho mọi thiết bị/người dùng khác khi họ tải lại trang. URL trình duyệt giờ tự cập nhật theo tab đang mở (dạng #tab-tenTab); bấm F5 sẽ khôi phục đúng tab đang xem thay vì quay về Lịch trình, và nút Back/Forward của trình duyệt chuyển tab mượt mà nhờ tích hợp History API. Sửa triệt để lỗi nút "AI Auto-Fill" đôi khi bị kẹt ở trạng thái đang tải — nay luôn tự khôi phục về trạng thái ban đầu trong mọi tình huống, kèm timeout 25s và thông báo lỗi chi tiết hơn khi Worker gặp sự cố.</p>
@@ -1731,28 +1990,23 @@
 
         /* === V42.1 - Gói từ vựng đặt tên (thay thế hoàn toàn việc chọn Ngày) === */
         let wordPackages = {}; // { deckId: { id, name, createdAt } }
+        let trashBin = {}; // V43.2 - Gói từ đã xoá, giữ 30 ngày trước khi xoá vĩnh viễn: { trashId: { deckId, deck, words, statuses, pkgLogs, deletedAt } }
         let currentSelectedDeckId = "";
         let targetModalDeckId = "";
         let reviewActivityLog = {}; // { "2026-08-08": soLuotOnTrongNgay }
 
         // V29 - Kho từ vựng dựng sẵn theo cấp độ CEFR, mỗi cấp có thể chứa nhiều gói. Sẽ được bổ sung thêm ở các phiên bản sau.
         /* === V40 - Kho Thuật ngữ Code (thay thế Kho theo cấp độ CEFR cũ) === */
-        const DEFAULT_CODE_TERMS = [
-            {id:'seed-1', term:'commit', category:'Git/GitHub', meaning:'Lưu lại một điểm thay đổi trong lịch sử code', example:'git commit -m "fix bug"'},
-            {id:'seed-2', term:'pull request', category:'Git/GitHub', meaning:'Yêu cầu gộp nhánh code của bạn vào nhánh chính', example:'Open a pull request to merge your feature branch.'},
-            {id:'seed-3', term:'merge conflict', category:'Git/GitHub', meaning:'Xung đột xảy ra khi Git không tự gộp được 2 thay đổi', example:'Please resolve the merge conflict before pushing.'},
-            {id:'seed-4', term:'useState', category:'React', meaning:'Hook quản lý state cục bộ trong component', example:'const [count, setCount] = useState(0);'},
-            {id:'seed-5', term:'props', category:'React', meaning:'Dữ liệu được truyền từ component cha xuống con', example:'This component receives a title prop.'},
-            {id:'seed-6', term:'useEffect', category:'React', meaning:'Hook chạy side-effect sau khi component render', example:'useEffect(() => { fetchData(); }, []);'},
-            {id:'seed-7', term:'prompt engineering', category:'AI Terms', meaning:'Kỹ thuật thiết kế câu lệnh để AI trả lời chính xác hơn', example:'Prompt engineering improves the quality of AI responses.'},
-            {id:'seed-8', term:'token', category:'AI Terms', meaning:'Đơn vị nhỏ nhất mà mô hình AI xử lý văn bản', example:'This model can process up to 128k tokens.'},
-            {id:'seed-9', term:'fine-tuning', category:'AI Terms', meaning:'Huấn luyện bổ sung một mô hình AI trên dữ liệu chuyên biệt', example:'We fine-tuned the model on customer support data.'}
-        ];
+        const DEFAULT_CODE_TERMS = []; // V43 - Bỏ toàn bộ dữ liệu mẫu, để Host tự thêm từ đầu
+        const DISCOVER_CATEGORIES = ['IELTS', 'A1-A2', 'B1-B2', 'C1-C2']; // V43 - Danh mục Gói khám phá cố định, không còn tự do đặt tên chủ đề nữa
         let codeTerms = [];
         let currentCodeCategory = 'all';
         let codeTermSearchQuery = '';
         let pendingCodeTermEditId = null;
         let pendingCodeTermsImport = [];
+        let addToPendingBatchMode = false; // V43.3 - true khi form Nhập thủ công đang dùng để thêm 1 từ vào LÔ đang xem trước (chưa xác nhận nạp), không lưu thẳng vào kho
+        let discoverPackages = {}; // V43.4 - Nhiều Gói con trong 1 Mục (vd Mục "IELTS" chứa nhiều Gói do Host tự tạo): { pkgId: { id, category, name, createdAt } }
+        let currentDiscoverPackageId = null; // V43.4 - null = đang xem danh sách các Gói trong 1 Mục; có id = đang xem/soạn bên trong 1 Gói cụ thể
         let practiceDeck = []; let practiceIdx = 0; let practiceFlipped = false;
         let filteredList = []; let cIdx = 0; let activeSortMode = "abc"; let activeFilter = "all"; let activeCefrFilter = "all";
         let isAudioMasterOn = true; let activeAlphabetSort = false;
@@ -1772,6 +2026,16 @@
         /* === V42.3 - Kiểm tra đăng nhập không gây nháy màn hình: nếu Firebase CHƯA xác thực xong thì hiện màn chờ trung tính, 
            chỉ hiện đúng 1 lần duy nhất (hoặc cổng đăng nhập, hoặc vào thẳng app) khi đã biết chắc kết quả === */
         function requireAuthCheck() {
+            // V43-TEST - Bỏ qua hoàn toàn cổng đăng nhập, tự vào thẳng với quyền Host giả lập
+            if(DEV_TEST_MODE) {
+                document.getElementById('authCheckingOverlay').classList.add('hidden');
+                document.getElementById('authGateScreen').classList.add('hidden');
+                applyHostStatus(DEV_TEST_FAKE_USER.email);
+                syncAccountMenuInfo(DEV_TEST_FAKE_USER, 'https://ui-avatars.com/api/?name=Test+Host&background=EAB308&color=fff');
+                let authArea = document.getElementById('authAreaEl');
+                if(authArea) authArea.innerHTML = `<div class="user-profile-chip"><img src="https://ui-avatars.com/api/?name=Test+Host&background=EAB308&color=fff"><span>Test Host</span></div>`;
+                return;
+            }
             if(window.authReady) {
                 if(!window.currentUser) document.getElementById('authGateScreen').classList.remove('hidden');
                 else document.getElementById('authGateScreen').classList.add('hidden');
@@ -1820,6 +2084,7 @@
             localStorage.setItem('tho_v22_streak', JSON.stringify(streakInfo));
             localStorage.setItem('tho_v22_pkgs', JSON.stringify(packagesLog));
             localStorage.setItem('tho_v42_packages', JSON.stringify(wordPackages));
+            localStorage.setItem('tho_v43_trash', JSON.stringify(trashBin));
             localStorage.setItem('tho_v42_activity', JSON.stringify(reviewActivityLog));
             if(window.syncDataToCloud) window.syncDataToCloud(); // V36 - đồng bộ lên đám mây nếu đã đăng nhập
         }
@@ -1890,6 +2155,8 @@
                 "pkg-default": { day: "2026-06-18", timestamp: "00:00:00 18/06/2026", count: 3 }
             };
             wordPackages = JSON.parse(localStorage.getItem('tho_v42_packages')) || {};
+            trashBin = JSON.parse(localStorage.getItem('tho_v43_trash')) || {};
+            purgeExpiredTrash(); // V43.2 - Xoá vĩnh viễn các gói đã nằm quá 30 ngày trong Thùng rác
             reviewActivityLog = JSON.parse(localStorage.getItem('tho_v42_activity')) || {};
             migrateDaysToPackagesV42(); // V42.1 - Gộp từ vựng theo ngày cũ thành Gói tự động (chạy 1 lần duy nhất)
             currentSelectedDeckId = localStorage.getItem('tho_v42_selectedDeck') || "";
@@ -1906,6 +2173,7 @@
             renderActivityHeatmap();
             updateHeaderStreak();
             updateReadyIndicator(); updateSmartBadge();
+            updateTrashBadge();
 
             setupSwipeGestures('cardContainerEl', () => nextW(), () => prevW());
             updateAiKeyStatus();
@@ -1914,6 +2182,7 @@
 
             // V41 - Khôi phục đúng tab từ URL hash (F5 / mở link trực tiếp)
             restoreTabFromUrlOnLoad();
+            updateThemeIcon(); // V45.3 - Hiện đúng icon theo theme đã lưu ngay khi vừa tải trang
         }
 
         function initAudioContext() {
@@ -2030,12 +2299,14 @@
 
             let tabEl = document.getElementById('tab-' + tabId);
             let navEl = document.getElementById('nav-' + tabId);
-            if(!tabEl || !navEl) { tabId = 'calendar'; tabEl = document.getElementById('tab-calendar'); navEl = document.getElementById('nav-calendar'); }
+            if(!tabEl) { tabId = 'calendar'; tabEl = document.getElementById('tab-calendar'); navEl = document.getElementById('nav-calendar'); }
 
             document.querySelectorAll('main').forEach(m => m.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             tabEl.classList.add('active');
-            navEl.classList.add('active');
+            // V43.2 - Flashcard không còn là mục riêng trong menu (chỉ mở từ Lịch trình) — không có navEl thì tô sáng "Lịch trình" thay thế
+            if(navEl) navEl.classList.add('active');
+            else { let calNav = document.getElementById('nav-calendar'); if(calNav) calNav.classList.add('active'); }
             
             document.getElementById('sidebar').classList.remove('open');
             document.getElementById('overlay').classList.remove('show');
@@ -2045,16 +2316,23 @@
 
             stopQuizBgMusic(); 
 
-            if(tabId !== 'flashcard') backToTabId = null; // rời khỏi flashcard theo cách khác thì huỷ đường quay lại
-            document.getElementById('backToTabBtn').style.display = (tabId === 'flashcard' && backToTabId) ? 'flex' : 'none';
+            // V44 - Nút "Quay lại" dùng chung cho cả 3 tab được mở từ 1 Gói cụ thể (Danh sách tổng hợp / Flashcard / Ôn tập thông minh)
+            if(!['flashcard', 'list', 'smart'].includes(tabId)) backToTabId = null;
+            // V45.5 - Sửa lỗi nút "Về trang chủ" chỉ tồn tại vật lý trong 1 tab nên bị ẩn theo khi tab đó không active;
+            // giờ có 1 nút riêng đặt trong mỗi tab-flashcard/list/smart (cùng class), cập nhật đồng loạt qua querySelectorAll
+            document.querySelectorAll('.back-to-tab-btn').forEach(btn => {
+                btn.style.display = (['flashcard', 'list', 'smart'].includes(tabId) && backToTabId) ? 'flex' : 'none';
+            });
 
             if(tabId === 'flashcard') initFlashcardTab();
             if(tabId === 'list') initListTab();
             if(tabId === 'library') initLibraryTab();
+            else pickingDiscoverForImport = false; // V44 - rời khỏi Khám phá bằng cách khác thì huỷ chế độ "đang chọn Gói để nhập"
             if(tabId === 'stats') renderStatsTab();
             if(tabId === 'quiz') initQuizTab();
             if(tabId === 'smart') initSmartTab();
             if(tabId === 'calendar') renderActivityHeatmap(); // V42.6 - Tab Lịch trình là dashboard, luôn làm mới lưới Gói học + biểu đồ mỗi khi quay lại tab này
+            if(tabId === 'trash') renderTrashTab();
 
             currentActiveTabId = tabId;
 
@@ -2093,9 +2371,15 @@
         function loadCodeTerms() {
             let raw = localStorage.getItem('tho_v40_codeTerms');
             codeTerms = raw ? JSON.parse(raw) : DEFAULT_CODE_TERMS.slice();
-            if(!raw) saveCodeTerms();
+            // V43.2 - Dọn sạch các thuật ngữ mẫu/cũ còn sót trên máy có danh mục không hợp lệ
+            // (từ trước khi khoá cứng 4 danh mục IELTS/A1-A2/B1-B2/C1-C2, vd GIT/GITHUB, REACT, AI TERMS...)
+            let before = codeTerms.length;
+            codeTerms = codeTerms.filter(t => DISCOVER_CATEGORIES.includes(t.category));
+            if(!raw || codeTerms.length !== before) saveCodeTerms();
+            discoverPackages = JSON.parse(localStorage.getItem('tho_v43_discoverPkgs')) || {}; // V43.4
         }
         function saveCodeTerms() { localStorage.setItem('tho_v40_codeTerms', JSON.stringify(codeTerms)); }
+        function saveDiscoverPackages() { localStorage.setItem('tho_v43_discoverPkgs', JSON.stringify(discoverPackages)); } // V43.4
 
         // V42.3 - Được gọi từ module Firebase khi Cloud có dữ liệu mới hơn máy, áp dụng lại giao diện ngay nếu đang xem tab này
         function applyCloudCodeTerms(cloudTerms) {
@@ -2103,12 +2387,18 @@
             if(document.getElementById('tab-library') && document.getElementById('tab-library').classList.contains('active')) renderCodeTermsTab();
         }
         window.applyCloudCodeTerms = applyCloudCodeTerms;
+        // V43.4 - Tương tự nhưng cho cấu trúc các Gói con (discoverPackages)
+        function applyCloudDiscoverPackages(cloudPackages) {
+            discoverPackages = cloudPackages;
+            if(document.getElementById('tab-library') && document.getElementById('tab-library').classList.contains('active')) renderCodeTermsTab();
+        }
+        window.applyCloudDiscoverPackages = applyCloudDiscoverPackages;
 
         // V42.3 - Chỉ gọi khi là Host: đẩy toàn bộ Gói từ vựng khám phá lên Cloud để mọi thiết bị khác nhận được
         async function syncDiscoverToCloud() {
             if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) return;
             try {
-                if(window.saveDiscoverPackagesToCloud) await window.saveDiscoverPackagesToCloud(codeTerms);
+                if(window.saveDiscoverPackagesToCloud) await window.saveDiscoverPackagesToCloud(codeTerms, discoverPackages);
             } catch(err) {
                 console.error('Lỗi đồng bộ Gói khám phá lên Cloud:', err);
                 showAlert("Đã lưu trên máy, nhưng đồng bộ Cloud thất bại: " + err.message, {icon: 'alertTriangle'});
@@ -2118,100 +2408,263 @@
         function initLibraryTab() {
             loadCodeTerms();
             currentCodeCategory = 'all';
+            currentDiscoverPackageId = null;
             codeTermSearchQuery = '';
             renderCodeTermsTab();
         }
 
-        function getCodeCategories() { return Array.from(new Set(codeTerms.map(t => t.category || 'Khác'))); }
+        function getCodeCategories() { return DISCOVER_CATEGORIES; } // V43 - Luôn hiện đủ 4 danh mục cố định, kể cả khi chưa có từ nào trong đó
 
-        function setCodeCategory(cat) { currentCodeCategory = cat; renderCodeTermsTab(); }
+        function setCodeCategory(cat) { currentCodeCategory = cat; currentDiscoverPackageId = null; renderCodeTermsTab(); }
         function filterCodeTermSearch(q) { codeTermSearchQuery = q.toLowerCase(); renderCodeTermsTab(); }
 
         function getFilteredCodeTerms() {
             return codeTerms.filter(t =>
-                (currentCodeCategory === 'all' || t.category === currentCodeCategory) &&
+                (!currentDiscoverPackageId || t.packageId === currentDiscoverPackageId) &&
+                (currentDiscoverPackageId || currentCodeCategory === 'all' || t.category === currentCodeCategory) &&
                 (!codeTermSearchQuery || t.term.toLowerCase().includes(codeTermSearchQuery) || (t.meaning || '').toLowerCase().includes(codeTermSearchQuery))
             );
         }
 
+        // V43.4 - Danh sách các Gói con thuộc 1 Mục cụ thể
+        function getPackagesInCategory(cat) {
+            return Object.values(discoverPackages).filter(p => p.category === cat).sort((a, b) => (a.createdAt || '').localeCompare(b.createdAt || ''));
+        }
+
+        function backToPackageList() { currentDiscoverPackageId = null; renderCodeTermsTab(); }
+
+        async function createDiscoverPackage() {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền tạo Gói.", {icon: 'xCircle'}); return; }
+            if(currentCodeCategory === 'all') { showAlert("Vui lòng chọn đúng 1 Mục cụ thể trước khi tạo Gói.", {icon: 'alertTriangle'}); return; }
+            let name = await showCustomPrompt(`Đặt tên cho Gói mới trong Mục "${currentCodeCategory}":`, "");
+            if(name === null) return;
+            name = name.trim();
+            if(!name) { showAlert("Tên Gói không được để trống."); return; }
+            let pkgId = 'discoverpkg-' + Date.now();
+            discoverPackages[pkgId] = { id: pkgId, category: currentCodeCategory, name, createdAt: new Date().toISOString() };
+            saveDiscoverPackages();
+            if(!DEV_TEST_MODE) syncDiscoverToCloud();
+            currentDiscoverPackageId = pkgId;
+            renderCodeTermsTab();
+        }
+
+        async function renameDiscoverPackage(pkgId) {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) return;
+            let pkg = discoverPackages[pkgId];
+            if(!pkg) return;
+            let name = await showCustomPrompt("Đổi tên Gói:", pkg.name);
+            if(name === null) return;
+            name = name.trim();
+            if(!name) { showAlert("Tên Gói không được để trống."); return; }
+            pkg.name = name;
+            saveDiscoverPackages();
+            if(!DEV_TEST_MODE) syncDiscoverToCloud();
+            renderCodeTermsTab();
+        }
+
+        async function deleteDiscoverPackage(pkgId) {
+            if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) return;
+            let pkg = discoverPackages[pkgId];
+            if(!pkg) return;
+            let count = codeTerms.filter(t => t.packageId === pkgId).length;
+            let ok = await showConfirm(`Xoá Gói "${pkg.name}" cùng toàn bộ ${count} từ bên trong? Hành động này không thể hoàn tác.`, {danger: true, confirmText: "Xoá Gói"});
+            if(!ok) return;
+            codeTerms = codeTerms.filter(t => t.packageId !== pkgId);
+            delete discoverPackages[pkgId];
+            saveCodeTerms();
+            saveDiscoverPackages();
+            if(!DEV_TEST_MODE) syncDiscoverToCloud();
+            if(currentDiscoverPackageId === pkgId) currentDiscoverPackageId = null;
+            renderCodeTermsTab();
+        }
+
         function renderCodeTermsTab() {
             let host = typeof isEffectiveHost === 'function' && isEffectiveHost();
-            let adminPanel = document.getElementById('codeTermsAdminPanel');
-            if(adminPanel) adminPanel.style.display = host ? 'block' : 'none';
+
+            let pickBanner = document.getElementById('discoverPickBanner');
+            if(pickBanner) pickBanner.style.display = pickingDiscoverForImport ? 'flex' : 'none';
 
             let cats = ['all', ...getCodeCategories()];
             let pillsEl = document.getElementById('codeCatPills');
             if(pillsEl) pillsEl.innerHTML = cats.map(c => `<button class="code-cat-pill ${c === currentCodeCategory ? 'active' : ''}" onclick="setCodeCategory('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tất cả Gói' : escapeHtml(c)}</button>`).join('');
 
-            // V42.3 - Nút "Nhập cả Gói vào tiến trình học" chỉ hiện khi đang xem đúng 1 Gói/Chủ đề cụ thể (không phải "Tất cả")
-            let importBar = document.getElementById('discoverImportBar');
-            if(importBar) {
-                if(currentCodeCategory !== 'all') {
-                    importBar.style.display = 'flex';
-                    document.getElementById('discoverImportLabel').innerText = `Gói "${currentCodeCategory}"`;
-                } else importBar.style.display = 'none';
-            }
-
-            let list = getFilteredCodeTerms();
+            let breadcrumb = document.getElementById('discoverBreadcrumbWrap');
+            let adminPanel = document.getElementById('codeTermsAdminPanel');
+            let searchRow = document.getElementById('discoverSearchRow');
             let listEl = document.getElementById('codeTermsList');
             if(!listEl) return;
-            if(list.length === 0) {
-                listEl.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); grid-column:1/-1;">${ic('inbox', 20)} Không tìm thấy từ vựng nào trong Gói khám phá.</div>`;
+
+            // === Chế độ 1: "Tất cả Gói" - hiện TẤT CẢ các Gói con từ mọi Mục (không gộp phẳng từng từ ra ngoài) ===
+            if(currentCodeCategory === 'all' && !currentDiscoverPackageId) {
+                breadcrumb.style.display = 'none';
+                adminPanel.style.display = 'none';
+                searchRow.style.display = 'none';
+                let allPkgs = Object.values(discoverPackages).sort((a, b) => (a.createdAt || '').localeCompare(b.createdAt || ''));
+                renderPackagesGridInto(listEl, allPkgs, host, true);
                 return;
             }
-            listEl.innerHTML = list.map(t => `
+
+            // === Chế độ 2: Đã chọn 1 Mục nhưng CHƯA mở vào Gói con nào - hiện danh sách các Gói trong Mục đó ===
+            if(!currentDiscoverPackageId) {
+                breadcrumb.style.display = 'none';
+                adminPanel.style.display = 'none';
+                searchRow.style.display = 'none';
+                let pkgs = getPackagesInCategory(currentCodeCategory);
+                renderPackagesGridInto(listEl, pkgs, host, false);
+                return;
+            }
+
+            // === Chế độ 3: Đang ở bên trong 1 Gói con cụ thể - soạn/xem các từ trong Gói đó ===
+            let pkg = discoverPackages[currentDiscoverPackageId];
+            if(!pkg) { currentDiscoverPackageId = null; renderCodeTermsTab(); return; }
+            breadcrumb.style.display = 'flex';
+            document.getElementById('discoverPkgTitle').innerHTML = `${ic('package', 15)} ${escapeHtml(pkg.name)} <span style="color:var(--text-muted); font-weight:400; font-size:12.5px;">(${escapeHtml(pkg.category)})</span>`;
+            // V44.1 - Nút "Nhập gói này vào tiến trình học" giờ LUÔN hiện khi đang xem bên trong 1 Gói (không chỉ khi vào từ "+ Thêm gói học"),
+            // để bất kỳ ai (Khách lẫn Host) browse Khám phá bình thường cũng thêm được Gói đang xem vào "Gói từ vựng đang học" của mình.
+            let pickBtn = document.getElementById('discoverPickImportBtn');
+            if(pickBtn) pickBtn.style.display = 'inline-flex';
+            adminPanel.style.display = host ? 'block' : 'none';
+            searchRow.style.display = 'flex';
+            renderCodeTermsListInto(listEl, getFilteredCodeTerms(), host);
+        }
+
+        // V44 - Vẽ lưới các thẻ Gói con (dùng chung cho "Tất cả Gói" lẫn xem trong 1 Mục cụ thể)
+        function renderPackagesGridInto(listEl, pkgs, host, showCategoryBadge) {
+            let pkgItemsHtml = pkgs.map(p => {
+                let n = codeTerms.filter(t => t.packageId === p.id).length;
+                return `
+                <div class="code-term-card" style="cursor:pointer;" onclick="setCodeCategory('${p.category.replace(/'/g, "\\'")}'); openDiscoverPackage('${p.id}')">
+                    <div class="ctc-top"><span class="ctc-term" style="font-family:var(--font-display);">${ic('package', 15)} ${escapeHtml(p.name)}</span>${showCategoryBadge ? `<span class="ctc-cat">${escapeHtml(p.category)}</span>` : ''}</div>
+                    <div class="ctc-meaning">${n} từ vựng</div>
+                    ${host ? `<div class="ctc-actions">
+                        <button class="btn-nav" style="padding:6px 12px; min-height:32px; font-size:11.5px;" onclick="event.stopPropagation(); renameDiscoverPackage('${p.id}')">${ic('type', 12)} Đổi tên</button>
+                        <button class="btn-nav" style="padding:6px 12px; min-height:32px; font-size:11.5px; color:var(--color-unlearned-text);" onclick="event.stopPropagation(); deleteDiscoverPackage('${p.id}')">${ic('xCircle', 12)} Xoá</button>
+                    </div>` : ''}
+                </div>`;
+            }).join('');
+            let emptyMsg = pkgs.length === 0 ? `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); grid-column:1/-1;">${ic('inbox', 20)} ${showCategoryBadge ? 'Chưa có Gói nào trong Kho khám phá.' : `Mục "${escapeHtml(currentCodeCategory)}" chưa có Gói nào.`}</div>` : '';
+            // V44 - Chỉ cho tạo Gói mới khi đang đứng đúng trong 1 Mục cụ thể, không cho tạo khi đang xem "Tất cả Gói" (không rõ nên tạo vào Mục nào)
+            let addCardHtml = (host && !showCategoryBadge) ? `<div class="code-term-card ctc-add-card" onclick="createDiscoverPackage()" role="button" tabindex="0" title="Tạo Gói mới">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <div style="font-size:12.5px; font-weight:700;">Tạo Gói mới</div>
+            </div>` : '';
+            listEl.innerHTML = emptyMsg + pkgItemsHtml + addCardHtml;
+        }
+
+        // V43.4 - Tách phần vẽ lưới thẻ từ vựng ra riêng để dùng chung cho cả 2 chế độ (Tất cả Gói / bên trong 1 Gói)
+        // V45.2 - Tô màu badge cấp độ theo đúng bảng màu CEFR dùng chung toàn app (ưu tiên level riêng của từ, nếu không có thì suy ra từ tên Mục)
+        function getCefrBadgeStyle(t) {
+            let lvl = (t.level || '').toLowerCase().trim();
+            if(!cefrGradients[lvl]) {
+                let m = (t.category || '').toLowerCase().match(/^[abc][12]/);
+                lvl = m ? m[0] : '';
+            }
+            return cefrGradients[lvl] ? `background:${cefrGradients[lvl]}; color:#fff;` : '';
+        }
+
+        function renderCodeTermsListInto(listEl, list, allowEdit) {
+            let itemsHtml = list.length === 0
+                ? `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); grid-column:1/-1;">${ic('inbox', 20)} Không tìm thấy từ vựng nào.</div>`
+                : list.map(t => `
                 <div class="code-term-card">
-                    <div class="ctc-top"><span class="ctc-term">${escapeHtml(t.term)}</span><span class="ctc-cat">${escapeHtml(t.category || 'Khác')}</span></div>
+                    ${t.image ? `<img src="${t.image}" alt="" style="width:100%; height:90px; object-fit:cover; border-radius:10px; margin-bottom:8px;" onerror="this.style.display='none';">` : ''}
+                    <div class="ctc-top"><span class="ctc-term">${escapeHtml(t.term)}</span><span class="ctc-cat" style="${getCefrBadgeStyle(t)}">${escapeHtml(t.level ? t.level.toUpperCase() : (t.category || 'Khác'))}</span></div>
+                    ${t.pronUK || t.pronUS ? `<div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">${t.pronUK ? 'UK ' + escapeHtml(t.pronUK) : ''} ${t.pronUS ? '· US ' + escapeHtml(t.pronUS) : ''}</div>` : ''}
                     <div class="ctc-meaning">${escapeHtml(t.meaning || '')}</div>
                     ${t.example ? `<div class="ctc-example">"${escapeHtml(t.example)}"</div>` : ''}
-                    ${host ? `<div class="ctc-actions">
+                    ${allowEdit ? `<div class="ctc-actions">
                         <button class="btn-nav" style="padding:6px 12px; min-height:32px; font-size:11.5px;" onclick="openCodeTermManualForm('${t.id}')">${ic('type', 12)} Sửa</button>
                         <button class="btn-nav" style="padding:6px 12px; min-height:32px; font-size:11.5px; color:var(--color-unlearned-text);" onclick="deleteCodeTerm('${t.id}')">${ic('xCircle', 12)} Xoá</button>
                     </div>` : ''}
                 </div>
             `).join('');
+            let addCardHtml = allowEdit ? `<div class="code-term-card ctc-add-card" onclick="openCodeTermManualForm()" role="button" tabindex="0" title="Thêm thuật ngữ mới">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <div style="font-size:12.5px; font-weight:700;">Thêm thuật ngữ mới</div>
+            </div>` : '';
+            listEl.innerHTML = itemsHtml + addCardHtml;
         }
+
+        function openDiscoverPackage(pkgId) { currentDiscoverPackageId = pkgId; renderCodeTermsTab(); }
 
         function openCodeTermManualForm(editId) {
             pendingCodeTermEditId = editId || null;
+            addToPendingBatchMode = false;
             let t = editId ? codeTerms.find(x => x.id === editId) : null;
+            // V43.4 - Thêm mới bắt buộc phải đang đứng trong 1 Gói con cụ thể (đã mở vào bằng openDiscoverPackage)
+            if(!t && !currentDiscoverPackageId) {
+                showAlert("Vui lòng mở vào đúng 1 Gói cụ thể trước khi thêm từ mới.", {icon: 'alertTriangle'});
+                return;
+            }
             document.getElementById('ctManualTerm').value = t ? t.term : '';
             document.getElementById('ctManualMeaning').value = t ? t.meaning : '';
-            document.getElementById('ctManualCategory').value = t ? t.category : '';
             document.getElementById('ctManualExample').value = t ? t.example : '';
             document.getElementById('codeTermManualFormBox').style.display = 'block';
         }
         function closeCodeTermManualForm() {
             document.getElementById('codeTermManualFormBox').style.display = 'none';
             pendingCodeTermEditId = null;
+            addToPendingBatchMode = false;
         }
+        // V43.2 - Bản Test cục bộ: chỉ lưu offline, KHÔNG gọi lên Cloud (tránh lỗi do chưa cấu hình Firebase khi test)
+        function persistCodeTermsAndNotify(successMsg) {
+            saveCodeTerms();
+            if(!DEV_TEST_MODE) {
+                syncDiscoverToCloud();
+                showAlert(successMsg + " và công bố lên Cloud!", {icon: 'checkCircle'});
+            } else {
+                showAlert(successMsg + " (Chế độ Test cục bộ — lưu offline, CHƯA đẩy lên Cloud).", {icon: 'checkCircle'});
+            }
+        }
+
         function saveCodeTermManual() {
             if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền chỉnh sửa Gói từ vựng khám phá.", {icon: 'xCircle'}); return; }
             let term = document.getElementById('ctManualTerm').value.trim();
             let meaning = document.getElementById('ctManualMeaning').value.trim();
-            let category = document.getElementById('ctManualCategory').value.trim() || 'Khác';
             let example = document.getElementById('ctManualExample').value.trim();
             if(!term || !meaning) { showAlert("Vui lòng nhập đủ Thuật ngữ và Nghĩa.", {icon: 'alertTriangle'}); return; }
+            // V43.3 - Đang ở chế độ thêm vào lô xem trước (chưa xác nhận nạp) thì chỉ đẩy vào pendingCodeTermsImport, không lưu thẳng vào kho/Cloud
+            if(addToPendingBatchMode) {
+                let cat = currentDiscoverPackageId ? discoverPackages[currentDiscoverPackageId].category : currentCodeCategory;
+                pendingCodeTermsImport.push({ id: 'ct-import-' + Date.now(), term, meaning, category: cat, example });
+                closeCodeTermManualForm();
+                renderCodeTermsPreview();
+                return;
+            }
             if(pendingCodeTermEditId) {
                 let t = codeTerms.find(x => x.id === pendingCodeTermEditId);
-                if(t) { t.term = term; t.meaning = meaning; t.category = category; t.example = example; }
+                if(t) { t.term = term; t.meaning = meaning; t.example = example; }
             } else {
-                codeTerms.push({ id: 'ct-' + Date.now(), term, meaning, category, example });
+                // V43.4 - Từ mới luôn gắn vào đúng Gói con + Mục đang mở (currentDiscoverPackageId bắt buộc phải có, đã chặn ở openCodeTermManualForm)
+                let pkg = discoverPackages[currentDiscoverPackageId];
+                codeTerms.push({ id: 'ct-' + Date.now(), term, meaning, category: pkg.category, packageId: pkg.id, example });
             }
-            saveCodeTerms();
-            syncDiscoverToCloud();
             closeCodeTermManualForm();
             renderCodeTermsTab();
-            showAlert("Đã lưu và công bố lên Cloud!", {icon: 'checkCircle'});
+            persistCodeTermsAndNotify("Đã lưu thuật ngữ");
         }
         async function deleteCodeTerm(id) {
             if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền xoá.", {icon: 'xCircle'}); return; }
             let ok = await showConfirm("Xoá từ vựng này khỏi Gói khám phá?", {danger: true, confirmText: "Xoá"});
             if(!ok) return;
+            let idx = codeTerms.findIndex(t => t.id === id);
+            if(idx === -1) return;
+            let deletedTerm = codeTerms[idx];
+            let deletedIdx = idx;
             codeTerms = codeTerms.filter(t => t.id !== id);
             saveCodeTerms();
-            syncDiscoverToCloud();
             renderCodeTermsTab();
+
+            showUndoToastCountdown(`Đã xoá "${deletedTerm.term}"`, () => {
+                codeTerms.splice(deletedIdx, 0, deletedTerm);
+                saveCodeTerms();
+                renderCodeTermsTab();
+            }, 5);
+
+            // V43.2 - Chỉ đẩy lên Cloud sau khi hết 5s hoàn tác (nếu người dùng không bấm Hoàn tác) và không phải chế độ Test
+            setTimeout(() => {
+                if(codeTerms.findIndex(t => t.id === id) === -1 && !DEV_TEST_MODE) syncDiscoverToCloud();
+            }, 5200);
         }
         function exportCodeTerms() {
             let blob = new Blob([JSON.stringify(codeTerms, null, 2)], { type: 'application/json' });
@@ -2220,21 +2673,32 @@
             a.href = url; a.download = 'vocaborbit-discover-packages.json'; a.click();
             URL.revokeObjectURL(url);
         }
-        function handleCodeTermsFileUpload(event) {
+        // V43.4 - Xử lý chung 1 file JSON, dùng cho cả nút "Tải tệp JSON lên" lẫn kéo-thả vào ô Drop Zone
+        function processCodeTermsJSONFile(file) {
             if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền nạp Gói từ vựng khám phá.", {icon: 'xCircle'}); return; }
-            let file = event.target.files[0];
+            if(!currentDiscoverPackageId) { showAlert("Vui lòng mở vào đúng 1 Gói cụ thể trước khi nạp file.", {icon: 'alertTriangle'}); return; }
             if(!file) return;
+            if(!/\.(json|js|txt)$/i.test(file.name)) { showAlert("Chỉ chấp nhận file .json, .js hoặc .txt.", {icon: 'xCircle'}); return; }
             let reader = new FileReader();
             reader.onload = function(evt) {
                 try {
-                    let parsed = JSON.parse(evt.target.result);
+                    let parsed = JSON.parse(extractJSONArray(evt.target.result));
                     if(!Array.isArray(parsed)) throw new Error("Dữ liệu phải là một mảng (array) các thuật ngữ.");
+                    // V44.2 - Giữ lại đầy đủ các trường phong phú (phiên âm, loại từ, họ từ, cấp độ, ảnh, ví dụ tiếng Việt)
+                    // nếu file JSON có cung cấp, để không bị mất khi sau này Nhập gói vào tiến trình học cá nhân
                     pendingCodeTermsImport = parsed.map((item, idx) => ({
                         id: 'ct-import-' + Date.now() + '-' + idx,
                         term: item.term || item.word || '',
                         meaning: item.meaning || '',
-                        category: item.category || 'Khác',
-                        example: item.example || ''
+                        category: discoverPackages[currentDiscoverPackageId].category,
+                        example: item.example || '',
+                        exampleVi: item.exampleVi || '',
+                        pronUK: item.pronUK || '',
+                        pronUS: item.pronUS || '',
+                        pos: item.pos || '',
+                        wordFamily: item.wordFamily || '',
+                        level: item.level || '',
+                        image: item.image || ''
                     })).filter(t => t.term && t.meaning);
                     if(pendingCodeTermsImport.length === 0) throw new Error("Không tìm thấy thuật ngữ hợp lệ nào (cần có ít nhất 'term' và 'meaning').");
                     renderCodeTermsPreview();
@@ -2244,61 +2708,63 @@
             };
             reader.readAsText(file);
         }
+        function handleCodeTermsFileUpload(event) {
+            let file = event.target.files[0];
+            processCodeTermsJSONFile(file);
+        }
+        // V43.4 - Kéo & thả file JSON trực tiếp vào ô Drop Zone, tiện hơn bấm chọn file
+        function handleCodeTermsFileDrop(event) {
+            event.preventDefault();
+            event.currentTarget.style.borderColor = 'var(--panel-border)';
+            event.currentTarget.style.color = 'var(--text-muted)';
+            let file = event.dataTransfer.files[0];
+            processCodeTermsJSONFile(file);
+        }
         function renderCodeTermsPreview() {
             let box = document.getElementById('codeTermsPreviewBox');
             if(pendingCodeTermsImport.length === 0) { box.style.display = 'none'; return; }
             box.style.display = 'block';
-            document.getElementById('codeTermsPreviewList').innerHTML = pendingCodeTermsImport.map(t => `<div style="padding:6px 0; border-bottom:1px solid var(--panel-border); font-size:12.5px;"><b>${escapeHtml(t.term)}</b> (${escapeHtml(t.category)}) — ${escapeHtml(t.meaning)}</div>`).join('');
+            document.getElementById('codeTermsPreviewList').innerHTML = pendingCodeTermsImport.map((t, idx) => `
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 0; border-bottom:1px solid var(--panel-border); font-size:12.5px;">
+                    <span><b>${escapeHtml(t.term)}</b> — ${escapeHtml(t.meaning)} ${t.image ? '🖼️' : ''} ${t.pronUK ? '🔊' : ''}</span>
+                    <button class="btn-icon" style="width:26px; height:26px; flex-shrink:0; color:var(--color-unlearned-text);" title="Bỏ từ này khỏi lô nạp" onclick="removePendingCodeTermImport(${idx})">${ic('xCircle', 13)}</button>
+                </div>
+            `).join('');
             document.getElementById('codeTermsPreviewCount').innerText = pendingCodeTermsImport.length;
+        }
+        // V43.3 - Bỏ 1 từ khỏi lô đang xem trước (chưa xác nhận nạp), không ảnh hưởng tới kho từ đã lưu
+        function removePendingCodeTermImport(idx) {
+            pendingCodeTermsImport.splice(idx, 1);
+            renderCodeTermsPreview();
+        }
+        // V43.3 - Mở form Nhập thủ công ở chế độ "thêm vào lô đang xem trước" thay vì lưu thẳng vào kho
+        function openAddTermToPendingBatch() {
+            if(!currentDiscoverPackageId) { showAlert("Vui lòng mở vào đúng 1 Gói cụ thể trước.", {icon: 'alertTriangle'}); return; }
+            pendingCodeTermEditId = null;
+            addToPendingBatchMode = true;
+            document.getElementById('ctManualTerm').value = '';
+            document.getElementById('ctManualMeaning').value = '';
+            document.getElementById('ctManualExample').value = '';
+            document.getElementById('codeTermManualFormBox').style.display = 'block';
         }
         function confirmCodeTermsImport() {
             if(typeof isEffectiveHost !== 'function' || !isEffectiveHost()) { showAlert("Chỉ Host mới có quyền nạp Gói từ vựng khám phá.", {icon: 'xCircle'}); return; }
-            codeTerms = codeTerms.concat(pendingCodeTermsImport);
-            saveCodeTerms();
-            syncDiscoverToCloud();
+            if(!currentDiscoverPackageId) { showAlert("Vui lòng mở vào đúng 1 Gói cụ thể trước khi xác nhận nạp.", {icon: 'alertTriangle'}); return; }
+            // V43.4 - Gắn toàn bộ lô vào đúng Gói con đang mở
+            let pkg = discoverPackages[currentDiscoverPackageId];
+            let toAdd = pendingCodeTermsImport.map(t => ({ ...t, category: pkg.category, packageId: pkg.id }));
+            codeTerms = codeTerms.concat(toAdd);
+            let importedCount = toAdd.length;
             pendingCodeTermsImport = [];
             document.getElementById('codeTermsPreviewBox').style.display = 'none';
             document.getElementById('codeTermsFileInput').value = '';
             renderCodeTermsTab();
-            showAlert("Đã nạp và công bố lên Cloud thành công!", {icon: 'checkCircle'});
+            persistCodeTermsAndNotify(`Đã nạp ${importedCount} thuật ngữ`);
         }
         function cancelCodeTermsImport() {
             pendingCodeTermsImport = [];
             document.getElementById('codeTermsPreviewBox').style.display = 'none';
             document.getElementById('codeTermsFileInput').value = '';
-        }
-
-        /* === V42.3 - Nhập cả Gói khám phá vào tiến trình học cá nhân (tạo 1 Deck mới, mọi thiết bị/tài khoản đều dùng được) === */
-        async function importDiscoverPackageToMyDecks() {
-            if(currentCodeCategory === 'all') { showAlert("Vui lòng chọn đúng 1 Gói cụ thể trước khi nhập.", {icon: 'alertTriangle'}); return; }
-            let terms = getFilteredCodeTerms();
-            if(terms.length === 0) { showAlert("Gói này chưa có từ vựng nào."); return; }
-
-            let deckName = `[Khám phá] ${currentCodeCategory}`;
-            // V42.4 - Tránh tạo trùng nhiều Deck cùng tên nếu bấm "Nhập vào tiến trình học" nhiều lần
-            let existingDeckId = Object.keys(wordPackages).find(id => wordPackages[id].name === deckName);
-            if(existingDeckId) {
-                let ok = await showConfirm(`Bạn đã có Gói "${deckName}" trong tiến trình học rồi.\n\nBấm "Nhập thêm" sẽ nạp lại toàn bộ ${terms.length} từ này vào gói đó lần nữa (có thể trùng từ). Bạn có chắc muốn tiếp tục?`, {confirmText: "Nhập thêm"});
-                if(!ok) return;
-            }
-
-            let deckId = existingDeckId || ('deck-discover-' + Date.now());
-            if(!existingDeckId) wordPackages[deckId] = { id: deckId, name: deckName, createdAt: new Date().toISOString().split('T')[0] };
-
-            let todayISO = new Date().toISOString().split('T')[0];
-            terms.forEach(t => {
-                rawList.push({
-                    stt: rawList.length + 1, word: t.term, meaning: t.meaning,
-                    pronUK: "/.../", pronUS: "/.../", pos: "Word", wordFamily: "",
-                    level: "A1", example: t.example || "No custom example.",
-                    day: todayISO, deckId: deckId, packageId: "discover-import"
-                });
-            });
-
-            save();
-            renderActivityHeatmap();
-            updateReadyIndicator(); updateSmartBadge();
-            showAlert(`Đã thêm Gói "${deckName}" (${terms.length} từ) vào tiến trình học của bạn! Vào tab Flashcard/Ôn tập/Quiz để chọn Gói này.`, {icon: 'checkCircle'});
         }
 
         /* === V40 - Luyện tập Flashcard nhanh từ danh sách Thuật ngữ Code === */
@@ -2326,11 +2792,30 @@
         }
         function closeCodeTermsPractice() { document.getElementById('codeTermsPracticeModal').classList.remove('show'); }
 
+        // V45.4 - Xoay vòng 4 giao diện: Tối (Cosmic Orbit) -> Sáng (EdTech Modern) -> Mêcola Kem (nền kem chữ đỏ) -> Mêcola Ngọc (nền xanh chữ trắng)
         function toggleTheme() {
-            let current = document.body.getAttribute('data-theme');
-            let next = current === 'light' ? 'dark' : 'light';
+            let current = document.body.getAttribute('data-theme') || 'dark';
+            let order = ['dark', 'light', 'mecola-cream', 'mecola-teal'];
+            let next = order[(order.indexOf(current) + 1) % order.length];
             document.body.setAttribute('data-theme', next);
             localStorage.setItem('tho_v38_theme', next);
+            updateThemeIcon();
+        }
+
+        // V45.4 - Icon nút đổi giao diện tự đổi theo theme đang chọn
+        function updateThemeIcon() {
+            let theme = document.body.getAttribute('data-theme') || 'dark';
+            let btn = document.getElementById('themeToggleBtn');
+            if(!btn) return;
+            let icons = {
+                dark: '<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>',
+                light: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>',
+                'mecola-cream': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M8.5 2h7l-0.8 5.2H9.3L8.5 2z"/><path d="M9.3 7.2l-2 3.3v9a2 2 0 0 0 2 2h5.4a2 2 0 0 0 2-2v-9l-2-3.3"/><circle cx="12" cy="15" r="1.3"/></svg>',
+                'mecola-teal': '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" width="16" height="16"><path d="M8.5 2h7l-0.8 5.2H9.3L8.5 2z"/><path d="M9.3 7.2l-2 3.3v9a2 2 0 0 0 2 2h5.4a2 2 0 0 0 2-2v-9l-2-3.3z"/></svg>'
+            };
+            btn.innerHTML = icons[theme] || icons.dark;
+            let labels = { dark: 'Đang ở giao diện Tối - bấm để đổi sang Sáng', light: 'Đang ở giao diện Sáng - bấm để đổi sang Mêcola Kem', 'mecola-cream': 'Đang ở giao diện Mêcola Kem - bấm để đổi sang Mêcola Ngọc', 'mecola-teal': 'Đang ở giao diện Mêcola Ngọc - bấm để đổi sang Tối' };
+            btn.setAttribute('aria-label', labels[theme] || 'Đổi giao diện');
         }
 
         /* === V42.1 - Migration: gộp từ vựng theo Ngày cũ thành Gói tự động đặt tên (chạy 1 lần khi nâng cấp) === */
@@ -2397,7 +2882,7 @@
             let lastMonth = -1;
             let cursor = new Date(startDate);
             let weekIndex = 0;
-            const monthNames = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+            const monthNames = ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12']; // V43 - Rút gọn để không bị chồng chữ khi cột hẹp (biểu đồ đã thu nhỏ)
 
             while(cursor <= today) {
                 for(let dow = 0; dow < 7; dow++) {
@@ -2423,9 +2908,14 @@
                 weekIndex++;
             }
 
+            let lastLabelWeek = -99;
             monthLabelPositions.forEach(m => {
+                // V43 - Bỏ qua nhãn tháng nếu quá gần nhãn trước (dưới 2 cột), tránh chữ chồng lên nhau khi biểu đồ bị thu nhỏ
+                if(m.week - lastLabelWeek < 2) return;
+                lastLabelWeek = m.week;
                 let lbl = document.createElement('span');
                 lbl.style.gridColumnStart = m.week + 1;
+                lbl.style.whiteSpace = 'nowrap';
                 lbl.innerText = monthNames[m.month];
                 monthsEl.appendChild(lbl);
             });
@@ -2453,9 +2943,11 @@
                 let words = rawList.filter(w => w.deckId === id);
                 let mastered = words.filter(w => statuses[w.word] === 'mastered').length;
                 let isActive = id === currentSelectedDeckId;
+                let isCompleted = words.length > 0 && mastered === words.length; // V45.2 - Gói đã học thuộc hết
                 return `
-                    <div class="deck-picker-card ${isActive ? 'deck-picker-card-active' : ''}" onclick="selectDeck('${id}'); switchTab('flashcard');">
-                        <div class="dp-name">${escapeHtml(pkg.name)} ${isActive ? ic('checkCircle', 13) : ''}</div>
+                    <div class="deck-picker-card ${isActive ? 'deck-picker-card-active' : ''} ${isCompleted ? 'deck-picker-card-completed' : ''}" onclick="backToTabId='calendar'; selectDeck('${id}'); switchTab('list');">
+                        <button class="dp-delete-btn" type="button" title="Xoá gói (vào Thùng rác)" onclick="event.stopPropagation(); deleteDeckToTrash('${id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+                        <div class="dp-name">${escapeHtml(pkg.name)} ${isActive ? ic('checkCircle', 13) : ''}${isCompleted ? `<span class="dp-completed-badge">${ic('checkCircle', 11)} Hoàn thành</span>` : ''}</div>
                         <div class="dp-count">${words.length} từ · ${mastered}/${words.length} đã thuộc</div>
                         <button class="dp-edit-btn" type="button" onclick="event.stopPropagation(); openDeckAddModal('${id}')">${ic('type', 13)} Thêm từ</button>
                     </div>
@@ -2475,8 +2967,8 @@
             if(wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) closeAddPackageMenu();
         });
 
-        function createNamedDeckAndOpen() {
-            let name = prompt("Đặt tên cho Gói từ vựng mới:", "");
+        async function createNamedDeckAndOpen() {
+            let name = await showCustomPrompt("Đặt tên cho Gói từ vựng mới:", "");
             if(name === null) return null;
             name = name.trim();
             if(!name) { showAlert("Tên Gói không được để trống."); return null; }
@@ -2487,18 +2979,62 @@
             return deckId;
         }
 
-        function chooseAddPackageManual() {
+        async function chooseAddPackageManual() {
             closeAddPackageMenu();
-            let deckId = createNamedDeckAndOpen();
+            let deckId = await createNamedDeckAndOpen();
             if(deckId) { openDeckAddModal(deckId); switchInputMode('quick'); }
         }
+        let pickingDiscoverForImport = false; // V44 - true khi người dùng đang "Thêm gói từ Khám phá" (đi chọn 1 Gói bên tab Khám phá để nhập vào tiến trình học)
         function chooseAddPackageDiscover() {
             closeAddPackageMenu();
+            pickingDiscoverForImport = true;
             switchTab('library');
         }
-        function chooseAddPackageJson() {
+        function cancelPickDiscoverForImport() {
+            pickingDiscoverForImport = false;
+            switchTab('calendar');
+        }
+        // V44 - Nhập toàn bộ từ vựng của 1 Gói khám phá thành 1 Gói mới trong tiến trình học cá nhân
+        async function importDiscoverPackageIntoPersonalDeck(pkgId) {
+            let pkg = discoverPackages[pkgId];
+            if(!pkg) return;
+            let terms = codeTerms.filter(t => t.packageId === pkgId);
+            if(terms.length === 0) { showAlert("Gói này chưa có từ vựng nào."); return; }
+
+            let deckName = pkg.name;
+            let existingDeckId = Object.keys(wordPackages).find(id => wordPackages[id].name === deckName);
+            if(existingDeckId) {
+                let ok = await showConfirm(`Bạn đã có Gói "${deckName}" trong tiến trình học rồi.\n\nBấm "Nhập thêm" sẽ nạp lại toàn bộ ${terms.length} từ này vào gói đó lần nữa (có thể trùng từ). Bạn có chắc muốn tiếp tục?`, {confirmText: "Nhập thêm"});
+                if(!ok) return;
+            }
+
+            let deckId = existingDeckId || ('deck-discover-' + Date.now());
+            if(!existingDeckId) wordPackages[deckId] = { id: deckId, name: deckName, createdAt: new Date().toISOString().split('T')[0] };
+
+            let todayISO = new Date().toISOString().split('T')[0];
+            terms.forEach(t => {
+                rawList.push({
+                    stt: rawList.length + 1, word: t.term, meaning: t.meaning,
+                    // V44.2 - Ưu tiên dùng đúng phiên âm/loại từ/họ từ/cấp độ/ảnh/ví dụ Việt đã có sẵn trong dữ liệu Khám phá
+                    // (do Host nạp qua file JSON đầy đủ trường), chỉ dùng giá trị mặc định khi thật sự không có
+                    pronUK: t.pronUK || "/.../", pronUS: t.pronUS || "/.../",
+                    pos: t.pos || "Word", wordFamily: t.wordFamily || "",
+                    level: t.level || "A1", example: t.example || "No custom example.",
+                    exampleVi: t.exampleVi || "", image: t.image || "",
+                    day: todayISO, deckId: deckId, packageId: "discover-import"
+                });
+            });
+
+            save();
+            pickingDiscoverForImport = false;
+            renderActivityHeatmap();
+            updateReadyIndicator(); updateSmartBadge();
+            switchTab('calendar');
+            showAlert(`Đã thêm Gói "${deckName}" (${terms.length} từ) vào tiến trình học của bạn!`, {icon: 'checkCircle'});
+        }
+        async function chooseAddPackageJson() {
             closeAddPackageMenu();
-            let deckId = createNamedDeckAndOpen();
+            let deckId = await createNamedDeckAndOpen();
             if(deckId) { openDeckAddModal(deckId); }
         }
 
@@ -2533,7 +3069,7 @@
         }
 
         async function promptCreateDeck() {
-            let name = prompt("Đặt tên cho Gói từ vựng mới:", "");
+            let name = await showCustomPrompt("Đặt tên cho Gói từ vựng mới:", "");
             if(name === null) return;
             name = name.trim();
             if(!name) { showAlert("Tên Gói không được để trống."); return; }
@@ -2616,6 +3152,106 @@
             }
         }
 
+        /* === V43.2 - Thùng rác: xoá cả Gói từ vựng (deck), giữ lại 30 ngày, khôi phục được === */
+        function updateTrashBadge() {
+            let badge = document.getElementById('navTrashBadge');
+            if(!badge) return;
+            let n = Object.keys(trashBin).length;
+            badge.innerText = n;
+            badge.style.display = n > 0 ? 'inline-block' : 'none';
+        }
+
+        function purgeExpiredTrash() {
+            let now = Date.now();
+            let changed = false;
+            for(let id in trashBin) {
+                let deletedAt = new Date(trashBin[id].deletedAt).getTime();
+                if(now - deletedAt > 30 * 24 * 60 * 60 * 1000) { delete trashBin[id]; changed = true; }
+            }
+            if(changed) save();
+        }
+
+        async function deleteDeckToTrash(deckId) {
+            let pkg = wordPackages[deckId];
+            if(!pkg) return;
+            let ok = await showConfirm(`Xoá Gói từ "${pkg.name}"? Gói sẽ chuyển vào Thùng rác và tự xoá vĩnh viễn sau 30 ngày (bạn có thể khôi phục trong thời gian đó).`, {danger: true, confirmText: "Xoá gói"});
+            if(!ok) return;
+
+            let words = rawList.filter(w => w.deckId === deckId);
+            let statusesSnap = {};
+            words.forEach(w => { if(statuses.hasOwnProperty(w.word)) statusesSnap[w.word] = statuses[w.word]; });
+            let pkgLogsSnap = {};
+            for(let key in packagesLog) { if(packagesLog[key].deckId === deckId) pkgLogsSnap[key] = packagesLog[key]; }
+
+            let trashId = 'trash-' + Date.now();
+            trashBin[trashId] = { deckId, deck: pkg, words, statuses: statusesSnap, pkgLogs: pkgLogsSnap, deletedAt: new Date().toISOString() };
+
+            delete wordPackages[deckId];
+            rawList = rawList.filter(w => w.deckId !== deckId);
+            for(let key in pkgLogsSnap) delete packagesLog[key];
+            if(currentSelectedDeckId === deckId) changeDeck();
+
+            save();
+            renderActivityHeatmap();
+            updateTrashBadge();
+            showAlert(`Đã chuyển Gói "${pkg.name}" vào Thùng rác. Tự xoá vĩnh viễn sau 30 ngày.`, {icon: 'checkCircle'});
+        }
+
+        function restoreDeckFromTrash(trashId) {
+            let entry = trashBin[trashId];
+            if(!entry) return;
+            wordPackages[entry.deckId] = entry.deck;
+            rawList.push(...entry.words);
+            Object.assign(statuses, entry.statuses);
+            Object.assign(packagesLog, entry.pkgLogs);
+            delete trashBin[trashId];
+            save();
+            renderActivityHeatmap();
+            updateTrashBadge();
+            renderTrashTab();
+            showAlert(`Đã khôi phục Gói "${entry.deck.name}".`, {icon: 'checkCircle'});
+        }
+
+        async function permanentlyDeleteTrash(trashId) {
+            let entry = trashBin[trashId];
+            if(!entry) return;
+            let ok = await showConfirm(`Xoá vĩnh viễn Gói "${entry.deck.name}"? Hành động này KHÔNG thể hoàn tác.`, {danger: true, confirmText: "Xoá vĩnh viễn"});
+            if(!ok) return;
+            delete trashBin[trashId];
+            save();
+            updateTrashBadge();
+            renderTrashTab();
+        }
+
+        function renderTrashTab() {
+            purgeExpiredTrash();
+            let container = document.getElementById('trashListEl');
+            if(!container) return;
+            let ids = Object.keys(trashBin);
+            if(ids.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:44px 20px; color:var(--text-muted); background:var(--panel-bg); border:1px dashed var(--panel-border); border-radius:var(--radius-lg);">${ic('inbox', 22)} Thùng rác trống.</div>`;
+                updateTrashBadge();
+                return;
+            }
+            container.innerHTML = ids.map(id => {
+                let entry = trashBin[id];
+                let daysLeft = 30 - Math.floor((Date.now() - new Date(entry.deletedAt).getTime()) / (24 * 60 * 60 * 1000));
+                return `
+                    <div class="trash-item">
+                        <div>
+                            <div style="font-weight:700; font-size:14px;">${escapeHtml(entry.deck.name)}</div>
+                            <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">${entry.words.length} từ · <span class="trash-item-days">Còn ${daysLeft > 0 ? daysLeft : 0} ngày</span></div>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn-action-panel" style="padding:8px 14px; font-size:12px;" onclick="restoreDeckFromTrash('${id}')">${ic('undo', 13)} Khôi phục</button>
+                            <button class="btn-nav" style="padding:8px 14px; font-size:12px; color:var(--color-unlearned-text);" onclick="permanentlyDeleteTrash('${id}')">${ic('xCircle', 13)} Xoá vĩnh viễn</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            updateTrashBadge();
+        }
+
         /* V22 TÍNH NĂNG XÓA GÓI TỪ VỰNG - TRÁNH TÌNH TRẠNG LỠ NẠP KHÔNG XÓA ĐƯỢC */
         async function deletePackage(pkgId) {
             let ok = await showConfirm("Bạn có chắc muốn xóa toàn bộ từ vựng thuộc lô nạp này ra khỏi Gói không?", {danger: true, confirmText: "Xoá gói"});
@@ -2642,6 +3278,23 @@
         }
 
         /* V42.1 - Nạp file JSON hàng loạt vào Gói từ vựng đang chọn (thay cho gắn theo ngày cũ) */
+        // V44 - Bóc tách đúng mảng JSON [ ... ] đầu tiên bằng cách đếm độ sâu ngoặc vuông thay vì regex tham lam,
+        // tránh lỗi "không đúng định dạng JSON" khi file có thêm code/chữ thừa SAU dấu ] cuối của mảng
+        // (vd đoạn script tạo nút tải file mà Gemini hay tự thêm vào, hoặc dấu ']' nằm trong đoạn giải thích).
+        function extractJSONArray(text) {
+            let start = text.indexOf('[');
+            if(start === -1) return text;
+            let depth = 0;
+            for(let i = start; i < text.length; i++) {
+                if(text[i] === '[') depth++;
+                else if(text[i] === ']') {
+                    depth--;
+                    if(depth === 0) return text.slice(start, i + 1);
+                }
+            }
+            return text.slice(start); // Ngoặc không cân bằng - trả về phần còn lại để JSON.parse tự báo lỗi cụ thể
+        }
+
         function handleDayFile(e) {
             let file = e.target.files[0]; if(!file) return;
             let reader = new FileReader();
@@ -2652,8 +3305,8 @@
                 let text = evt.target.result;
                 let parsed;
                 try {
-                    let match = text.match(/\[([\s\S]*)\]/);
-                    parsed = JSON.parse(match ? match[0] : text);
+                    let match = extractJSONArray(text);
+                    parsed = JSON.parse(match);
                 } catch(err) {
                     showAlert("File không đúng định dạng JSON!\n\nCó thể nội dung Gemini trả về còn dính chữ giải thích thừa ngoài dấu [ ], hoặc thiếu dấu phẩy/ngoặc ở đâu đó.\n\nChi tiết lỗi kỹ thuật: " + err.message, {icon: 'xCircle'});
                     return;
@@ -2723,9 +3376,11 @@
                 wordFamily: document.getElementById('m-family').value.trim() || "",
                 level: document.getElementById('m-level').value || "A1",
                 example: document.getElementById('m-example').value.trim() || "No custom example.",
+                exampleVi: document.getElementById('m-example-vi').value.trim() || "",
+                image: document.getElementById('m-image').value.trim() || "",
                 day: todayISO, deckId: targetModalDeckId, packageId: "manual"
             });
-            ['m-word','m-meaning','m-pronuk','m-pronus','m-pos','m-family','m-example'].forEach(id => document.getElementById(id).value = "");
+            ['m-word','m-meaning','m-pronuk','m-pronus','m-pos','m-family','m-example','m-example-vi','m-image'].forEach(id => document.getElementById(id).value = "");
             save(); 
             renderPackageHistory();
             renderActivityHeatmap(); 
@@ -2822,6 +3477,8 @@
             document.getElementById('e-level').value = (item.level || "A1").toUpperCase();
             document.getElementById('e-family').value = item.wordFamily || "";
             document.getElementById('e-example').value = item.example || "";
+            document.getElementById('e-example-vi').value = item.exampleVi || "";
+            document.getElementById('e-image').value = item.image || "";
             document.getElementById('editWordModal').classList.add('show');
         }
 
@@ -2845,6 +3502,8 @@
             editTargetItem.level = document.getElementById('e-level').value || "A1";
             editTargetItem.wordFamily = document.getElementById('e-family').value.trim() || "";
             editTargetItem.example = document.getElementById('e-example').value.trim() || "";
+            editTargetItem.exampleVi = document.getElementById('e-example-vi').value.trim() || "";
+            editTargetItem.image = document.getElementById('e-image').value.trim() || "";
             delete editTargetItem.pron; // dữ liệu cũ không cần nữa vì đã có UK/US
 
             save();
@@ -3067,7 +3726,14 @@
         }
 
         /* V38 - Fallback: phát âm thanh MP3 từ Free Dictionary API khi TTS lỗi hoặc thiết bị không có giọng đọc tốt */
+        let currentFallbackAudio = null; // V45.2 - Theo dõi audio dự phòng đang phát để có thể ngắt khi bấm phát âm từ khác
+        function stopAllPronunciation() {
+            if('speechSynthesis' in window) window.speechSynthesis.cancel();
+            if(currentFallbackAudio) { currentFallbackAudio.pause(); currentFallbackAudio.currentTime = 0; currentFallbackAudio = null; }
+        }
+
         async function playFallbackAudio(word) {
+            stopAllPronunciation();
             try {
                 let res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
                 if(!res.ok) throw new Error('Không tìm thấy dữ liệu phát âm dự phòng');
@@ -3080,7 +3746,8 @@
                     if(audioUrl) break;
                 }
                 if(!audioUrl) throw new Error('Từ này chưa có âm thanh dự phòng');
-                new Audio(audioUrl).play();
+                currentFallbackAudio = new Audio(audioUrl);
+                currentFallbackAudio.play();
             } catch(err) {
                 console.error('Lỗi phát âm dự phòng:', err);
             }
@@ -3088,6 +3755,7 @@
 
         function speakWordText(word) {
             if(!word) return;
+            stopAllPronunciation(); // V45.2 - Ngắt hẳn phát âm đang chạy (nếu có) trước khi phát từ mới, tránh chồng chéo/kéo dài khi bấm dồn dập
             if(!('speechSynthesis' in window) || englishVoices.length === 0) { playFallbackAudio(word); return; }
             let utterance = new SpeechSynthesisUtterance(word);
             utterance.rate = parseFloat(localStorage.getItem('tho_v18_speechrate') || 1);
@@ -3112,6 +3780,7 @@
             if(event) event.stopPropagation();
             let item = (context === 'f') ? filteredList[cIdx] : srQueue[0];
             if(!item) return;
+            stopAllPronunciation(); // V45.2 - Ngắt phát âm đang chạy trước khi phát giọng UK/US mới
 
             let localeKey = accent === 'uk' ? 'gb' : 'us';
             let voice = englishVoices.find(v => v.lang.toLowerCase().includes(localeKey))
@@ -3142,6 +3811,50 @@
         function setSortMode(mode) { activeSortMode = mode; buildFilteredList(); cIdx = 0; renderCard(); }
         function flip() {
             document.getElementById('cardContainerEl').classList.toggle('flipped');
+        }
+
+        // V43.1 - Áp ảnh minh họa cho mặt sau thẻ (nếu từ có URL ảnh); tự ẩn nếu không có hoặc ảnh lỗi
+        function applyCardImage(item, imgElId) {
+            let el = document.getElementById(imgElId);
+            let containerId = (imgElId === 'sr-image') ? 'smartCardContainerEl' : 'cardContainerEl';
+            if(item.image && String(item.image).trim()) {
+                el.src = item.image;
+                el.style.display = 'block';
+                el.onerror = () => { el.style.display = 'none'; syncCardHeight(containerId); };
+                el.onload = () => { syncCardHeight(containerId); };
+            } else {
+                el.style.display = 'none';
+                el.removeAttribute('src');
+            }
+        }
+
+        // V46 - Khung Flashcard tự đo chiều cao NỘI DUNG THẬT của cả 2 mặt (trước/sau) rồi lấy mặt cao nhất
+        // để gán cho khung, thay vì set chiều cao cứng như bản cũ -> ảnh/chữ/ví dụ luôn nằm gọn trong khung,
+        // không bị tràn ra ngoài hay cần vuốt xuống mới thấy hết, dù trên điện thoại, iPad hay PC.
+        function syncCardHeight(containerId) {
+            let container = document.getElementById(containerId);
+            if(!container) return;
+            requestAnimationFrame(() => {
+                let faces = container.querySelectorAll('.card-face');
+                let maxH = 0;
+                faces.forEach(f => { if(f.scrollHeight > maxH) maxH = f.scrollHeight; });
+                if(maxH > 0) container.style.height = (Math.max(maxH, 260) + 10) + 'px'; // +10px đệm an toàn, tránh sát mép do font load lệch 1-2px
+            });
+        }
+        window.syncCardHeight = syncCardHeight;
+
+        // V46 - Đo lại khi xoay màn hình / đổi kích thước cửa sổ (điện thoại, iPad, PC) để khung luôn fit
+        let _cardResizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(_cardResizeTimer);
+            _cardResizeTimer = setTimeout(() => {
+                syncCardHeight('cardContainerEl');
+                syncCardHeight('smartCardContainerEl');
+            }, 150);
+        });
+        // V46 - Font web (Google Fonts) tải xong có thể làm chữ đổi chiều rộng/cao nhẹ -> đo lại 1 lần nữa cho chắc
+        if(document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => { syncCardHeight('cardContainerEl'); syncCardHeight('smartCardContainerEl'); });
         }
 
         function applyPronAndFamily(item, ukElId, usElId, familyElId) {
@@ -3176,6 +3889,8 @@
                 applyPronAndFamily(item, 'f-pron-uk', 'f-pron-us', 'b-family');
                 document.getElementById('b-meaning').innerText = item.meaning;
                 document.getElementById('b-ex').innerText = item.example || '';
+                document.getElementById('b-ex-vi').innerText = item.exampleVi ? `(${item.exampleVi})` : '';
+                applyCardImage(item, 'b-image');
                 
                 let lvl = (item.level || 'A1').toLowerCase();
                 let partOfSpeech = item.pos ? ` - ${item.pos}` : ''; 
@@ -3190,6 +3905,7 @@
                 wrap.classList.add('aura-' + currentStatus);
                 requestAnimationFrame(() => wrap.classList.remove('changing'));
                 if(isAudioMasterOn) setTimeout(() => speakCurrentWord(), 150);
+                syncCardHeight('cardContainerEl');
             }, 150);
         }
 
@@ -3283,6 +3999,8 @@
                 document.getElementById('sr-meaning').innerText = item.meaning;
                 document.getElementById('sr-ex').innerText = 'Bấm để lật...';
                 document.getElementById('sr-exback').innerText = item.example || '';
+                document.getElementById('sr-exback-vi').innerText = item.exampleVi ? `(${item.exampleVi})` : '';
+                applyCardImage(item, 'sr-image');
 
                 let lvl = (item.level || 'A1').toLowerCase();
                 let partOfSpeech = item.pos ? ` - ${item.pos}` : '';
@@ -3299,6 +4017,7 @@
                 wrap.classList.add('aura-' + currentStatus);
                 requestAnimationFrame(() => wrap.classList.remove('changing'));
                 if(isAudioMasterOn) setTimeout(() => speakSmartWord(), 150);
+                syncCardHeight('smartCardContainerEl');
             }, 150);
         }
 
@@ -3386,7 +4105,10 @@
                             <button class="vc-icon-btn" title="Xoá từ" aria-label="Xoá từ này"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
                         </div>
                     </div>
-                    <div class="vc-w">${item.word}</div>
+                    <div class="vc-w-row">
+                        ${item.image ? `<img class="vc-thumb" src="${item.image}" alt="" onerror="this.style.display='none';">` : ''}
+                        <div class="vc-w">${item.word}</div>
+                    </div>
                     <div class="vc-m">${item.meaning}</div>
                     <div class="vc-dot d-${s}"></div>
                 `;
@@ -3873,7 +4595,31 @@
             if(pendingUndoAction) pendingUndoAction();
             pendingUndoAction = null;
             clearTimeout(undoToastTimeout);
+            clearInterval(undoToastCountdownInterval);
             document.getElementById('undoToast').classList.remove('show');
+        }
+
+        // V43.2 - Bản có đếm ngược hiển thị trực tiếp trên nút Hoàn tác (dùng cho xoá Thuật ngữ Code)
+        let undoToastCountdownInterval = null;
+        function showUndoToastCountdown(message, restoreFn, seconds) {
+            pendingUndoAction = restoreFn;
+            let toast = document.getElementById('undoToast');
+            let remaining = seconds;
+            toast.innerHTML = `<span>${message}</span><button onclick="performUndo()">${ic('undo', 13)} Hoàn tác (${remaining}s)</button>`;
+            toast.classList.add('show');
+            clearTimeout(undoToastTimeout);
+            clearInterval(undoToastCountdownInterval);
+            undoToastCountdownInterval = setInterval(() => {
+                remaining--;
+                let btn = toast.querySelector('button');
+                if(remaining > 0 && btn) btn.innerHTML = `${ic('undo', 13)} Hoàn tác (${remaining}s)`;
+                if(remaining <= 0) clearInterval(undoToastCountdownInterval);
+            }, 1000);
+            undoToastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+                pendingUndoAction = null;
+                clearInterval(undoToastCountdownInterval);
+            }, seconds * 1000);
         }
 
         /* === V40 - Toast thông báo nhanh (không có nút hành động, tự ẩn) === */
@@ -4010,6 +4756,28 @@
             });
         }
 
+        /* === V43 - Modal nhập tên tuỳ chỉnh (thay thế window.prompt() gốc của trình duyệt) === */
+        let _customPromptResolve = null;
+        function showCustomPrompt(label, defaultValue) {
+            return new Promise(resolve => {
+                _customPromptResolve = resolve;
+                document.getElementById('customPromptLabel').innerText = label;
+                let input = document.getElementById('customPromptInput');
+                input.value = defaultValue || '';
+                document.getElementById('customPromptModal').classList.add('show');
+                setTimeout(() => input.focus(), 50);
+            });
+        }
+        function confirmCustomPrompt() {
+            let value = document.getElementById('customPromptInput').value;
+            document.getElementById('customPromptModal').classList.remove('show');
+            if(_customPromptResolve) { _customPromptResolve(value); _customPromptResolve = null; }
+        }
+        function cancelCustomPrompt() {
+            document.getElementById('customPromptModal').classList.remove('show');
+            if(_customPromptResolve) { _customPromptResolve(null); _customPromptResolve = null; }
+        }
+
         function togglePromptView() {
             document.getElementById('promptCollapseWrap').classList.toggle('open');
             document.getElementById('promptToggleBtn').classList.toggle('open');
@@ -4086,6 +4854,11 @@
                       localStorage.setItem('tho_v40_codeTerms', JSON.stringify(cloudData.terms));
                       if (typeof window.applyCloudCodeTerms === 'function') window.applyCloudCodeTerms(cloudData.terms);
                   }
+                  // V43.4 - Đồng bộ luôn cấu trúc các Gói con (discoverPackages) kèm theo thuật ngữ
+                  if (cloudData.packages && typeof cloudData.packages === 'object') {
+                      localStorage.setItem('tho_v43_discoverPkgs', JSON.stringify(cloudData.packages));
+                      if (typeof window.applyCloudDiscoverPackages === 'function') window.applyCloudDiscoverPackages(cloudData.packages);
+                  }
               }
           }
       } catch (e) {
@@ -4095,12 +4868,12 @@
   loadDiscoverPackagesOnStartup();
 
   // V42.3 - CHỈ Host mới được phép gọi hàm này để đẩy Gói từ vựng khám phá lên Cloud
-  window.saveDiscoverPackagesToCloud = async function(terms) {
+  window.saveDiscoverPackagesToCloud = async function(terms, packages) {
       if (!(typeof isEffectiveHost === 'function' && isEffectiveHost())) {
           throw new Error("Chỉ Host mới có quyền công bố Gói từ vựng khám phá lên Cloud.");
       }
       if (window.db && typeof doc === 'function' && typeof setDoc === 'function') {
-          await setDoc(doc(db, 'config', 'discoverPackages'), { terms, updatedAt: new Date().toISOString() });
+          await setDoc(doc(db, 'config', 'discoverPackages'), { terms, packages: packages || {}, updatedAt: new Date().toISOString() });
       } else {
           throw new Error("Chưa kết nối được Firestore Database.");
       }
@@ -4131,7 +4904,7 @@
   // V38 - Smart Merge: gộp dữ liệu máy (guest/offline) với dữ liệu đám mây, không mất/ghi đè bất kỳ bên nào
   function smartMergeAppState(localData, cloudData) {
     function scoreCompleteness(item) {
-      return ['pronUK','pronUS','pos','wordFamily','meaning','example'].filter(k => item[k] && String(item[k]).trim() && item[k] !== '/.../').length;
+      return ['pronUK','pronUS','pos','wordFamily','meaning','example','exampleVi','image'].filter(k => item[k] && String(item[k]).trim() && item[k] !== '/.../').length;
     }
     let mergedMap = {};
     [...(localData.rawList || []), ...(cloudData.rawList || [])].forEach(item => {
